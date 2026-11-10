@@ -1,0 +1,108 @@
+# Master implementation plan (PyroScope)
+
+Live task board. Agents and humans update it as work happens.
+
+## How to use this file (agents: read carefully)
+
+- Status: `[ ]` not started, `[~]` in progress (put `@handle` in Owner), `[x]` done.
+- **Claim before coding**: edit only your own row (`[ ]` -> `[~]` + handle), commit `chore(plan): claim <ID>`, push.
+- Each chunk file has task checkboxes. Tick them as you go. When all are ticked and tests pass, set your row to `[x]`.
+- A chunk may start only when every "Depends" ID is `[x]` (or the human approves a stub or fixture) and its Window is open.
+- Window `PRE`: allowed any time before the event (no project application code; see P00). Window `EVENT`: starts Nov 14 at 09:00 local time unless `docs/RULES_CHECK.md` says earlier work is allowed.
+- Priority: P0 required for the demo, P1 only after all P0, P2 stretch.
+- Never reorder or rename rows or edit someone else's row. Keep edits to one line. Record deviations in the log at the bottom (append only).
+
+Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.md`, `docs/PRODUCT_BRIEF.md`, `docs/API_REFERENCE.md`, then the chunk file.
+
+## Pre-event (Nov 9-13)
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
+| [ ] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | |
+| [ ] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | |
+| [ ] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | |
+| [ ] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | |
+| [ ] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | |
+
+## Shared
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [x] | S00 | Repo bootstrap (monorepo, Python and web tooling, CI) | P0 | EVENT | P00 | 2 | plan/shared/S00-bootstrap.md | @azmaeenmahtab |
+| [ ] | S01 | Contract first: OpenAPI, examples, deterministic fixtures, mocks | P0 | EVENT | S00 | 3 | plan/shared/S01-contracts-fixtures.md | |
+| [ ] | S02 | Deployment and data shipping | P0 | EVENT | A01, F01 | 3 | plan/shared/S02-deploy.md | |
+
+## Data lane (pipeline/)
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [ ] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | |
+| [ ] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | |
+| [ ] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | |
+| [ ] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | |
+| [ ] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | |
+| [ ] | D06 | Run harmonization, downscale to cells, validation report | P0 | EVENT | D04, D05 | 4 | plan/data/D06-harmonize-run.md | |
+| [ ] | D07 | Climatology, anomalies, seasons, yearly stats | P0 | EVENT | D06 | 3 | plan/data/D07-calendar-stats.md | |
+| [ ] | D08 | NRT incremental update and provisional flags | P1 | EVENT | D03, D07 | 4 | plan/data/D08-nrt-update.md | |
+
+## API lane (services/api/)
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [ ] | A01 | API foundation, data loading, meta and areas | P0 | EVENT | S01 | 2 | plan/api/A01-foundation.md | |
+| [ ] | A02 | Heatmap and series endpoints | P0 | EVENT | A01 | 3 | plan/api/A02-heatmap-series.md | |
+| [ ] | A03 | Calendar, yearly stats, anomalies, methodology | P0 | EVENT | A01 | 4 | plan/api/A03-calendar-stats.md | |
+| [ ] | A04 | Alert subscriptions and evaluation | P1 | EVENT | A03, D08 | 4 | plan/api/A04-alerts.md | |
+| [ ] | A05 | Ask PyroScope agent (typed tools, replay mode) | P0 | EVENT | A03 | 5 | plan/api/A05-ask-agent.md | |
+| [ ] | A06 | Guidance and Wildland Action Planner | P1 | EVENT | A03 | 3 | plan/api/A06-guidance.md | |
+
+## Web lane (apps/web/)
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [ ] | F01 | Next.js foundation, shell, API client, mocks | P0 | EVENT | S01, P05 | 2 | plan/web/F01-foundation.md | |
+| [ ] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | |
+| [ ] | F03 | Area selection and URL state | P0 | EVENT | F01 | 3 | plan/web/F03-area-selection.md | |
+| [ ] | F04 | FireCalendar and the hidden-jump chart | P0 | EVENT | F03 | 5 | plan/web/F04-calendar-series.md | |
+| [ ] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | |
+| [ ] | F06 | Alerts UI | P1 | EVENT | F03 | 3 | plan/web/F06-alerts-ui.md | |
+| [ ] | F07 | Ask PyroScope chat UI | P0 | EVENT | F01 | 4 | plan/web/F07-ask-ui.md | |
+| [ ] | F08 | Methodology and transparency page | P0 | EVENT | F01 | 3 | plan/web/F08-methodology.md | |
+| [ ] | F09 | Polish, accessibility, performance | P1 | EVENT | F02-F08 | 3 | plan/web/F09-polish.md | |
+
+## Deliver
+
+| Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [ ] | X01 | Submission package (README, summary, video, deck sync, AI disclosure) | P0 | EVENT | all P0 | 4 | plan/deliver/X01-submission.md | |
+| [ ] | X02 | Final QA, demo rehearsal, offline fallback | P0 | EVENT | all P0 | 3 | plan/deliver/X02-qa-rehearsal.md | |
+
+## Suggested lanes (6 people; assign by strengths)
+
+| Lane | Focus | Chunks |
+| --- | --- | --- |
+| 1 | Data engineering A | P01, P02, D01, D02, D03, D08 |
+| 2 | Data science B | P03, D04, D05, D06, D07 |
+| 3 | API and AI | A01, A02, A03, A05, A04, A06 |
+| 4 | Frontend map and calendar | F01, F02, F03, F04 |
+| 5 | Frontend rest and design | P05, F05, F06, F07, F08, F09 |
+| 6 | Lead, QA, release, pitch | P00, P04, S00, S01, S02, X01, X02 |
+
+## Schedule (Dhaka time, UTC+6; confirm the local event schedule with your Local Lead)
+
+| When | Target |
+| --- | --- |
+| Nov 9 | P00 (rules check, accounts), P01 requests submitted, everyone installs tools and reads the docs |
+| Nov 10-12 | P01 downloads, P02 findings, P03, P04 spikes, P05 design; update docs with real numbers |
+| Nov 13 | Read the Project Submission Guide and Judging Guide (released today); fill `docs/RULES_CHECK.md`; dry-run the chunk loop on a tiny task |
+| Nov 14, 09:00 | Kickoff: S00 (2h), S01 (3h). Then in parallel D01, D02, D05, A01, F01 |
+| Nov 14, evening | Target: D03, D04 done; real hexes on the map (A02, F02); area selection (F03); API skeleton deployed (S02 draft) |
+| Nov 15, 09:00-13:00 | D06, D07, A03, F04, A05, F07, F08; then **13:00 feature freeze** (P0 bugs only) |
+| Nov 15, 13:00-18:00 | S02 final deploy, X01 package, video recording, X02 rehearsal |
+| Nov 15, 18:00 | First complete submission; verify it opens and the receipt shows |
+| Nov 15, 23:59 | Hard cutoff (local time). Never wait for the last hour |
+
+## Deviation Log (append only: date, chunk, what, why, impact)
+
+- (none yet)
