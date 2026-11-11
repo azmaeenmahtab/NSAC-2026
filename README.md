@@ -1,7 +1,7 @@
 # PyroScope: Burning Activity Calendar
 
 > **NASA Space Apps Challenge 2026** — *Harmonization of MODIS and VIIRS Hot Spots*  
-> **Team:** Singularity
+> **Team:** Perceptron
 
 PyroScope harmonizes NASA MODIS (1 km, 2000–present) and VIIRS (375 m, 2012–present) active-fire records into a consistent 2000–present **Burning Activity Calendar** (FireCalendar) for early warning, land managers, and emergency response.
 

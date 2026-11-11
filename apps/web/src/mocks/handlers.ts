@@ -24,7 +24,7 @@ export const handlers = [
         ],
         counts: { events_created: 302 },
         attribution:
-          "NASA FIRMS active fire data; Team Singularity; CARTO / OpenStreetMap basemaps; geoBoundaries CC-BY 3.0 IGO.",
+          "NASA FIRMS active fire data; Team Perceptron; CARTO / OpenStreetMap basemaps; geoBoundaries CC-BY 3.0 IGO.",
       },
       meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
     });

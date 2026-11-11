@@ -9,7 +9,7 @@ Everything the platform asks for, complete, consistent with the app, and submitt
 - **README.md**: what PyroScope is, the problem, screenshots, architecture and pipeline diagrams, how to run (`make setup`, `make pipeline`, `make dev-api`, `make dev-web`, `docker compose up`), data lineage and parameters, the live demo link, data sources and required attributions (NASA FIRMS acknowledgement, basemap, boundary data), licenses, limitations, team roles, the AI-tools disclosure exactly as the rules require.
 - **Project summary text** within the platform's limits, with the real measured results only (the real jump metrics and CV numbers from `docs/DATA_FINDINGS.md`).
 - **Links**: public GitHub repository (license file included), live demo URL, demo video (if required), slides.
-- **Pitch deck**: update the existing deck with real screenshots and measured numbers; remove any claim not confirmed by the data (the report's 3,029 vs 10,972 and "3 to 7 times" unless verified); fix the team name to Singularity everywhere; keep the pitch length required by the local event (the earlier plan used 240 seconds).
+- **Pitch deck**: update the existing deck with real screenshots and measured numbers; remove any claim not confirmed by the data (the report's 3,029 vs 10,972 and "3 to 7 times" unless verified); fix the team name to Perceptron everywhere; keep the pitch length required by the local event (the earlier plan used 240 seconds).
 - **Demo video** (only if required or useful as a backup): 3 to 4 minutes screen recording following the story in PRODUCT_BRIEF.md section 4; label replay mode if used.
 - **Submission form text** drafted in `docs/SUBMISSION_DRAFT.md` and reviewed by the whole team.
 

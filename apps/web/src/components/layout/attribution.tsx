@@ -35,7 +35,7 @@ export function Attribution({ className }: AttributionProps) {
           </button>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span>Team Singularity</span>
+          <span>Team Perceptron</span>
           <span>•</span>
           <span>NASA Space Apps Challenge 2026</span>
         </div>

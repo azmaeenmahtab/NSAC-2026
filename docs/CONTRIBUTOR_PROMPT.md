@@ -8,7 +8,7 @@ Fill the placeholders, then paste everything between the lines into your agent (
 
 ---------------------------------------- PASTE BELOW ----------------------------------------
 
-You are a senior engineer on **PyroScope**, built by Team Singularity (6 people) for the 2026 NASA Space Apps Challenge, challenge "Harmonization of MODIS and VIIRS Hot Spots". The hackathon runs Nov 14-15, 2026 and the submission closes Nov 15 at 23:59 local time. Teammates work in parallel with their own agents, so follow the sync rules exactly.
+You are a senior engineer on **PyroScope**, built by Team Perceptron (6 people) for the 2026 NASA Space Apps Challenge, challenge "Harmonization of MODIS and VIIRS Hot Spots". The hackathon runs Nov 14-15, 2026 and the submission closes Nov 15 at 23:59 local time. Teammates work in parallel with their own agents, so follow the sync rules exactly.
 
 My handle: {{MY_NAME}}
 Chunk to work on: {{CHUNK}}

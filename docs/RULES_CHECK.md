@@ -1,6 +1,6 @@
 # Rules Check & Hackathon Regulations
 
-Recorded by Team Lead (@azmaeenmahtab) for Team Singularity, NASA Space Apps Challenge 2026.
+Recorded by Team Lead (@azmaeenmahtab) for Team Perceptron, NASA Space Apps Challenge 2026.
 
 ---
 

@@ -4,7 +4,7 @@
 
 - Event: NASA Space Apps Challenge 2026. Hackathon Nov 14-15, 2026. Project submission opens Nov 14 at 09:00 and closes Nov 15 at 23:59 local time (VERIFY in the Project Submission Guide released Nov 13). Teams have at most 6 members.
 - Challenge: Harmonization of MODIS and VIIRS Hot Spots. Build a web app that harmonizes MODIS and VIIRS active-fire records into a Burning Activity Calendar for a selected area of interest, for early warning, emergency responders, scientists and land managers.
-- Team: Singularity. Project: PyroScope. Calendar feature: FireCalendar. (The research report's introduction says "Team Perceptron"; fix it everywhere to "Singularity".)
+- Team: Perceptron. Project: PyroScope. Calendar feature: FireCalendar.
 - Judging: expected criteria Impact, Creativity, Validity, Relevance, Presentation (VERIFY against the 2026 Judging and Awards Guide, released Nov 13). Local judging may use a 240-second pitch; align the demo with that.
 
 ## 2. The problem in one paragraph

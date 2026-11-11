@@ -50,3 +50,4 @@ def above_normal(month_to_date_class: str | None) -> bool:
     if not month_to_date_class:
         return False
     return month_to_date_class.strip().lower() in ("elevated", "extreme")
+
