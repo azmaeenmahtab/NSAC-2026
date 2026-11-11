@@ -31,7 +31,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [x] | S00 | Repo bootstrap (monorepo, Python and web tooling, CI) | P0 | EVENT | P00 | 2 | plan/shared/S00-bootstrap.md | @azmaeenmahtab |
 | [x] | S01 | Contract first: OpenAPI, examples, deterministic fixtures, mocks | P0 | EVENT | S00 | 3 | plan/shared/S01-contracts-fixtures.md | @azmaeenmahtab |
-| [ ] | S02 | Deployment and data shipping | P0 | EVENT | A01, F01 | 3 | plan/shared/S02-deploy.md | |
+| [~] | S02 | Deployment and data shipping | P0 | EVENT | A01, F01 | 3 | plan/shared/S02-deploy.md | @Aragon |
 
 ## Data lane (pipeline/)
 
