@@ -20,7 +20,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
 | [x] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | @azmaeenmahtab |
-| [~] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
+| [x] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
 | [ ] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | |
 | [ ] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | |
 | [ ] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | |
@@ -105,4 +105,5 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 ## Deviation Log (append only: date, chunk, what, why, impact)
 
-- (none yet)
+- 2026-11-11, P02: Replaced research report draft estimates (3,029 vs 10,972 annual fires; "3 to 7 times") with empirical figures from raw FIRMS data (MODIS raw ~9,645, VIIRS raw ~39,193; raw ratio 4.10x, filtered ratio 3.77x; ST-DBSCAN physical fire events ~560 vs ~860, ratio 1.5x; overlap window 2012-02 to 2026-10). Impact: ensures scientific accuracy in pitch, methodology page, and algorithm parameters.
+- 2026-11-11, P02: Confirmed that NRT CSVs lack the `type` column present in archive CSVs. Impact: pipeline ingest must treat missing `type` as NaN rather than failing or dropping rows.

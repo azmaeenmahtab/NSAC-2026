@@ -40,19 +40,19 @@ Area of interest for the build: **Bangladesh** (country), with districts and a *
 6. A warning for an area whose season is about to start; guidance checklist. (P1)
 7. Methodology page: validation numbers, limitations. (F08)
 
-Only show numbers that the pipeline actually produced. Do not quote the research report's figures (for example 3,029 vs 10,972 annual fires for Bangladesh, "3 to 7 times", "86% smaller pixel") until `docs/DATA_FINDINGS.md` (chunk P02) confirms or replaces them.
+Real numbers verified from data (chunk P02, `docs/DATA_FINDINGS.md`): in the 2012–2025 overlap, Bangladesh averaged 9,645 raw MODIS and 39,193 raw VIIRS detections/year (raw ratio 4.10x, filtered ratio 3.77x, not the report's 3,029 vs 10,972 or "3 to 7 times"). After ST-DBSCAN clustering, physical fire events average ~560 (MODIS) vs ~860 (VIIRS) per year (ratio only ~1.5x). Over 97% of burning in the Chittagong Hill Tracts (which accounts for ~40-45% of all national detections) occurs in March–May.
 
 ## 5. Method summary and parameters (defaults; all live in `pipeline/config.yaml`)
 
 | Step | Rule | Default |
 | --- | --- | --- |
-| Sources | FIRMS Standard Processing archives: MODIS (Terra+Aqua, MCD14DL C6.1) and VIIRS S-NPP (VNP14IMGTDL). NOAA-20/21 only for NRT/sensitivity | VERIFY dataset names in FIRMS |
-| Confidence filter | MODIS numeric confidence >= 30 (nominal and high); VIIRS `n` and `h` (drop `l`). MODIS `type` = 0 when the column exists | VERIFY thresholds in the FIRMS FAQ; the research report's ">80%" would drop all VIIRS nominal pixels and is not used |
-| Clustering | ST-DBSCAN per sensor family: spatial eps 2,700 m (haversine), temporal eps 24 h, min points 2 (counts the point itself) | event = cluster; noise points (label -1) are dropped, count them in the manifest |
+| Sources | FIRMS Standard Processing archives: MODIS (Terra+Aqua, MCD14DL C6.1) and VIIRS S-NPP (VNP14IMGTDL). Tail filled with NRT products | Verified in P01/P02 |
+| Confidence filter | MODIS numeric confidence >= 30 (drops 3.6% low); VIIRS `n` and `h` (drops 8.8% low). `type` = 0 when column exists (archive has `type`, NRT lacks `type`, drops 0.5% MODIS and 3.2% VIIRS industrial/offshore) | Verified in P02; report's ">80%" drops 65% of MODIS and breaks on VIIRS strings |
+| Clustering | ST-DBSCAN per sensor family: spatial eps 2,700 m (haversine), temporal eps 24 h, min points 2 (counts the point itself) | event = cluster; noise points (label -1, ~5.7% MODIS, ~2.7% VIIRS) dropped, counted in manifest |
 | Event time | start timestamp UTC; month = UTC calendar month of the start | D-05 |
 | H3 | resolutions 5, 6, 7 stored; map uses 7 at high zoom | |
 | Calibration unit | district (ADM2) if mean monthly MODIS events in the overlap >= 3, otherwise parent division (ADM1) | min_mean_monthly_modis = 3 |
-| Overlap | months where both MODIS and VIIRS S-NPP have complete data (about 2012-02 to the latest full month) | |
+| Overlap | months where both MODIS and VIIRS S-NPP have complete data: **2012-02 through 2026-10** (177 complete calendar months) | Verified in P02 (VIIRS S-NPP started 2012-01-20) |
 | Harmonization | equal-n quantile mapping per calibration unit and pooled calendar-month group (month-1, month, month+1) vs a ratio baseline; chosen per unit by leave-one-year-out CV RMSE | |
 | Harmonized record | MODIS-equivalent: months before the overlap use raw MODIS, months in and after the overlap use calibrated VIIRS | |
 | Cell-level values | proportional downscaling: cell harmonized = cell raw VIIRS x (unit harmonized / unit raw VIIRS); sum over cells equals the unit total | |

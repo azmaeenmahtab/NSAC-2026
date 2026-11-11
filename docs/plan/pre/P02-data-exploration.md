@@ -16,8 +16,8 @@ Know the real numbers before we build and pitch: verify or correct every claim i
 8. A rough estimate of events per year after a quick DBSCAN at the default parameters, to size the pipeline runtime.
 
 ## Tasks
-- [ ] Exploration script or notebook runs end to end on the raw files (outputs not committed)
-- [ ] `docs/DATA_FINDINGS.md` written with the tables above
-- [ ] PRODUCT_BRIEF.md section 4 and 5 updated where the findings differ; list changes in the Deviation Log
-- [ ] Decision recorded: whether the NOAA-20 sensitivity check (P2) is worth planning
-- [ ] Master plan row P02 set to `[x]`
+- [x] Exploration script or notebook runs end to end on the raw files (outputs not committed)
+- [x] `docs/DATA_FINDINGS.md` written with the tables above
+- [x] PRODUCT_BRIEF.md section 4 and 5 updated where the findings differ; list changes in the Deviation Log
+- [x] Decision recorded: whether the NOAA-20 sensitivity check (P2) is worth planning
+- [x] Master plan row P02 set to `[x]`
