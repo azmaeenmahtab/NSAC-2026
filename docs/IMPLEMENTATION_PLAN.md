@@ -40,7 +40,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [x] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | @azmaeenmahtab |
 | [x] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | @adityasaha03 |
 | [x] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | @adityasaha03 |
-| [~] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | @anamraiyan |
+| [x] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | @anamraiyan |
 | [x] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | @Aragon |
 | [ ] | D06 | Run harmonization, downscale to cells, validation report | P0 | EVENT | D04, D05 | 4 | plan/data/D06-harmonize-run.md | |
 | [ ] | D07 | Climatology, anomalies, seasons, yearly stats | P0 | EVENT | D06 | 3 | plan/data/D07-calendar-stats.md | |
@@ -112,3 +112,4 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 - 2026-11-11, A01/A02: Correction by @Aragon. Rows set back to `[~]` because two boxes had been ticked without verification: A01 "Dockerfile stub builds" (Docker not installed locally, never built) and A02 "Timing measured on real data" (no real processed data exists yet; the earlier "sub-15 ms" figure was not measured). Also updated `contracts/openapi.yaml` and `docs/API_REFERENCE.md`, which had not been changed when `/api/health` gained `dataLoaded`/`dataVersion` and `/api/heatmap` gained `res`/`metric`/`from`/`to`. Code on main is unchanged and its tests pass. Impact: none of the features are blocked; the rows can return to `[x]` after a Docker build check and a real-data timing run.
 - 2026-11-11, A03: Implemented calendar, yearly stats, anomalies, and methodology for named regions and presets using fixtures; custom-bbox on-the-fly statistics deferred per user decision 1.(a) until D07 stats engine lands. Kept row as [~] per decision 2 so we return to finish custom bbox once D07 is merged.
+- 2026-11-11, D04: Verified and confirmed VIIRS S-NPP first complete calendar month is 2012-02 (earliest detection 2012-01-20), and latest complete month is 2026-10 (November 2026 is partial, handled by D08). MODIS coverage spans 2000-11 through 2026-10 (312 months), VIIRS spans 2012-02 through 2026-10 (177 months). Generated 31,296 dense district-months across all 64 districts and 27,494 sparse cell-months with 100% invariant consistency. Impact: establishes dense baseline tables for D06 quantile-mapping harmonization.

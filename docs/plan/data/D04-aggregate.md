@@ -15,11 +15,11 @@ Aggregate events to monthly counts per H3 cell and per district, dense and consi
 - Output to `data/interim/`.
 
 ## Tests
-- [ ] 10-event fixture: expected cell counts and district counts computed by hand and asserted; zero-filled district-months present; sparse cells absent
-- [ ] Coverage test: MODIS rows start at 2000-11, VIIRS rows do not appear before the configured start
-- [ ] Invariant tests on the fixture and on the real data (run in CI only on the fixture)
+- [x] 10-event fixture: expected cell counts and district counts computed by hand and asserted; zero-filled district-months present; sparse cells absent
+- [x] Coverage test: MODIS rows start at 2000-11, VIIRS rows do not appear before the configured start
+- [x] Invariant tests on the fixture and on the real data (run in CI only on the fixture)
 
 ## Tasks
-- [ ] Aggregations and coverage implemented
-- [ ] Stage runs on real events; invariants pass; row counts logged
-- [ ] Master plan row D04 set to `[x]`
+- [x] Aggregations and coverage implemented
+- [x] Stage runs on real events; invariants pass; row counts logged
+- [x] Master plan row D04 set to `[x]`
