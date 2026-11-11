@@ -16,11 +16,11 @@ Choose an area of interest (country, division, district, CHT preset, or a drawn 
 - Other features read the state only through `features/areas` exports.
 
 ## Tests
-- [ ] URL round trip: state -> URL -> state is identity for valid values (include `bbox:88.1,21.5,92.6,26.4`)
-- [ ] Invalid `area` or reversed dates are corrected to defaults
-- [ ] `bbox.ts`: west >= east or out-of-range latitudes rejected; area size helper
+- [x] URL round trip: state -> URL -> state is identity for valid values (include `bbox:88.1,21.5,92.6,26.4`)
+- [x] Invalid `area` or reversed dates are corrected to defaults
+- [x] `bbox.ts`: west >= east or out-of-range latitudes rejected; area size helper
 
 ## Tasks
-- [ ] Selector, draw tool, breadcrumb, URL state hook
-- [ ] Map fits to the selected area (coordinate with F02 through the shared state, not by importing internals)
-- [ ] Master plan row F03 set to `[x]`
+- [x] Selector, draw tool, breadcrumb, URL state hook
+- [x] Map fits to the selected area (coordinate with F02 through the shared state, not by importing internals)
+- [x] Master plan row F03 set to `[x]`
