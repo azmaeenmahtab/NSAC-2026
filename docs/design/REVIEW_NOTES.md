@@ -56,3 +56,4 @@ The design directly maps to the pitch story articulated in [`PRODUCT_BRIEF.md`](
 - **Component Interface**: Defined in `docs/design/components.md`.
 - **Wireframes**: 6 vector SVG wireframes delivered in `docs/design/wireframes/` and documented in `docs/design/wireframes.md`.
 - **Result**: Frontend lanes have full visual, architectural, and textual specifications to build against without ambiguity.
+

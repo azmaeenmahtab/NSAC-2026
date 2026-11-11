@@ -205,3 +205,4 @@ Renders expandable inspector cards detailing the exact tool calls made by the as
 | `HiddenJumpChart` | Lane 4 | `apps/web/src/features/series/components/hidden-jump-chart.tsx`| SVG accessible titles, data table fallback |
 | `AskPanel` | Lane 5 | `apps/web/src/features/ask/components/ask-panel.tsx` | `aria-live="polite"` for streaming assistant tokens |
 | `ToolCallTimeline`| Lane 5 | `apps/web/src/features/ask/components/tool-timeline.tsx` | Accordion disclosure pattern, screen-reader details |
+

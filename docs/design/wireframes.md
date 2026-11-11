@@ -153,3 +153,4 @@ Vector SVG wireframes for all 6 screens are rendered in [`docs/design/wireframes
 | **Desktop / Pitch Display** | $\ge 1280\text{ px}$ | Split 65% Map / 35% Panel | Side panel permanently docked |
 | **Tablet / Small Laptop** | $768\text{ px} - 1279\text{ px}$| Split 55% Map / 45% Panel | Collapsible side panel toggle |
 | **Mobile Handheld** | $< 768\text{ px}$ | Single Column / Map Centric | Bottom sheet drawer (Swipe up to expand) |
+

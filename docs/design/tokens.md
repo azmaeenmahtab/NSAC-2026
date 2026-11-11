@@ -169,3 +169,4 @@ Add or verify in `apps/web/src/app/globals.css`:
   --color-sensor-harmonized: #FF6B00; /* PyroScope Harmonized series */
 }
 ```
+

@@ -109,3 +109,4 @@ Every page footer, data export dialog, and methodology header **must** include:
 ### 5.3 Advisory & Operational Safety Disclaimer (Non-Negotiable)
 Featured prominently in the footer, modal dialogs, and alert subscription forms:
 > *"NOTICE: PyroScope is an open scientific research and decision-support platform designed for retrospective analysis, pattern discovery, and early season awareness. It is NOT an operational tactical fire dispatch system or emergency evacuation service. In the event of an active wildfire threat, immediately contact the Bangladesh Fire Service and Civil Defence (emergency: 999 or 102) and the Ministry of Environment, Forest and Climate Change."*
+
