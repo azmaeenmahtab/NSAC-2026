@@ -44,7 +44,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [x] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | @Aragon |
 | [x] | D06 | Run harmonization, downscale to cells, validation report | P0 | EVENT | D04, D05 | 4 | plan/data/D06-harmonize-run.md | @anamraiyan |
 | [x] | D07 | Climatology, anomalies, seasons, yearly stats | P0 | EVENT | D06 | 3 | plan/data/D07-calendar-stats.md | @Rohan |
-| [ ] | D08 | NRT incremental update and provisional flags | P1 | EVENT | D03, D07 | 4 | plan/data/D08-nrt-update.md | |
+| [~] | D08 | NRT incremental update and provisional flags | P1 | EVENT | D03, D07 | 4 | plan/data/D08-nrt-update.md | @Rohan |
 
 ## API lane (services/api/)
 
