@@ -16,13 +16,13 @@ Each with `router.py`, `service.py`, `repository.py`, `schemas.py`, `tests/`.
 - Provisional months are flagged and excluded from the baselines (already true in the data; just pass flags through).
 
 ## Tests
-- [ ] Fixture calendar for alpha: season start 4, peak 5, end 6, share 0.7059; the 2020-05 cell is `extreme`
-- [ ] Yearly ranks and `vs_mean_pct` match the fixture values
-- [ ] On-the-fly bbox covering all fixture cells reproduces the country calendar exactly
-- [ ] Methodology payload contains every required key; limitations list is non-empty and unchanged from the brief
-- [ ] Validation, 404 and size-limit tests
+- [x] Fixture calendar for alpha: season start 4, peak 5, end 6, share 0.7059; the 2020-05 cell is `extreme`
+- [x] Yearly ranks and `vs_mean_pct` match the fixture values
+- [ ] On-the-fly bbox covering all fixture cells reproduces the country calendar exactly (deferred per user decision 1.(a) until D07 stats engine)
+- [x] Methodology payload contains every required key; limitations list is non-empty and unchanged from the brief
+- [x] Validation, 404 and size-limit tests
 
 ## Tasks
-- [ ] Three features implemented with tests
-- [ ] OpenAPI and examples updated
-- [ ] Master plan row A03 set to `[x]`
+- [x] Three features implemented with tests (calendar, stats/anomalies, methodology)
+- [x] OpenAPI and examples updated
+- [ ] Master plan row A03 set to `[x]` (kept as `[~]` per decision 2 until bbox on-the-fly and D06/D07 land)
