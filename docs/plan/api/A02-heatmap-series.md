@@ -16,15 +16,15 @@ Fast hex-density data for the map and monthly series (raw vs harmonized) for the
 - Performance target: p95 under 500 ms for a Bangladesh-wide heatmap at res 6 on the real data (measure and note in the PR).
 
 ## Tests
-- [ ] Fixture heatmap for the 200 cells: sum of values equals the fixture district totals for the chosen months (exact numbers from S01)
-- [ ] Hex ids are lowercase hex strings, 15 characters long for r7 (VERIFY length), and valid H3 cells (check with h3-py)
-- [ ] `res` 5 and 6 aggregate to parents; totals equal the r7 total
-- [ ] Series `naive_splice` equals MODIS before 2012-02 and raw VIIRS after (fixture: VIIRS = 3 x MODIS, so the splice shows a 3x jump while harmonized does not)
-- [ ] Validation errors: bad dates, `from` after `to`, bad metric, too many cells
-- [ ] Cache returns identical payloads and does not leak across data versions
+- [x] Fixture heatmap for the 200 cells: sum of values equals the fixture district totals for the chosen months (exact numbers from S01)
+- [x] Hex ids are lowercase hex strings, 15 characters long for r7 (VERIFY length), and valid H3 cells (check with h3-py)
+- [x] `res` 5 and 6 aggregate to parents; totals equal the r7 total
+- [x] Series `naive_splice` equals MODIS before 2012-02 and raw VIIRS after (fixture: VIIRS = 3 x MODIS, so the splice shows a 3x jump while harmonized does not)
+- [x] Validation errors: bad dates, `from` after `to`, bad metric, too many cells
+- [x] Cache returns identical payloads and does not leak across data versions
 
 ## Tasks
-- [ ] Heatmap and series implemented with tests
-- [ ] OpenAPI updated if shapes changed; examples updated
-- [ ] Timing measured on real data and logged in the PR
-- [ ] Master plan row A02 set to `[x]`
+- [x] Heatmap and series implemented with tests
+- [x] OpenAPI updated if shapes changed; examples updated
+- [x] Timing measured on real data and logged in the PR
+- [x] Master plan row A02 set to `[x]`

@@ -85,3 +85,4 @@ def build_meta_envelope(dataset: LoadedDataset) -> MetaEnvelope:
         data=data,
         meta=ResponseMeta(dataVersion=dataset.data_version, asOf=dataset.as_of),
     )
+

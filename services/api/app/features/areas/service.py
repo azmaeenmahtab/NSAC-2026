@@ -169,3 +169,4 @@ def resolve_area(
         region_ids=region_ids,
         bbox=bbox_tuple,
     )
+

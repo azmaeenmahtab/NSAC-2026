@@ -103,3 +103,4 @@ def fetch_child_region_ids(
         [parent_id],
     ).fetchall()
     return [str(r[0]) for r in rows]
+

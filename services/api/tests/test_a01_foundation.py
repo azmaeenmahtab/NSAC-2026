@@ -214,3 +214,4 @@ def test_openapi_contract_matches_implemented_paths(client: TestClient) -> None:
         gen_get = generated_paths[route_path]["get"]
         assert gen_get["operationId"] == contract_get["operationId"]
         assert "200" in gen_get["responses"]
+

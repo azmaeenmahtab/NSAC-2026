@@ -40,3 +40,4 @@ class ResolvedArea:
     name: str
     region_ids: tuple[str, ...]
     bbox: tuple[float, float, float, float]
+

@@ -26,3 +26,4 @@ def get_db_cursor(request: Request) -> Generator[duckdb.DuckDBPyConnection, None
         yield cursor
     finally:
         cursor.close()
+

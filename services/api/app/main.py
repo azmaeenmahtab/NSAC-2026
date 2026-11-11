@@ -27,7 +27,9 @@ from app.core.ratelimit import (
     rate_limit_exception_handler,
 )
 from app.features.areas import router as areas_router
+from app.features.heatmap import router as heatmap_router
 from app.features.meta import router as meta_router
+from app.features.series import router as series_router
 
 logger = setup_api_logger()
 
@@ -93,6 +95,8 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
     # --- Feature routers (one line per feature chunk) ---
     app_instance.include_router(meta_router)
     app_instance.include_router(areas_router)
+    app_instance.include_router(heatmap_router)
+    app_instance.include_router(series_router)
 
     return app_instance
 

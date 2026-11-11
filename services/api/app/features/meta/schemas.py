@@ -36,3 +36,4 @@ class MetaEnvelope(BaseModel):
 
     data: MetaData
     meta: ResponseMeta
+

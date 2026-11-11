@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import Any
 
 import duckdb
+import h3
+import pyarrow as pa
 
 REQUIRED_PARQUET_TABLES: dict[str, str] = {
     "regions": "regions.parquet",
@@ -56,6 +58,43 @@ def _validate_view_name(name: str) -> str:
     if not _VALID_IDENTIFIER_RE.match(name):
         raise ValueError(f"Unsafe SQL view identifier: {name!r}")
     return name
+
+
+def _register_cell_centroids(
+    con: duckdb.DuckDBPyConnection,
+    registered: list[str],
+) -> None:
+    """Precompute `(h3_r7, lat, lon)` lookup table in DuckDB for fast bbox queries."""
+    sources = ["SELECT DISTINCT h3_r7 FROM harmonized_cell"]
+    if "monthly_cell" in registered:
+        sources.append("SELECT DISTINCT h3_r7 FROM monthly_cell")
+
+    union_sql = " UNION ".join(sources)
+    rows = con.execute(union_sql).fetchall()
+
+    if rows:
+        cell_ids: list[int] = []
+        lats: list[float] = []
+        lons: list[float] = []
+        for (cell_int,) in rows:
+            u64 = int(cell_int)
+            lat, lon = h3.cell_to_latlng(format(u64, "x"))
+            cell_ids.append(u64)
+            lats.append(float(lat))
+            lons.append(float(lon))
+        arrow_tbl = pa.table(
+            {
+                "h3_r7": pa.array(cell_ids, type=pa.uint64()),
+                "lat": pa.array(lats, type=pa.float64()),
+                "lon": pa.array(lons, type=pa.float64()),
+            }
+        )
+        con.register("_tmp_centroids", arrow_tbl)
+        con.execute("CREATE TABLE cell_centroids AS SELECT * FROM _tmp_centroids")
+        con.unregister("_tmp_centroids")
+    else:
+        con.execute("CREATE TABLE cell_centroids (h3_r7 UBIGINT, lat DOUBLE, lon DOUBLE)")
+    registered.append("cell_centroids")
 
 
 def load_dataset(
@@ -120,6 +159,8 @@ def load_dataset(
             f"CREATE OR REPLACE VIEW {safe_view} AS SELECT * FROM read_parquet('{posix_path}')"
         )
         registered.append(safe_view)
+
+    _register_cell_centroids(con, registered)
 
     return LoadedDataset(
         data_dir=base_dir,
