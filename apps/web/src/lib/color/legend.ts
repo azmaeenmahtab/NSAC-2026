@@ -7,6 +7,7 @@ export interface AnomalyConfig {
   textColor: string;
   bgTint: string;
   borderColor: string;
+  hex: string;
 }
 
 export const ANOMALY_CONFIGS: Record<string, AnomalyConfig> = {
@@ -16,6 +17,7 @@ export const ANOMALY_CONFIGS: Record<string, AnomalyConfig> = {
     textColor: "text-[#94a3b8]",
     bgTint: "bg-[#161f30]/40",
     borderColor: "border-[#1f293d]",
+    hex: "#94a3b8",
   },
   elevated: {
     label: "Elevated",
@@ -23,6 +25,7 @@ export const ANOMALY_CONFIGS: Record<string, AnomalyConfig> = {
     textColor: "text-[#f59e0b]",
     bgTint: "bg-[#f59e0b]/10",
     borderColor: "border-[#f59e0b]/40",
+    hex: "#f59e0b",
   },
   extreme: {
     label: "Extreme",
@@ -30,6 +33,7 @@ export const ANOMALY_CONFIGS: Record<string, AnomalyConfig> = {
     textColor: "text-[#ef4444]",
     bgTint: "bg-[#ef4444]/15",
     borderColor: "border-[#ef4444]/50",
+    hex: "#ef4444",
   },
 };
 
@@ -47,7 +51,9 @@ export const INFERNO_LEGEND_STEPS: LegendStep[] = Array.from(
   (_, index) => {
     const t = index / (STEP_COUNT - 1);
     const c = rgb(interpolateInferno(t));
-    const hex = c.formatHex ? c.formatHex() : `#${Math.round(c.r).toString(16).padStart(2, "0")}${Math.round(c.g).toString(16).padStart(2, "0")}${Math.round(c.b).toString(16).padStart(2, "0")}`;
+    const hex = c.formatHex
+      ? c.formatHex()
+      : `#${Math.round(c.r).toString(16).padStart(2, "0")}${Math.round(c.g).toString(16).padStart(2, "0")}${Math.round(c.b).toString(16).padStart(2, "0")}`;
     const pct = Math.round(t * 100);
     return {
       index,
@@ -58,4 +64,3 @@ export const INFERNO_LEGEND_STEPS: LegendStep[] = Array.from(
     };
   }
 );
-

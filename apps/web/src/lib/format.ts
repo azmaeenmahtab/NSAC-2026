@@ -53,6 +53,15 @@ export function formatNumber(
   });
 }
 
+export function formatYearMonth(
+  year: number | string,
+  month: number | string
+): string {
+  const m = typeof month === "string" ? parseInt(month, 10) : month;
+  const name = formatMonthFull(m);
+  return `${name} ${year}`;
+}
+
 export function formatPercentile(rank: number | null | undefined): string {
   if (rank === null || rank === undefined || isNaN(rank)) {
     return "—";
@@ -67,7 +76,7 @@ export function formatPercentile(rank: number | null | undefined): string {
   else if (remainder10 === 2 && remainder100 !== 12) suffix = "nd";
   else if (remainder10 === 3 && remainder100 !== 13) suffix = "rd";
 
-  return `${rounded}${suffix} %ile`;
+  return `${rounded}${suffix}`;
 }
 
 export function formatFrp(frp: number | null | undefined): string {

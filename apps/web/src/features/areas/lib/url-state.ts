@@ -1,4 +1,5 @@
 import type { ViewState, MetricType } from "../types";
+import { parseBBox, isValidBBox } from "./bbox";
 
 export const DEFAULT_VIEW_STATE: ViewState = {
   area: "PRESET-CHT",
@@ -14,6 +15,10 @@ const VALID_METRICS: Set<MetricType> = new Set([
   "raw_viirs",
 ]);
 
+const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])$/;
+const CELL_REGEX = /^[0-9a-fA-F]{15}$/;
+const SLUG_REGEX = /^[a-zA-Z0-9_-]+$/;
+
 interface SearchParamsReader {
   get(name: string): string | null;
 }
@@ -23,15 +28,34 @@ export function parseViewState(
 ): ViewState {
   if (!searchParams) return { ...DEFAULT_VIEW_STATE };
 
-  const area = searchParams.get("area") || DEFAULT_VIEW_STATE.area;
-  const from = searchParams.get("from") || DEFAULT_VIEW_STATE.from;
-  const to = searchParams.get("to") || DEFAULT_VIEW_STATE.to;
+  let area = searchParams.get("area") || DEFAULT_VIEW_STATE.area;
+  if (area.startsWith("bbox:")) {
+    const bbox = parseBBox(area);
+    if (!bbox || !isValidBBox(bbox)) {
+      area = DEFAULT_VIEW_STATE.area;
+    }
+  } else if (!SLUG_REGEX.test(area)) {
+    area = DEFAULT_VIEW_STATE.area;
+  }
+
+  let from = searchParams.get("from") || DEFAULT_VIEW_STATE.from;
+  let to = searchParams.get("to") || DEFAULT_VIEW_STATE.to;
+
+  if (!DATE_REGEX.test(from) || !DATE_REGEX.test(to)) {
+    from = DEFAULT_VIEW_STATE.from;
+    to = DEFAULT_VIEW_STATE.to;
+  } else if (from > to) {
+    const tmp = from;
+    from = to;
+    to = tmp;
+  }
 
   const rawMetric = searchParams.get("metric") as MetricType;
   const metric: MetricType =
     rawMetric && VALID_METRICS.has(rawMetric) ? rawMetric : DEFAULT_VIEW_STATE.metric;
 
-  const cell = searchParams.get("cell") || null;
+  const rawCell = searchParams.get("cell");
+  const cell = rawCell && CELL_REGEX.test(rawCell) ? rawCell.toLowerCase() : null;
 
   return {
     area,
@@ -53,4 +77,3 @@ export function serializeViewState(state: ViewState): URLSearchParams {
 
   return params;
 }
-

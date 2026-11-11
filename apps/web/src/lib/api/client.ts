@@ -52,7 +52,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
       errorData = { message: res.statusText || `Request failed with status ${res.status}` };
     }
 
-    const retryAfterHeader = res.headers.get("Retry-After");
+    const retryAfterHeader = res.headers?.get ? res.headers.get("Retry-After") : null;
     if (retryAfterHeader) {
       const seconds = parseInt(retryAfterHeader, 10);
       if (!isNaN(seconds)) {
@@ -72,16 +72,32 @@ export async function apiGet<T>(
   options?: RequestInit
 ): Promise<T> {
   const url = buildUrl(endpoint, params);
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-      ...(options?.headers || {}),
-    },
-    ...options,
-  });
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        ...(options?.headers || {}),
+      },
+      ...options,
+    });
+    return await handleResponse<T>(res);
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    throw new ApiError(502, {
+      code: "UPSTREAM_ERROR",
+      message: err instanceof Error ? err.message : "Failed to fetch from API",
+    });
+  }
+}
 
-  return handleResponse<T>(res);
+export async function apiGetData<T>(
+  endpoint: string,
+  params?: Record<string, unknown>,
+  options?: RequestInit
+): Promise<T> {
+  const envelope = await apiGet<ApiResponse<T>>(endpoint, params, options);
+  return envelope.data;
 }
 
 export async function apiPost<T>(
@@ -90,17 +106,32 @@ export async function apiPost<T>(
   options?: RequestInit
 ): Promise<T> {
   const url = buildUrl(endpoint);
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...(options?.headers || {}),
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-    ...options,
-  });
-
-  return handleResponse<T>(res);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        ...(options?.headers || {}),
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+      ...options,
+    });
+    return await handleResponse<T>(res);
+  } catch (err) {
+    if (err instanceof ApiError) throw err;
+    throw new ApiError(502, {
+      code: "UPSTREAM_ERROR",
+      message: err instanceof Error ? err.message : "Failed to fetch from API",
+    });
+  }
 }
 
+export async function apiPostData<T>(
+  endpoint: string,
+  body?: unknown,
+  options?: RequestInit
+): Promise<T> {
+  const envelope = await apiPost<ApiResponse<T>>(endpoint, body, options);
+  return envelope.data;
+}
