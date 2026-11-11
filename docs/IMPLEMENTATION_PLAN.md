@@ -39,7 +39,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [x] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | @azmaeenmahtab |
 | [x] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | @adityasaha03 |
-| [ ] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | |
+| [~] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | @adityasaha03 |
 | [ ] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | |
 | [x] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | @Aragon |
 | [ ] | D06 | Run harmonization, downscale to cells, validation report | P0 | EVENT | D04, D05 | 4 | plan/data/D06-harmonize-run.md | |
