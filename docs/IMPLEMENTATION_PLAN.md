@@ -55,7 +55,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [~] | A03 | Calendar, yearly stats, anomalies, methodology | P0 | EVENT | A01 | 4 | plan/api/A03-calendar-stats.md | @Aragon |
 | [ ] | A04 | Alert subscriptions and evaluation | P1 | EVENT | A03, D08 | 4 | plan/api/A04-alerts.md | |
 | [x] | A05 | Ask PyroScope agent (typed tools, replay mode) | P0 | EVENT | A03 | 5 | plan/api/A05-ask-agent.md | @adityasaha03 |
-| [ ] | A06 | Guidance and Wildland Action Planner | P1 | EVENT | A03 | 3 | plan/api/A06-guidance.md | |
+| [~] | A06 | Guidance and Wildland Action Planner | P1 | EVENT | A03 | 3 | plan/api/A06-guidance.md | @adityasaha03 |
 
 ## Web lane (apps/web/)
 
