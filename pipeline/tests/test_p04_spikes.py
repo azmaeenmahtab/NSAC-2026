@@ -108,7 +108,10 @@ def test_spike_c_replay_and_mocked_live_tool_calling() -> None:
     assert len(live["toolCalls"]) == 1
 
     # Verify hallucinated number fails grounding check
-    assert spike_c.verify_grounding("There were 999 fires in 2025.", [{"year": 2025, "count": 384}]) is False
+    assert (
+        spike_c.verify_grounding("There were 999 fires in 2025.", [{"year": 2025, "count": 384}])
+        is False
+    )
 
 
 def test_spike_results_doc_exists() -> None:
@@ -119,4 +122,3 @@ def test_spike_results_doc_exists() -> None:
     assert "Spike B" in content
     assert "Spike C" in content
     assert "gemini-3.8-flash" in content
-

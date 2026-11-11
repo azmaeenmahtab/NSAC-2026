@@ -23,7 +23,9 @@ paths:
                   status: { type: string, example: "healthy" }
                   service: { type: string, example: "PyroScope API" }
                   version: { type: string, example: "0.1.0" }
-                required: [status, service, version]
+                  dataLoaded: { type: boolean, example: true }
+                  dataVersion: { type: string, example: "v0.1.0-fixtures" }
+                required: [status, service, version, dataLoaded, dataVersion]
 
   /meta:
     get:
@@ -437,9 +439,13 @@ components:
         data:
           type: object
           properties:
+            res: { type: integer, enum: [5, 6, 7], example: 7 }
+            metric: { type: string, enum: [harmonized, raw_modis, raw_viirs] }
+            from: { type: string, example: "2020-01" }
+            to: { type: string, example: "2020-12" }
             cells: { type: array, items: { $ref: '#/components/schemas/HeatmapCell' } }
             stats: { $ref: '#/components/schemas/HeatmapStats' }
-          required: [cells, stats]
+          required: [res, metric, from, to, cells, stats]
         meta: { $ref: '#/components/schemas/ResponseMeta' }
       required: [data, meta]
 

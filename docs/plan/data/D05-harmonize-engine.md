@@ -25,7 +25,7 @@ Pure, tested functions that fit a VIIRS-to-MODIS transfer function by quantile m
 6. Non-negativity and monotonic: for random sorted inputs, `apply_qm` is non-decreasing in `x` and never negative (property test).
 
 ## Tasks
-- [ ] Pooling, QM, ratio, evaluation implemented with docstrings stating units and assumptions
-- [ ] All six fixtures pass
-- [ ] Short note `docs/HARMONIZATION.md` (one page): the method in plain language, the equal-n simplification, the pooling, the extrapolation rule, and why it is not applied per cell (D-01)
-- [ ] Master plan row D05 set to `[x]`
+- [x] Pooling, QM, ratio, evaluation implemented with docstrings stating units and assumptions
+- [x] All six fixtures pass
+- [x] Short note `docs/HARMONIZATION.md` (one page): the method in plain language, the equal-n simplification, the pooling, the extrapolation rule, and why it is not applied per cell (D-01)
+- [x] Master plan row D05 set to `[x]`

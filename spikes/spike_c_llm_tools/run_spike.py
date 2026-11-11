@@ -17,8 +17,18 @@ import time
 from typing import Any
 
 STUB_AREA_VALUES: dict[str, dict[str, Any]] = {
-    "PRESET-CHT": {"area_id": "PRESET-CHT", "year": 2025, "harmonized_events": 384, "season": "Mar-May"},
-    "BGD": {"area_id": "BGD", "year": 2025, "harmonized_events": 562, "season": "Mar-May"},
+    "PRESET-CHT": {
+        "area_id": "PRESET-CHT",
+        "year": 2025,
+        "harmonized_events": 384,
+        "season": "Mar-May",
+    },
+    "BGD": {
+        "area_id": "BGD",
+        "year": 2025,
+        "harmonized_events": 562,
+        "season": "Mar-May",
+    },
 }
 
 GET_VALUE_DECLARATION: dict[str, Any] = {
@@ -27,7 +37,12 @@ GET_VALUE_DECLARATION: dict[str, Any] = {
     "description": "Return harmonized MODIS-equivalent fire event count and peak season for an area.",
     "parameters": {
         "type": "object",
-        "properties": {"area": {"type": "string", "description": "Region ID such as PRESET-CHT or BGD"}},
+        "properties": {
+            "area": {
+                "type": "string",
+                "description": "Region ID such as PRESET-CHT or BGD",
+            }
+        },
         "required": ["area"],
     },
 }
@@ -64,12 +79,16 @@ def ask_replay(question: str, area: str = "PRESET-CHT") -> dict[str, Any]:
         "mode": "replay",
         "question": question,
         "answer": answer,
-        "toolCalls": [{"name": "get_value", "args": {"area": area}, "durationMs": duration_ms}],
+        "toolCalls": [
+            {"name": "get_value", "args": {"area": area}, "durationMs": duration_ms}
+        ],
         "grounded": True,
     }
 
 
-def ask_gemini_live(question: str, client: Any = None, model: str | None = None) -> dict[str, Any]:
+def ask_gemini_live(
+    question: str, client: Any = None, model: str | None = None
+) -> dict[str, Any]:
     """Call Gemini Interactions API with `get_value` tool and 20s timeout."""
     model_id = model or os.environ.get("LLM_MODEL", "gemini-3.8-flash")
     if client is None:
@@ -97,7 +116,9 @@ def ask_gemini_live(question: str, client: Any = None, model: str | None = None)
             area_arg = str(step.arguments.get("area", "PRESET-CHT"))
             res = get_value(area_arg)
             dur_ms = round((time.perf_counter() - t0) * 1000.0, 3)
-            tool_calls.append({"name": step.name, "args": {"area": area_arg}, "durationMs": dur_ms})
+            tool_calls.append(
+                {"name": step.name, "args": {"area": area_arg}, "durationMs": dur_ms}
+            )
             tool_outputs.append(res)
             function_results.append(
                 {
@@ -117,11 +138,16 @@ def ask_gemini_live(question: str, client: Any = None, model: str | None = None)
     )
     answer = str(final_turn.output_text)
     grounded = verify_grounding(answer, tool_outputs)
-    return {"mode": "live", "model": model_id, "answer": answer, "toolCalls": tool_calls, "grounded": grounded}
+    return {
+        "mode": "live",
+        "model": model_id,
+        "answer": answer,
+        "toolCalls": tool_calls,
+        "grounded": grounded,
+    }
 
 
 if __name__ == "__main__":
     q = "How many harmonized fire events occurred in PRESET-CHT in 2025?"
     replay_resp = ask_replay(q, "PRESET-CHT")
     print("Spike C (replay):", json.dumps(replay_resp, indent=2))
-

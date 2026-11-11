@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-surface-canvas: #080b10;
+  --color-surface-panel: #0e141f;
+  --color-surface-card: #161f30;
+  --color-surface-card-hover: #1e293b;
+  --color-surface-card-active: #253347;
+
+  --color-border-subtle: #1f293d;
+  --color-border-default: #2d3b55;
+  --color-border-focus: #ff6b00;
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-text-accent: #ff6b00;
+
+  --color-accent-primary: #ff6b00;
+  --color-accent-hover: #ff8533;
+  --color-accent-active: #e05e00;
+  --color-accent-glow: rgba(255, 107, 0, 0.25);
+  --color-accent-subtle: rgba(255, 107, 0, 0.12);
+
+  --color-anomaly-normal: #10b981;
+  --color-anomaly-elevated: #f59e0b;
+  --color-anomaly-extreme: #ef4444;
+
+  --background: var(--color-surface-canvas);
+  --foreground: var(--color-text-primary);
 }
 
 @theme inline {
+  --color-surface-canvas: var(--color-surface-canvas);
+  --color-surface-panel: var(--color-surface-panel);
+  --color-surface-card: var(--color-surface-card);
+  --color-surface-card-hover: var(--color-surface-card-hover);
+  --color-surface-card-active: var(--color-surface-card-active);
+
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-default: var(--color-border-default);
+  --color-border-focus: var(--color-border-focus);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-accent: var(--color-text-accent);
+
+  --color-accent-primary: var(--color-accent-primary);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-active: var(--color-accent-active);
+  --color-accent-glow: var(--color-accent-glow);
+  --color-accent-subtle: var(--color-accent-subtle);
+
+  --color-anomaly-normal: var(--color-anomaly-normal);
+  --color-anomaly-elevated: var(--color-anomaly-elevated);
+  --color-anomaly-extreme: var(--color-anomaly-extreme);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Geist Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbars for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-panel);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-focus);
 }

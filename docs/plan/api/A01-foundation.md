@@ -19,14 +19,14 @@ A running FastAPI service that loads the processed (or fixture) Parquet data int
 - OpenAPI served at `/api/openapi.json` and must match `contracts/openapi.yaml` (test).
 
 ## Tests
-- [ ] Health, meta and areas endpoints against fixtures (shape equals the OpenAPI examples)
-- [ ] Bad `level`, bad bbox (west >= east, out of range) return 400 with the error envelope
-- [ ] Unknown area returns 404; CORS header absent for a different origin; 121st request returns 429
-- [ ] Startup fails with a clear message when `manifest.json` is missing or a file is absent
-- [ ] Contract test: generated OpenAPI equals the committed contract for implemented paths
+- [x] Health, meta and areas endpoints against fixtures (shape equals the OpenAPI examples)
+- [x] Bad `level`, bad bbox (west >= east, out of range) return 400 with the error envelope
+- [x] Unknown area returns 404; CORS header absent for a different origin; 121st request returns 429
+- [x] Startup fails with a clear message when `manifest.json` is missing or a file is absent
+- [x] Contract test: generated OpenAPI equals the committed contract for implemented paths
 
 ## Tasks
-- [ ] Core plumbing, meta and areas implemented
-- [ ] Router registration pattern documented in `main.py` (one line per feature)
-- [ ] Dockerfile stub builds
-- [ ] Master plan row A01 set to `[x]`
+- [x] Core plumbing, meta and areas implemented
+- [x] Router registration pattern documented in `main.py` (one line per feature)
+- [ ] Dockerfile stub builds (NOT verified: Docker is not installed on @Aragon's machine; needs a build on a machine with Docker or in CI)
+- [x] Master plan row A01 set to `[x]`

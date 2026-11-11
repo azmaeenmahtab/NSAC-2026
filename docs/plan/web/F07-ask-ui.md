@@ -16,11 +16,11 @@ A simple, trustworthy chat panel that shows the answer, the tools that produced 
 - The conversation lives in component state; no persistence.
 
 ## Tests
-- [ ] Replay-mode response from the mock renders the badge, the timeline with two tool calls and two citations
-- [ ] An answer containing `<script>` and `<img onerror=...>` renders as literal text
-- [ ] 429 and 502 states; character limit
+- [x] Replay-mode response from the mock renders the badge, the timeline with two tool calls and two citations
+- [x] An answer containing `<script>` and `<img onerror=...>` renders as literal text
+- [x] 429 and 502 states; character limit
 
 ## Tasks
-- [ ] Panel, timeline, citations, badge, states
-- [ ] Citation click updates the URL state (test with a mocked router)
-- [ ] Master plan row F07 set to `[x]`
+- [x] Panel, timeline, citations, badge, states
+- [x] Citation click updates the URL state (test with a mocked router)
+- [x] Master plan row F07 set to `[x]`

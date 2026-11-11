@@ -1,69 +1,114 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+import React, { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { AppShell } from "@/components/layout/app-shell";
+import { SidePanelContent } from "@/features/shell";
+import { FireCalendar } from "@/features/calendar";
+import { SeriesChart } from "@/features/series";
+import { cn } from "@/lib/utils";
+
+const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center p-6 text-center">
+      <div className="max-w-md space-y-2 rounded-xl border border-[#1f293d] bg-[#0e141f] p-8">
+        <div className="text-2xl animate-pulse">🔥</div>
+        <h2 className="text-sm font-semibold text-[#f8fafc]">
+          Initializing Hex Map Viewport...
+        </h2>
+      </div>
     </div>
+  ),
+});
+
+type ViewMode = "map" | "calendar" | "series";
+
+function MainContent() {
+  const [viewMode, setViewMode] = React.useState<ViewMode>("map");
+
+  return (
+    <AppShell
+      sidePanelTitle="Analytical Telemetry"
+      sidePanelContent={<SidePanelContent />}
+    >
+      <div className="relative flex flex-1 flex-col h-full overflow-hidden">
+        {/* View Switcher Segmented Control Bar */}
+        <div className="z-20 flex items-center justify-between border-b border-[#1f293d] bg-[#0e141f]/90 px-4 py-2 backdrop-blur-md">
+          <div className="flex items-center gap-1 rounded-lg bg-[#080b10] p-1 border border-[#1f293d]">
+            <button
+              type="button"
+              onClick={() => setViewMode("map")}
+              className={cn(
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                viewMode === "map"
+                  ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                  : "text-[#94a3b8] hover:text-[#f8fafc]"
+              )}
+            >
+              🗺️ Hex Map
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("calendar")}
+              className={cn(
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                viewMode === "calendar"
+                  ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                  : "text-[#94a3b8] hover:text-[#f8fafc]"
+              )}
+            >
+              📅 FireCalendar
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("series")}
+              className={cn(
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                viewMode === "series"
+                  ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                  : "text-[#94a3b8] hover:text-[#f8fafc]"
+              )}
+            >
+              📈 The Hidden Jump
+            </button>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-xs text-[#64748b]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b00]" />
+            <span>Harmonized 2000–Present Active Fire Baseline</span>
+          </div>
+        </div>
+
+        {/* Viewports */}
+        <div className="relative flex-1 overflow-auto bg-[#080b10]">
+          {viewMode === "map" && <FireMap />}
+          {viewMode === "calendar" && (
+            <div className="max-w-7xl mx-auto p-4">
+              <FireCalendar />
+            </div>
+          )}
+          {viewMode === "series" && (
+            <div className="max-w-7xl mx-auto p-4">
+              <SeriesChart />
+            </div>
+          )}
+        </div>
+      </div>
+    </AppShell>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#080b10] text-[#f8fafc]">
+          Loading PyroScope...
+        </div>
+      }
+    >
+      <MainContent />
+    </Suspense>
   );
 }

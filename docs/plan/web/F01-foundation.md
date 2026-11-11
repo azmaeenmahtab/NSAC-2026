@@ -22,9 +22,9 @@ The app shell in the dark "mission control" theme with a typed API client, TanSt
 - Responsive shell: map area plus a resizable or collapsible side panel; at narrow widths the panel becomes a bottom sheet.
 
 ## Tasks
-- [ ] App generated and configured (Tailwind dark theme, shadcn initialised)
-- [ ] API client, types generation, mocks, query provider
-- [ ] Shell, header badges, attribution, query boundary
-- [ ] RTL tests: `QueryBoundary` states, header badge when `provisionalFrom` is present
-- [ ] `pnpm build`, `pnpm lint`, `pnpm typecheck` pass
-- [ ] Master plan row F01 set to `[x]`
+- [x] App generated and configured (Tailwind dark theme, shadcn initialised)
+- [x] API client, types generation, mocks, query provider
+- [x] Shell, header badges, attribution, query boundary
+- [x] RTL tests: `QueryBoundary` states, header badge when `provisionalFrom` is present
+- [x] `pnpm build`, `pnpm lint`, `pnpm typecheck` pass
+- [x] Master plan row F01 set to `[x]`

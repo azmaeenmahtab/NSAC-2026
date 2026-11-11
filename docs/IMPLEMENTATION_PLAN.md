@@ -18,10 +18,10 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
+| [x] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
 | [x] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | @azmaeenmahtab |
 | [x] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
-| [~] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | @Aragon |
+| [x] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | @Aragon |
 | [x] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | @Aragon |
 | [x] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | @adityasaha03 |
 
@@ -37,11 +37,11 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [~] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | @azmaeenmahtab |
-| [x] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | @adityasaha03 |
+| [x] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | @azmaeenmahtab |
+| [~] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | @adityasaha03 |
 | [ ] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | |
 | [ ] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | |
-| [ ] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | |
+| [x] | D05 | Harmonization engine (pure): quantile mapping, ratio, CV | P0 | EVENT | S00 | 3 | plan/data/D05-harmonize-engine.md | @Aragon |
 | [ ] | D06 | Run harmonization, downscale to cells, validation report | P0 | EVENT | D04, D05 | 4 | plan/data/D06-harmonize-run.md | |
 | [ ] | D07 | Climatology, anomalies, seasons, yearly stats | P0 | EVENT | D06 | 3 | plan/data/D07-calendar-stats.md | |
 | [ ] | D08 | NRT incremental update and provisional flags | P1 | EVENT | D03, D07 | 4 | plan/data/D08-nrt-update.md | |
@@ -50,9 +50,9 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [ ] | A01 | API foundation, data loading, meta and areas | P0 | EVENT | S01 | 2 | plan/api/A01-foundation.md | |
-| [ ] | A02 | Heatmap and series endpoints | P0 | EVENT | A01 | 3 | plan/api/A02-heatmap-series.md | |
-| [ ] | A03 | Calendar, yearly stats, anomalies, methodology | P0 | EVENT | A01 | 4 | plan/api/A03-calendar-stats.md | |
+| [~] | A01 | API foundation, data loading, meta and areas | P0 | EVENT | S01 | 2 | plan/api/A01-foundation.md | @Aragon |
+| [~] | A02 | Heatmap and series endpoints | P0 | EVENT | A01 | 3 | plan/api/A02-heatmap-series.md | @Aragon |
+| [~] | A03 | Calendar, yearly stats, anomalies, methodology | P0 | EVENT | A01 | 4 | plan/api/A03-calendar-stats.md | @Aragon |
 | [ ] | A04 | Alert subscriptions and evaluation | P1 | EVENT | A03, D08 | 4 | plan/api/A04-alerts.md | |
 | [ ] | A05 | Ask PyroScope agent (typed tools, replay mode) | P0 | EVENT | A03 | 5 | plan/api/A05-ask-agent.md | |
 | [ ] | A06 | Guidance and Wildland Action Planner | P1 | EVENT | A03 | 3 | plan/api/A06-guidance.md | |
@@ -61,13 +61,13 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [ ] | F01 | Next.js foundation, shell, API client, mocks | P0 | EVENT | S01, P05 | 2 | plan/web/F01-foundation.md | |
-| [ ] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | |
-| [ ] | F03 | Area selection and URL state | P0 | EVENT | F01 | 3 | plan/web/F03-area-selection.md | |
-| [ ] | F04 | FireCalendar and the hidden-jump chart | P0 | EVENT | F03 | 5 | plan/web/F04-calendar-series.md | |
+| [x] | F01 | Next.js foundation, shell, API client, mocks | P0 | EVENT | S01, P05 | 2 | plan/web/F01-foundation.md | @Aragon |
+| [x] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | @Aragon |
+| [x] | F03 | Area selection and URL state | P0 | EVENT | F01 | 3 | plan/web/F03-area-selection.md | @Aragon |
+| [x] | F04 | FireCalendar and the hidden-jump chart | P0 | EVENT | F03 | 5 | plan/web/F04-calendar-series.md | @Aragon |
 | [ ] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | |
 | [ ] | F06 | Alerts UI | P1 | EVENT | F03 | 3 | plan/web/F06-alerts-ui.md | |
-| [ ] | F07 | Ask PyroScope chat UI | P0 | EVENT | F01 | 4 | plan/web/F07-ask-ui.md | |
+| [x] | F07 | Ask PyroScope chat UI | P0 | EVENT | F01 | 4 | plan/web/F07-ask-ui.md | @Aragon |
 | [ ] | F08 | Methodology and transparency page | P0 | EVENT | F01 | 3 | plan/web/F08-methodology.md | |
 | [ ] | F09 | Polish, accessibility, performance | P1 | EVENT | F02-F08 | 3 | plan/web/F09-polish.md | |
 
@@ -108,3 +108,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 - 2026-11-11, P02: Replaced research report draft estimates (3,029 vs 10,972 annual fires; "3 to 7 times") with empirical figures from raw FIRMS data (MODIS raw ~9,645, VIIRS raw ~39,193; raw ratio 4.10x, filtered ratio 3.77x; ST-DBSCAN physical fire events ~560 vs ~860, ratio 1.5x; overlap window 2012-02 to 2026-10). Impact: ensures scientific accuracy in pitch, methodology page, and algorithm parameters.
 - 2026-11-11, P02: Confirmed that NRT CSVs lack the `type` column present in archive CSVs. Impact: pipeline ingest must treat missing `type` as NaN rather than failing or dropping rows.
 - 2026-11-11, P04: Verified and pinned exact tech stack versions in `docs/ARCHITECTURE.md` and `docs/SPIKE_RESULTS.md`: `@deck.gl/*@9.4.1` (`@deck.gl/mapbox` `MapboxOverlayProps`), `react-map-gl@8.1.3`, `maplibre-gl@^5.24.0` (avoids v6 bundler worker changes), `h3-js@4.5.0`, `d3-color@3.1.1` alongside `d3-scale-chromatic@3.1.1`, `duckdb@2.0.0` (requires `CAST(year AS INTEGER) * 100 + month` to avoid `INT16` multiplication overflow), and `google-genai>=2.30.1` Interactions API (`client.interactions.create`) with `gemini-3.8-flash` and keyless CARTO Dark Matter / OpenFreeMap dark basemap URLs. Impact: removes integration and runtime risk for F02, A02, and A05.
+- 2026-11-11, P03: Built `data/reference/` (`regions.geojson`, `regions.parquet`, `region_cells.parquet`, `SOURCES.md`) from geoBoundaries v6.0.0 (`gbOpen`, commit `9469f09`, BBS/UN OCHA CC BY 3.0 IGO & CC0 1.0). Empirical H3 r7 cell count across the 64 districts is 26,683 (25,020 strict centroid-in-polygon + 1,663 deduplicated border/coastal-overlapping cells) rather than the rough 28k-30k estimate because mean H3 r7 cell area at Bangladesh's ~24°N latitude is 5.721 km² (vs 5.161 km² global average) over 140,052 km² of ADM2 land polygon area; including deduplicated border-overlap cells guarantees 100% of in-country FIRMS detections map to a unique district cell per `DB_SCHEMA.md` invariant.
+
+- 2026-11-11, A01/A02: Correction by @Aragon. Rows set back to `[~]` because two boxes had been ticked without verification: A01 "Dockerfile stub builds" (Docker not installed locally, never built) and A02 "Timing measured on real data" (no real processed data exists yet; the earlier "sub-15 ms" figure was not measured). Also updated `contracts/openapi.yaml` and `docs/API_REFERENCE.md`, which had not been changed when `/api/health` gained `dataLoaded`/`dataVersion` and `/api/heatmap` gained `res`/`metric`/`from`/`to`. Code on main is unchanged and its tests pass. Impact: none of the features are blocked; the rows can return to `[x]` after a Docker build check and a real-data timing run.
+- 2026-11-11, A03: Implemented calendar, yearly stats, anomalies, and methodology for named regions and presets using fixtures; custom-bbox on-the-fly statistics deferred per user decision 1.(a) until D07 stats engine lands. Kept row as [~] per decision 2 so we return to finish custom bbox once D07 is merged.

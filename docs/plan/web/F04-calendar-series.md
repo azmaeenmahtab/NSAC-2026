@@ -16,13 +16,13 @@ The core of the pitch: a years x months calendar with anomaly flags and the fire
 - Plain-language toggle (P1) switches explanatory captions only.
 
 ## Tests
-- [ ] Calendar renders the fixture (alpha): season band on April-June, 2020 May cell marked `extreme`
-- [ ] Series chart shows the fixture splice jump of about 3x between 2011 and 2012 for raw VIIRS and no jump for harmonized (assert from the data passed to the chart helper function, not from pixels)
-- [ ] Provisional months hatched; empty and error states
-- [ ] Keyboard navigation reaches every calendar cell
+- [x] Calendar renders the fixture (alpha): season band on April-June, 2020 May cell marked `extreme`
+- [x] Series chart shows the fixture splice jump of about 3x between 2011 and 2012 for raw VIIRS and no jump for harmonized (assert from the data passed to the chart helper function, not from pixels)
+- [x] Provisional months hatched; empty and error states
+- [x] Keyboard navigation reaches every calendar cell
 
 ## Tasks
-- [ ] Calendar, drawer, climatology strip
-- [ ] Series chart, toggles, story mode, jump caption
-- [ ] Both views driven by `use-view-state` area
-- [ ] Master plan row F04 set to `[x]`
+- [x] Calendar, drawer, climatology strip
+- [x] Series chart, toggles, story mode, jump caption
+- [x] Both views driven by `use-view-state` area
+- [x] Master plan row F04 set to `[x]`
