@@ -17,13 +17,13 @@ Cluster detections into fire events per sensor family, attach H3 ids and distric
 - Report in the manifest: pixels in, events out, noise points, events outside, per family; and the VIIRS/MODIS ratio of pixels and of events per year (this shows how much clustering reduces the sensor disparity, a useful pitch number if real).
 
 ## Tests
-- [ ] `events.py` on a hand-built 6-detection input: two clusters with known centroid (mean), `n_pixels`, start and end, FRP sum, and month; a MODIS and a VIIRS pixel at the same place and time must NOT merge (different families)
-- [ ] H3 round trip: for 3 known lat/lon pairs compare `h3_r7` against values computed with the h3 CLI or docs examples; parent relation holds (`parent(h3_r7, 6) == h3_r6`)
-- [ ] District assignment: a point inside Rangamati returns `BGD-ADM2-rangamati`; a point in the Bay of Bengal returns null
-- [ ] Determinism: two runs give identical content hashes
+- [x] `events.py` on a hand-built 6-detection input: two clusters with known centroid (mean), `n_pixels`, start and end, FRP sum, and month; a MODIS and a VIIRS pixel at the same place and time must NOT merge (different families)
+- [x] H3 round trip: for 3 known lat/lon pairs compare `h3_r7` against values computed with the h3 CLI or docs examples; parent relation holds (`parent(h3_r7, 6) == h3_r6`)
+- [x] District assignment: a point inside Rangamati returns `BGD-ADM2-rangamati`; a point in the Bay of Bengal returns null
+- [x] Determinism: two runs give identical content hashes
 
 ## Tasks
-- [ ] events, h3 helpers, region assignment, stage implemented
-- [ ] Stage runs on the real detections; manifest report written; runtime logged
-- [ ] Sanity table in the PR: events per year per family; ratio of VIIRS to MODIS events per year
-- [ ] Master plan row D03 set to `[x]`
+- [x] events, h3 helpers, region assignment, stage implemented
+- [x] Stage runs on the real detections; manifest report written; runtime logged
+- [x] Sanity table in the PR: events per year per family; ratio of VIIRS to MODIS events per year
+- [x] Master plan row D03 set to `[x]`
