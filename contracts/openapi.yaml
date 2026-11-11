@@ -273,6 +273,17 @@ paths:
             type: integer
             minimum: 1
             maximum: 12
+        - name: stage
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [pre_season, in_season, post_season, extreme, off_season]
+        - name: audience
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Checklist items
@@ -607,7 +618,7 @@ components:
       type: object
       properties:
         id: { type: string }
-        stage: { type: string, enum: [pre_season, in_season, post_season, extreme] }
+        stage: { type: string, enum: [pre_season, in_season, post_season, extreme, off_season] }
         audience: { type: string }
         text: { type: string }
         source_title: { type: string }

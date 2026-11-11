@@ -35,7 +35,7 @@ Pipeline order: raw CSV -> `detections` -> `events` -> `monthly_cell`, `monthly_
 `region_id`, `h3_r7` (UINT64). Each r7 cell belongs to exactly one district (by cell centroid); `PRESET-CHT` and parents are derived by union. Invariant: every `h3_r7` in `monthly_cell` that lies inside Bangladesh appears once at district level.
 
 ### guidance.json (P1)
-List of `{ id, stage (pre_season|in_season|post_season|extreme), audience, text, source_title, source_url, verified (bool) }`.
+List of `{ id, stage (pre_season|in_season|post_season|extreme|off_season), audience, text, source_title, source_url, verified (bool) }`.
 
 ## 3. Pipeline tables (`data/interim/` and `data/processed/<version>/`)
 

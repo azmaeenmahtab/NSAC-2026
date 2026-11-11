@@ -14,7 +14,7 @@ The machine-readable contract is `contracts/openapi.yaml` (chunk S01 writes it f
 | GET /api/anomalies | A03 | `area_id`, optional `year`, `class` filter |
 | GET /api/methodology | A03 | parameters, per-unit calibration report summary (CV metrics chosen method), Q-Q data points for display, jump metrics (before/after), limitations list |
 | POST /api/ask | A05 | body `{ question (<=500), area_id?, style: "standard"\|"plain" }`. Returns `{ answer, citations: [{ tool, areaId, years, dataVersion }], toolCalls: [{ name, args, durationMs }], mode: "live"\|"replay" }` |
-| GET /api/guidance | A06 (P1) | `area_id`, `month`. Rule-based checklist items with source info and `verified` flag |
+| GET /api/guidance | A06 (P1) | `area_id`, optional `month`, `stage`, `audience`. Rule-based checklist items with source info and `verified` flag |
 | POST /api/alerts/subscriptions | A04 (P1) | `{ email, area_id, rule, lead_days }` -> sends a confirmation email |
 | GET /api/alerts/subscriptions/confirm | A04 (P1) | `token` |
 | DELETE /api/alerts/subscriptions | A04 (P1) | `token` (unsubscribe) |
