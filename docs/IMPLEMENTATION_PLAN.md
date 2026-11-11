@@ -65,7 +65,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [x] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | @Aragon |
 | [x] | F03 | Area selection and URL state | P0 | EVENT | F01 | 3 | plan/web/F03-area-selection.md | @Aragon |
 | [x] | F04 | FireCalendar and the hidden-jump chart | P0 | EVENT | F03 | 5 | plan/web/F04-calendar-series.md | @Aragon |
-| [ ] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | |
+| [~] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | @Aragon |
 | [ ] | F06 | Alerts UI | P1 | EVENT | F03 | 3 | plan/web/F06-alerts-ui.md | |
 | [x] | F07 | Ask PyroScope chat UI | P0 | EVENT | F01 | 4 | plan/web/F07-ask-ui.md | @Aragon |
 | [x] | F08 | Methodology and transparency page | P0 | EVENT | F01 | 3 | plan/web/F08-methodology.md | @Aragon |
