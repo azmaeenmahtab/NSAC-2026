@@ -32,3 +32,4 @@ export function ModeBadge({ mode, className }: ModeBadgeProps) {
     </Badge>
   );
 }
+

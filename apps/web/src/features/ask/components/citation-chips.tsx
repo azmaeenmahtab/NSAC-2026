@@ -61,3 +61,4 @@ export function CitationChips({ citations, className }: CitationChipsProps) {
     </div>
   );
 }
+

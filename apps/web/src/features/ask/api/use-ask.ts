@@ -8,3 +8,4 @@ export function useAsk() {
       apiPost<ApiResponse<AskResponse>>("/ask", req),
   });
 }
+

@@ -72,3 +72,4 @@ export function ToolTimeline({ toolCalls, className }: ToolTimelineProps) {
     </div>
   );
 }
+
