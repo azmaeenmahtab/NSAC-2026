@@ -6,6 +6,9 @@ import { AppShell } from "@/components/layout/app-shell";
 import { SidePanelContent } from "@/features/shell";
 import { FireCalendar } from "@/features/calendar";
 import { SeriesChart } from "@/features/series";
+import { YearlyBars, YearlyTable, useYearlyStats } from "@/features/stats";
+import { ActionPlanner } from "@/features/guidance";
+import { useViewState } from "@/features/areas";
 import { cn } from "@/lib/utils";
 
 const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
@@ -22,10 +25,47 @@ const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
   ),
 });
 
-type ViewMode = "map" | "calendar" | "series";
+type ViewMode = "map" | "calendar" | "series" | "stats" | "planner";
+
+function YearlyStatsView({ areaId }: { areaId: string }) {
+  const { data: stats = [], isLoading, error } = useYearlyStats(areaId);
+  const [selectedYear, setSelectedYear] = React.useState<number | null>(null);
+
+  if (isLoading) {
+    return (
+      <div className="py-12 text-center text-xs text-[#94a3b8] animate-pulse">
+        Loading historical annual statistics...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-6 px-4 rounded-xl bg-red-950/30 border border-red-800/40 text-xs text-red-300">
+        Failed to load annual statistics for this area.
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <YearlyBars
+        data={stats}
+        selectedYear={selectedYear}
+        onSelectYear={setSelectedYear}
+      />
+      <YearlyTable
+        data={stats}
+        selectedYear={selectedYear}
+        onSelectYear={setSelectedYear}
+      />
+    </div>
+  );
+}
 
 function MainContent() {
   const [viewMode, setViewMode] = React.useState<ViewMode>("map");
+  const { area } = useViewState();
 
   return (
     <AppShell
@@ -35,12 +75,12 @@ function MainContent() {
       <div className="relative flex flex-1 flex-col h-full overflow-hidden">
         {/* View Switcher Segmented Control Bar */}
         <div className="z-20 flex items-center justify-between border-b border-[#1f293d] bg-[#0e141f]/90 px-4 py-2 backdrop-blur-md">
-          <div className="flex items-center gap-1 rounded-lg bg-[#080b10] p-1 border border-[#1f293d]">
+          <div className="flex items-center gap-1 rounded-lg bg-[#080b10] p-1 border border-[#1f293d] overflow-x-auto">
             <button
               type="button"
               onClick={() => setViewMode("map")}
               className={cn(
-                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
                 viewMode === "map"
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
@@ -52,7 +92,7 @@ function MainContent() {
               type="button"
               onClick={() => setViewMode("calendar")}
               className={cn(
-                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
                 viewMode === "calendar"
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
@@ -64,7 +104,7 @@ function MainContent() {
               type="button"
               onClick={() => setViewMode("series")}
               className={cn(
-                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer",
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
                 viewMode === "series"
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
@@ -72,9 +112,33 @@ function MainContent() {
             >
               📈 The Hidden Jump
             </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("stats")}
+              className={cn(
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
+                viewMode === "stats"
+                  ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                  : "text-[#94a3b8] hover:text-[#f8fafc]"
+              )}
+            >
+              📊 Annual Stats
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("planner")}
+              className={cn(
+                "rounded px-3 py-1 text-xs font-medium transition-colors cursor-pointer whitespace-nowrap",
+                viewMode === "planner"
+                  ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                  : "text-[#94a3b8] hover:text-[#f8fafc]"
+              )}
+            >
+              🛡️ Action Planner
+            </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 text-xs text-[#64748b]">
+          <div className="hidden lg:flex items-center gap-2 text-xs text-[#64748b]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b00]" />
             <span>Harmonized 2000–Present Active Fire Baseline</span>
           </div>
@@ -91,6 +155,16 @@ function MainContent() {
           {viewMode === "series" && (
             <div className="max-w-7xl mx-auto p-4">
               <SeriesChart />
+            </div>
+          )}
+          {viewMode === "stats" && (
+            <div className="max-w-7xl mx-auto p-4">
+              <YearlyStatsView areaId={area} />
+            </div>
+          )}
+          {viewMode === "planner" && (
+            <div className="max-w-5xl mx-auto p-4">
+              <ActionPlanner areaId={area} />
             </div>
           )}
         </div>

@@ -14,6 +14,6 @@ Yearly area-wise burn statistics and sourced preparedness checklists beside the 
 - Plain text only; no HTML from the API.
 
 ## Tasks
-- [ ] Yearly table and bars with tests (sort order, rank badge)
-- [ ] Action planner with unverified labels and disclaimer (RTL test)
-- [ ] Master plan row F05 set to `[x]`
+- [x] Yearly table and bars with tests (sort order, rank badge)
+- [x] Action planner with unverified labels and disclaimer (RTL test)
+- [x] Master plan row F05 set to `[x]`
