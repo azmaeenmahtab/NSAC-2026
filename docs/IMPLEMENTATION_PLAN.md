@@ -37,7 +37,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [ ] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | |
+| [~] | D01 | Ingest and normalize FIRMS CSVs | P0 | EVENT | S00, P01 | 3 | plan/data/D01-ingest.md | @azmaeenmahtab |
 | [ ] | D02 | ST-DBSCAN engine (pure) | P0 | EVENT | S00 | 3 | plan/data/D02-st-dbscan.md | |
 | [ ] | D03 | Build fire events and H3 index | P0 | EVENT | D01, D02, P03 | 3 | plan/data/D03-events.md | |
 | [ ] | D04 | Monthly cell and region tables | P0 | EVENT | D03 | 2 | plan/data/D04-aggregate.md | |
