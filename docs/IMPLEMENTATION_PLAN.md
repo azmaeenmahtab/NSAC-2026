@@ -62,7 +62,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [x] | F01 | Next.js foundation, shell, API client, mocks | P0 | EVENT | S01, P05 | 2 | plan/web/F01-foundation.md | @Aragon |
-| [ ] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | |
+| [~] | F02 | Hex map (MapLibre + deck.gl H3) | P0 | EVENT | F01 | 4 | plan/web/F02-map.md | @Aragon |
 | [x] | F03 | Area selection and URL state | P0 | EVENT | F01 | 3 | plan/web/F03-area-selection.md | @Aragon |
 | [ ] | F04 | FireCalendar and the hidden-jump chart | P0 | EVENT | F03 | 5 | plan/web/F04-calendar-series.md | |
 | [ ] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | |
