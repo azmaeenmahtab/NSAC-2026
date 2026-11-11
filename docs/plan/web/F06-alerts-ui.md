@@ -15,6 +15,6 @@ Show the current alert state for the selected area and let a user subscribe by e
 - Optional: browser Notification permission request for the banner state (P2).
 
 ## Tasks
-- [ ] Banner, subscribe form with validation, confirmation page
-- [ ] RTL tests: validation messages, 429 message, banner conditions
-- [ ] Master plan row F06 set to `[x]`
+- [x] Banner, subscribe form with validation, confirmation page
+- [x] RTL tests: validation messages, 429 message, banner conditions
+- [x] Master plan row F06 set to `[x]`

@@ -452,4 +452,127 @@ export const handlers = [
       meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
     });
   }),
+
+  http.get("*/api/alerts/active", ({ request }) => {
+    const url = new URL(request.url);
+    const areaId = url.searchParams.get("area_id") || "PRESET-CHT";
+
+    if (areaId.includes("quiet") || areaId === "BGD-ADM1-barisal") {
+      return HttpResponse.json({
+        data: {
+          season_approaching: false,
+          above_normal: false,
+          current_month_class: "normal",
+          days_until_season: null,
+          reason: null,
+          provisional_as_of: "2026-10-31",
+        },
+        meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+      });
+    }
+
+    return HttpResponse.json({
+      data: {
+        season_approaching: true,
+        above_normal: true,
+        current_month_class: "elevated",
+        days_until_season: 12,
+        reason: "Dry seasonal transition detected. Burning elevated above 90th percentile.",
+        provisional_as_of: "2026-10-31",
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
+
+  http.post("*/api/alerts/subscriptions", async ({ request }) => {
+    const body = (await request.json()) as {
+      email?: string;
+      area_id?: string;
+      rule?: string;
+      lead_days?: number;
+    };
+
+    if (!body.email || !body.email.includes("@")) {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "A valid email address is required.",
+          },
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (body.email.includes("429")) {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "RATE_LIMITED",
+            message: "Subscription rate limit reached: maximum 5 requests per hour.",
+          },
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": "3600",
+          },
+        }
+      );
+    }
+
+    if (body.area_id === "unknown_area") {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "NOT_FOUND",
+            message: "Specified area identifier not found.",
+          },
+        }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    return HttpResponse.json({
+      data: {
+        message: "Verification email sent. Please check your inbox to confirm subscription.",
+        status: "pending_confirmation",
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
+
+  http.get("*/api/alerts/subscriptions/confirm", ({ request }) => {
+    const url = new URL(request.url);
+    const token = url.searchParams.get("token");
+
+    if (!token || token === "expired") {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "TOKEN_EXPIRED",
+            message: "This subscription link has expired or is invalid.",
+          },
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    return HttpResponse.json({
+      data: {
+        confirmed: true,
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
+
+  http.delete("*/api/alerts/subscriptions", () => {
+    return HttpResponse.json({
+      data: {
+        unsubscribed: true,
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
 ];
