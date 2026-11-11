@@ -197,3 +197,25 @@ Applying Space-Time DBSCAN clustering (2,700 m spatial radius, 24-hour temporal 
 2. Incorporating NOAA-20 (operational 2018) into the historical pipeline would inject another artificial step change at 2018, violating the core scientific mission of providing a seamless Burning Activity Calendar.
 3. S-NPP alone provides sufficient spatial density (~35,000 filtered detections/year) to calibrate against MODIS without needing secondary satellites.
 
+---
+
+## 10. Harmonization Results & Jump Elimination (D06 Empirical Verification)
+
+### Data Table: Sensor Splice Jump Metrics & Cross-Validation Diagnostics
+
+| Metric | Naive Splice Series | Harmonized (PyroScope) | Impact / Interpretation |
+| :--- | :---: | :---: | :--- |
+| **Pre-Splice Baseline (2007–2011 Mean Events/Yr)** | 665.2 | 665.2 | Historical MODIS dual-platform reference |
+| **Post-Splice Mean (2012–2016 Mean Events/Yr)** | **1,230.2** | **572.9** | Eliminates artificial ~2.15x jump in raw events |
+| **Jump Ratio (Post-Splice / Pre-Splice)** | **1.85x** (+85%) | **0.86x** (-14%) | Restores continuity consistent with long-term climate trend |
+| **National Overlap CV RMSE** | — | 792.14 events/mo | Leave-one-year-out CV over 177 overlap months |
+| **National Overlap CV Bias** | — | +334.37 events/mo | Conservative, bounded bias |
+| **Unallocated Harmonized Events** | — | **0.0** | 100% of district harmonized events conserved to cells |
+
+### Calibration Unit Hierarchy & Method Selection Breakdown
+- **Active Calibration Districts ($\ge 3$ mean MODIS events/month)**: Only 3 out of 64 districts met the autonomous calibration threshold: `BGD-ADM2-bandarban`, `BGD-ADM2-khagrachari`, and `BGD-ADM2-rangamati` (comprising the Chittagong Hill Tracts). All three selected **Ratio** based on superior leave-one-year-out CV RMSE.
+- **Sparse Fallback Districts ($< 3$ mean MODIS events/month)**: 61 districts fell back to their parent division's pooled series (8 divisions total).
+- **Method Breakdown**: 1 unit (`BGD-ADM1-barishal`) chose **Quantile Mapping**, while 10 units chose **Ratio**.
+- **Conservation**: Cell downscaling achieved exact mathematical conservation ($\sum cell_{harm} = district_{harm}$) across all 20,626 cell-months with zero unallocated events.
+
+

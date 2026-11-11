@@ -44,7 +44,14 @@ def main() -> None:
         agg_summary = run_aggregation()
         logger.info(f"Aggregation complete: {agg_summary}")
 
-    if args.stage not in ("help", "ingest", "cluster", "aggregate", "all"):
+    if args.stage in ("harmonize", "all"):
+        logger.info("Executing harmonize stage...")
+        from pyroscope_pipeline.harmonize.run import run_harmonization
+
+        harm_summary = run_harmonization()
+        logger.info(f"Harmonization complete: {harm_summary}")
+
+    if args.stage not in ("help", "ingest", "cluster", "aggregate", "harmonize", "all"):
         logger.info(f"Stage '{args.stage}' requested (placeholder until stage implementation).")
 
 
