@@ -96,3 +96,4 @@ export function CalendarCell({
     </td>
   );
 }
+

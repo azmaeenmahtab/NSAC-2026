@@ -217,4 +217,84 @@ export const handlers = [
       meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
     });
   }),
+
+  http.post("*/api/ask", async ({ request }) => {
+    const body = (await request.json()) as { question?: string; area_id?: string; style?: string };
+    const q = body.question || "";
+
+    if (q.includes("trigger_429")) {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "RATE_LIMITED",
+            message: "Rate limit exceeded: max 10 queries per minute",
+          },
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": "30",
+          },
+        }
+      );
+    }
+
+    if (q.includes("trigger_502")) {
+      return new HttpResponse(
+        JSON.stringify({
+          error: {
+            code: "UPSTREAM_ERROR",
+            message: "Upstream model provider timeout connecting to LLM service",
+          },
+        }),
+        {
+          status: 502,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    let answerText =
+      "In Chittagong Hill Tracts (PRESET-CHT), fire activity peaks strongly between March and April. In 2020, May experienced an extreme anomaly with 200 physical fire events.";
+
+    if (q.includes("xss_test")) {
+      answerText =
+        "<script>alert('xss')</script><img onerror=\"alert(1)\" src=\"x\"/> In Chittagong Hill Tracts, peak burning occurs in March.";
+    }
+
+    return HttpResponse.json({
+      data: {
+        answer: answerText,
+        mode: "replay",
+        citations: [
+          {
+            tool: "get_season",
+            areaId: "PRESET-CHT",
+            years: [2012, 2013, 2014, 2015, 2016],
+            dataVersion: "v0.1.0-fixtures",
+          },
+          {
+            tool: "get_anomalies",
+            areaId: "PRESET-CHT",
+            years: [2020],
+            dataVersion: "v0.1.0-fixtures",
+          },
+        ],
+        toolCalls: [
+          {
+            name: "get_season",
+            args: { area_id: "PRESET-CHT" },
+            durationMs: 35.2,
+          },
+          {
+            name: "get_anomalies",
+            args: { area_id: "PRESET-CHT", year: 2020 },
+            durationMs: 48.6,
+          },
+        ],
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
 ];

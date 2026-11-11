@@ -25,3 +25,4 @@ export type SeriesVisibility = {
   naive_splice: boolean;
   harmonized: boolean;
 };
+

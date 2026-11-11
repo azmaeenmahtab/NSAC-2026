@@ -31,3 +31,4 @@ export function useMethodologyJump() {
     staleTime: 60 * 60 * 1000,
   });
 }
+

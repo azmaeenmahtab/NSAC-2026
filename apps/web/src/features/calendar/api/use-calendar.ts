@@ -10,3 +10,4 @@ export function useCalendar(area = "PRESET-CHT") {
     staleTime: 5 * 60 * 1000,
   });
 }
+

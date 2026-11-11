@@ -57,3 +57,4 @@ export function SeasonBand({ season, className }: SeasonBandProps) {
     </div>
   );
 }
+
