@@ -28,5 +28,5 @@ A running FastAPI service that loads the processed (or fixture) Parquet data int
 ## Tasks
 - [x] Core plumbing, meta and areas implemented
 - [x] Router registration pattern documented in `main.py` (one line per feature)
-- [ ] Dockerfile stub builds (NOT verified: Docker is not installed on @Aragon's machine; needs a build on a machine with Docker or in CI)
+- [x] Dockerfile stub builds (completed and verified in S02)
 - [x] Master plan row A01 set to `[x]`
