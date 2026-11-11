@@ -42,11 +42,7 @@ out/
 .turbo/
 
 # Environment and secrets
-.env
 .env*.local
-.env.development
-.env.test
-.env.production
 !.env.example
 
 # Database
@@ -66,7 +62,6 @@ coverage/
 # IDE / OS
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
 *.swp
 *.swo
@@ -75,3 +70,4 @@ Thumbs.db
 .ipynb_checkpoints/
 *-checkpoint.ipynb
 
+config.bat
