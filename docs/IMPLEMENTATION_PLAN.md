@@ -20,7 +20,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
 | [x] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | @azmaeenmahtab |
-| [ ] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | |
+| [~] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
 | [ ] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | |
 | [ ] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | |
 | [ ] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | |
