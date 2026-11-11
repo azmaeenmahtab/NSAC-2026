@@ -26,5 +26,5 @@ Fast hex-density data for the map and monthly series (raw vs harmonized) for the
 ## Tasks
 - [x] Heatmap and series implemented with tests
 - [x] OpenAPI updated if shapes changed; examples updated
-- [x] Timing measured on real data and logged in the PR
+- [ ] Timing measured on real data and logged in the PR (blocked: real processed data needs D03-D07; only fixtures exist)
 - [x] Master plan row A02 set to `[x]`
