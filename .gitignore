@@ -75,3 +75,5 @@ Thumbs.db
 .ipynb_checkpoints/
 *-checkpoint.ipynb
 
+#Bug Report
+docs/BUG_REPORT.md
