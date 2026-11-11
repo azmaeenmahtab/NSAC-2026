@@ -19,15 +19,15 @@ Produce the harmonized MODIS-equivalent record per district, aggregated up, down
 - Output: `data/interim/harmonized_region.parquet`, `calibration_report.parquet`, `harmonized_cell.parquet`, `diagnostics.json`.
 
 ## Tests
-- [ ] On the S01 fixture (VIIRS = 3 x MODIS exactly): every district chooses a method with CV RMSE 0 within 1e-9, and `harmonized == raw_modis` equivalent everywhere in the overlap
-- [ ] Aggregate-up: country equals the sum of the districts exactly (fixture)
-- [ ] Downscale conservation: cell sums equal the district value within 1e-6 (fixture), and the `unallocated_harmonized` case (district raw VIIRS 0) is reported
-- [ ] Fallback test: a sparse district (mean MODIS below 3) uses the parent calibration unit
-- [ ] Jump metrics on a synthetic series where the splice jumps by a known factor 3: `naive_ratio` is about 3 and `harmonized_ratio` is about 1
-- [ ] Determinism: identical hashes across two runs
+- [x] On the S01 fixture (VIIRS = 3 x MODIS exactly): every district chooses a method with CV RMSE 0 within 1e-9, and `harmonized == raw_modis` equivalent everywhere in the overlap
+- [x] Aggregate-up: country equals the sum of the districts exactly (fixture)
+- [x] Downscale conservation: cell sums equal the district value within 1e-6 (fixture), and the `unallocated_harmonized` case (district raw VIIRS 0) is reported
+- [x] Fallback test: a sparse district (mean MODIS below 3) uses the parent calibration unit
+- [x] Jump metrics on a synthetic series where the splice jumps by a known factor 3: `naive_ratio` is about 3 and `harmonized_ratio` is about 1
+- [x] Determinism: identical hashes across two runs
 
 ## Tasks
-- [ ] Units, build, downscale, aggregate-up, jump metrics implemented
-- [ ] Stage runs on the real monthly tables; calibration report reviewed by a human: list units that fell back, units where QM beat ratio, any unit with poor CV (flag, do not hide)
-- [ ] Update `docs/DATA_FINDINGS.md` with the real jump metrics and CV numbers; update the pitch owner
-- [ ] Master plan row D06 set to `[x]`
+- [x] Units, build, downscale, aggregate-up, jump metrics implemented
+- [x] Stage runs on the real monthly tables; calibration report reviewed by a human: list units that fell back, units where QM beat ratio, any unit with poor CV (flag, do not hide)
+- [x] Update `docs/DATA_FINDINGS.md` with the real jump metrics and CV numbers; update the pitch owner
+- [x] Master plan row D06 set to `[x]`
