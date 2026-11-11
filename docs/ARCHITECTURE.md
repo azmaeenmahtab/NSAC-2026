@@ -4,10 +4,10 @@
 
 | Layer | Choice |
 | --- | --- |
-| Python | 3.12 (VERIFY the exact version supported by your host), `uv` with lockfile |
-| Pipeline libs | pandas, numpy, scipy, scikit-learn (BallTree haversine), h3 (h3-py v4), geopandas, shapely, pyarrow, duckdb, httpx, pyyaml, pydantic |
-| API | FastAPI, Pydantic v2, uvicorn, DuckDB, slowapi (rate limit), rapidfuzz (area name matching), httpx, google-genai or another SDK behind the provider adapter (VERIFY) |
-| Web | Next.js App Router, React, TypeScript strict, Tailwind (dark), shadcn/ui, react-map-gl (MapLibre), deck.gl (`@deck.gl/geo-layers` H3HexagonLayer), Recharts, TanStack Query, d3-scale-chromatic, openapi-typescript, MSW (mocks) |
+| Python | 3.12 (verified 3.12.10), `uv` with lockfile |
+| Pipeline libs | pandas, numpy, scipy, scikit-learn (BallTree haversine), h3 (h3-py v4.5), geopandas, shapely, pyarrow, duckdb (2.0), httpx, pyyaml, pydantic |
+| API | FastAPI, Pydantic v2, uvicorn, DuckDB, slowapi (rate limit), rapidfuzz (area name matching), httpx, `google-genai` (>=2.30.1, Interactions API with `gemini-3.8-flash` behind the provider adapter) |
+| Web | Next.js App Router, React, TypeScript strict, Tailwind (dark), shadcn/ui, `react-map-gl` (8.1.3 via `react-map-gl/maplibre` + `maplibre-gl` ^5.24.0), deck.gl (9.4.1: `@deck.gl/geo-layers` `H3HexagonLayer`, `@deck.gl/mapbox` `MapboxOverlay`), `h3-js` (4.5.0), Recharts, TanStack Query, `d3-scale-chromatic` + `d3-color`, openapi-typescript, MSW (mocks) |
 | Tests | pytest, hypothesis (optional), vitest, React Testing Library, Playwright |
 | Tooling | ruff, mypy, pre-commit (optional), GitHub Actions, Docker (API image) |
 
@@ -106,9 +106,9 @@ Python: ruff + mypy (strict on pipeline engines), type hints everywhere, datacla
 
 ## 10. Environment variables
 
-`services/api/.env.example`: `DATA_DIR=../../data/processed/current`, `WEB_ORIGIN=http://localhost:3000`, `LLM_PROVIDER=replay` (gemini|replay), `LLM_MODEL=` (VERIFY a current model id), `GEMINI_API_KEY=`, `SMTP_HOST=`, `SMTP_USER=`, `SMTP_PASSWORD=`, `ALERTS_FROM=`, `APP_DB_PATH=./app.db`.
+`services/api/.env.example`: `DATA_DIR=../../data/processed/current`, `WEB_ORIGIN=http://localhost:3000`, `LLM_PROVIDER=replay` (gemini|replay), `LLM_MODEL=gemini-3.8-flash`, `GEMINI_API_KEY=`, `SMTP_HOST=`, `SMTP_USER=`, `SMTP_PASSWORD=`, `ALERTS_FROM=`, `APP_DB_PATH=./app.db`.
 `pipeline/.env.example`: `FIRMS_MAP_KEY=`, `DATA_ROOT=../data`.
-`apps/web/.env.example`: `NEXT_PUBLIC_API_URL=http://localhost:8000`, `NEXT_PUBLIC_USE_MOCKS=false`, `NEXT_PUBLIC_BASEMAP_STYLE_URL=` (VERIFY a free style URL and its terms).
+`apps/web/.env.example`: `NEXT_PUBLIC_API_URL=http://localhost:8000`, `NEXT_PUBLIC_USE_MOCKS=false`, `NEXT_PUBLIC_BASEMAP_STYLE_URL=https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json` (fallback: `https://tiles.openfreemap.org/styles/dark`).
 
 ## 11. Git workflow
 

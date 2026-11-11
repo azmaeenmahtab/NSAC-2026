@@ -16,8 +16,8 @@ Depends: none. Priority: P0. Window: PRE. Code lives in `spikes/<name>/`, is exc
 - Read first: the current official function-calling docs for the provider; VERIFY the model id to use and the free-tier limits; check the SDK's thread-safety and timeout options.
 
 ## Tasks
-- [ ] Spike A done with fps numbers and the working snippet
-- [ ] Spike B done with timings and the UINT64 handling decision
-- [ ] Spike C done with the exact SDK call shape and model id
-- [ ] `docs/SPIKE_RESULTS.md` written; update ARCHITECTURE.md section 1 if versions or libraries changed (log in the Deviation Log)
-- [ ] Master plan row P04 set to `[x]`
+- [x] Spike A done with fps numbers and the working snippet
+- [x] Spike B done with timings and the UINT64 handling decision
+- [x] Spike C done with the exact SDK call shape and model id
+- [x] `docs/SPIKE_RESULTS.md` written; update ARCHITECTURE.md section 1 if versions or libraries changed (log in the Deviation Log)
+- [x] Master plan row P04 set to `[x]`

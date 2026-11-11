@@ -21,9 +21,9 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
 | [x] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | @azmaeenmahtab |
 | [x] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
-| [ ] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | |
-| [~] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | @Aragon |
-| [x] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | @adityasaha03 |
+| [~] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | @Aragon |
+| [x] | P04 | Three tech spikes (deck.gl H3, DuckDB, LLM tools) | P0 | PRE | none | 4 | plan/pre/P04-tech-spikes.md | @Aragon |
+| [~] | P05 | UX design pass (wireframes, tokens, copy) | P0 | PRE | none | 3 | plan/pre/P05-design.md | @adityasaha03 |
 
 ## Shared
 
@@ -107,3 +107,4 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 - 2026-11-11, P02: Replaced research report draft estimates (3,029 vs 10,972 annual fires; "3 to 7 times") with empirical figures from raw FIRMS data (MODIS raw ~9,645, VIIRS raw ~39,193; raw ratio 4.10x, filtered ratio 3.77x; ST-DBSCAN physical fire events ~560 vs ~860, ratio 1.5x; overlap window 2012-02 to 2026-10). Impact: ensures scientific accuracy in pitch, methodology page, and algorithm parameters.
 - 2026-11-11, P02: Confirmed that NRT CSVs lack the `type` column present in archive CSVs. Impact: pipeline ingest must treat missing `type` as NaN rather than failing or dropping rows.
+- 2026-11-11, P04: Verified and pinned exact tech stack versions in `docs/ARCHITECTURE.md` and `docs/SPIKE_RESULTS.md`: `@deck.gl/*@9.4.1` (`@deck.gl/mapbox` `MapboxOverlayProps`), `react-map-gl@8.1.3`, `maplibre-gl@^5.24.0` (avoids v6 bundler worker changes), `h3-js@4.5.0`, `d3-color@3.1.1` alongside `d3-scale-chromatic@3.1.1`, `duckdb@2.0.0` (requires `CAST(year AS INTEGER) * 100 + month` to avoid `INT16` multiplication overflow), and `google-genai>=2.30.1` Interactions API (`client.interactions.create`) with `gemini-3.8-flash` and keyless CARTO Dark Matter / OpenFreeMap dark basemap URLs. Impact: removes integration and runtime risk for F02, A02, and A05.
