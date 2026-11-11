@@ -19,14 +19,14 @@ Turn the raw MODIS and VIIRS CSVs into one clean `detections.parquet` with a uni
 - `firms_api.py`: `fetch_area(source, bbox, start_date, days, map_key)` with exponential backoff, a token bucket that keeps below 3,000 transactions per 10 minutes, redacts the MAP_KEY in logs, returns a DataFrame. VERIFY the allowed day range and transaction cost (see P01).
 
 ## Tests
-- [ ] `normalize` unit tests: `acq_time` `"52"` -> `00:52`, `"1330"` -> `13:30`, `"0"` -> `00:00`
-- [ ] `confidence` tests: MODIS 29 dropped, 30 kept, 80 kept; VIIRS `l` dropped, `n` and `h` kept; MODIS `type` 2 dropped
-- [ ] Duplicate rows removed; counts by reason correct on a 20-row fixture
-- [ ] Stage run on the fixture raw files produces the DB_SCHEMA columns and types
-- [ ] Idempotent: running twice yields identical Parquet bytes content (compare a content hash)
+- [x] `normalize` unit tests: `acq_time` `"52"` -> `00:52`, `"1330"` -> `13:30`, `"0"` -> `00:00`
+- [x] `confidence` tests: MODIS 29 dropped, 30 kept, 80 kept; VIIRS `l` dropped, `n` and `h` kept; MODIS `type` 2 dropped
+- [x] Duplicate rows removed; counts by reason correct on a 20-row fixture
+- [x] Stage run on the fixture raw files produces the DB_SCHEMA columns and types
+- [x] Idempotent: running twice yields identical Parquet bytes content (compare a content hash)
 
 ## Tasks
-- [ ] Readers, normalize, confidence filter implemented per spec
-- [ ] `firms_api.py` implemented with a mocked-HTTP test for backoff and the rate limiter
-- [ ] Stage `ingest` runs on the real raw files; manifest counts written; row counts logged in the PR
-- [ ] Master plan row D01 set to `[x]`
+- [x] Readers, normalize, confidence filter implemented per spec
+- [x] `firms_api.py` implemented with a mocked-HTTP test for backoff and the rate limiter
+- [x] Stage `ingest` runs on the real raw files; manifest counts written; row counts logged in the PR
+- [x] Master plan row D01 set to `[x]`

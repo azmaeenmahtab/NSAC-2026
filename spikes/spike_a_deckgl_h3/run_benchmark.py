@@ -203,4 +203,3 @@ def run_benchmark() -> dict[str, Any]:
 if __name__ == "__main__":
     metrics = run_benchmark()
     print("Spike A Browser Metrics:", json.dumps(metrics, indent=2))
-

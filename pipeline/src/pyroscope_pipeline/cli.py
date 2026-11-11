@@ -23,7 +23,15 @@ def main() -> None:
         parser.print_help()
         sys.exit(0)
 
-    logger.info(f"Stage '{args.stage}' requested (placeholder until stage implementation).")
+    if args.stage in ("ingest", "all"):
+        logger.info("Executing ingest stage...")
+        from pyroscope_pipeline.ingest.run import run_ingest
+
+        stats = run_ingest()
+        logger.info(f"Ingest complete: {stats}")
+
+    if args.stage not in ("help", "ingest", "all"):
+        logger.info(f"Stage '{args.stage}' requested (placeholder until stage implementation).")
 
 
 if __name__ == "__main__":
