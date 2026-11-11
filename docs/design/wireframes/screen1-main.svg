@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="100%" height="100%" style="background:#080B10;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E141F"/>
+      <stop offset="100%" stop-color="#141D2D"/>
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E141F"/>
+      <stop offset="100%" stop-color="#0A0E17"/>
+    </linearGradient>
+    <linearGradient id="infernoRamp" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000004"/>
+      <stop offset="16%" stop-color="#280B54"/>
+      <stop offset="33%" stop-color="#651A80"/>
+      <stop offset="50%" stop-color="#9F2F7F"/>
+      <stop offset="66%" stop-color="#D44842"/>
+      <stop offset="83%" stop-color="#F57D15"/>
+      <stop offset="100%" stop-color="#FCFFA4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- TOP HEADER (Height: 64px) -->
+  <rect x="0" y="0" width="1440" height="64" fill="url(#headerGrad)" stroke="#1F293D" stroke-width="1"/>
+  
+  <!-- Logo & Title -->
+  <circle cx="36" cy="32" r="14" fill="#FF6B00"/>
+  <path d="M30 38 Q36 22 42 38 Q36 34 30 38" fill="#FFF"/>
+  <text x="60" y="38" fill="#F8FAFC" font-size="18" font-weight="700" letter-spacing="-0.5">PyroScope</text>
+  <rect x="156" y="22" width="130" height="20" rx="4" fill="#1F293D"/>
+  <text x="164" y="36" fill="#94A3B8" font-size="10" font-weight="600">NASA Space Apps 2026</text>
+
+  <!-- Area Selector Combobox -->
+  <rect x="310" y="16" width="280" height="32" rx="6" fill="#161F30" stroke="#2D3B55" stroke-width="1"/>
+  <text x="324" y="37" fill="#94A3B8" font-size="12">Area:</text>
+  <text x="362" y="37" fill="#FF6B00" font-size="12" font-weight="600">Chittagong Hill Tracts (CHT)</text>
+  <polygon points="572,30 580,30 576,36" fill="#94A3B8"/>
+
+  <!-- Global Time Range Pill -->
+  <rect x="605" y="16" width="200" height="32" rx="6" fill="#161F30" stroke="#2D3B55" stroke-width="1"/>
+  <text x="618" y="37" fill="#94A3B8" font-size="12">Range:</text>
+  <text x="668" y="37" fill="#F8FAFC" font-size="12" font-weight="500">2000-11 – 2026-10</text>
+
+  <!-- Metric Toggle Buttons -->
+  <rect x="820" y="16" width="270" height="32" rx="6" fill="#161F30" stroke="#2D3B55" stroke-width="1"/>
+  <rect x="822" y="18" width="105" height="28" rx="4" fill="#FF6B00"/>
+  <text x="836" y="36" fill="#FFF" font-size="11" font-weight="600">Harmonized</text>
+  <text x="942" y="36" fill="#94A3B8" font-size="11">Raw MODIS</text>
+  <text x="1025" y="36" fill="#94A3B8" font-size="11">Raw VIIRS</text>
+
+  <!-- Navigation Links -->
+  <text x="1115" y="37" fill="#FF6B00" font-size="13" font-weight="600">Mission Control</text>
+  <text x="1225" y="37" fill="#94A3B8" font-size="13">Hidden Jump</text>
+  <text x="1310" y="37" fill="#94A3B8" font-size="13">Ask Assistant</text>
+  <text x="1395" y="37" fill="#94A3B8" font-size="13">Docs</text>
+
+  <!-- LEFT: 3D MAP VIEWPORT (Width: 920px, Height: 836px) -->
+  <g transform="translate(0, 64)">
+    <!-- Map Background / Water / Canvas -->
+    <rect x="0" y="0" width="920" height="836" fill="#0A0E17"/>
+    <path d="M120 100 Q 250 80, 400 120 T 700 300 T 800 600 T 600 800 T 200 700 Z" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    
+    <!-- Simplified Bangladesh Coastline & Borders -->
+    <path d="M280 150 L380 140 L520 180 L650 250 L680 400 L620 550 L560 620 L450 680 L350 650 L280 500 L220 380 Z" fill="#131B2B" stroke="#2D3B55" stroke-width="1.5"/>
+    <!-- CHT Region Boundary Highlight -->
+    <path d="M580 410 L680 430 L690 580 L620 640 L590 520 Z" fill="#1F293D" fill-opacity="0.6" stroke="#FF6B00" stroke-width="2" stroke-dasharray="4 2"/>
+    <text x="610" y="470" fill="#FF6B00" font-size="12" font-weight="700">CHT PRESET</text>
+
+    <!-- H3 Hexagon Clusters (Deck.gl H3HexagonLayer simulated) -->
+    <!-- Low density purple -->
+    <polygon points="340,300 355,292 370,300 370,318 355,326 340,318" fill="#4A0C6B" opacity="0.8"/>
+    <polygon points="372,282 387,274 402,282 402,300 387,308 372,300" fill="#651A80" opacity="0.8"/>
+    <polygon points="410,320 425,312 440,320 440,338 425,346 410,338" fill="#781C6D" opacity="0.8"/>
+    
+    <!-- Medium density orange in CHT area -->
+    <polygon points="610,480 625,472 640,480 640,498 625,506 610,498" fill="#D44842" opacity="0.9"/>
+    <polygon points="626,452 641,444 656,452 656,470 641,478 626,470" fill="#F57D15" opacity="0.95"/>
+    <polygon points="642,480 657,472 672,480 672,498 657,506 642,498" fill="#FCFFA4" opacity="1" stroke="#FFF" stroke-width="1.5"/>
+    <polygon points="626,508 641,500 656,508 656,526 641,534 626,526" fill="#F57D15" opacity="0.9"/>
+    <polygon points="610,536 625,528 640,536 640,554 625,562 610,554" fill="#D44842" opacity="0.85"/>
+
+    <!-- Map Floating Controls (Top-Right of Map) -->
+    <g transform="translate(850, 20)">
+      <rect x="0" y="0" width="48" height="140" rx="8" fill="#0E141F" stroke="#2D3B55" stroke-width="1"/>
+      <text x="18" y="28" fill="#F8FAFC" font-size="18" font-weight="700">+</text>
+      <line x1="8" y1="42" x2="40" y2="42" stroke="#1F293D"/>
+      <text x="20" y="66" fill="#F8FAFC" font-size="18" font-weight="700">−</text>
+      <line x1="8" y1="80" x2="40" y2="80" stroke="#1F293D"/>
+      <rect x="10" y="92" width="28" height="18" rx="3" fill="#161F30"/>
+      <text x="15" y="105" fill="#FF6B00" font-size="9" font-weight="700">3D</text>
+      <text x="14" y="130" fill="#94A3B8" font-size="9">R7</text>
+    </g>
+
+    <!-- Map Hover Tooltip Simulation -->
+    <g transform="translate(685, 430)">
+      <rect x="0" y="0" width="190" height="90" rx="6" fill="#0E141F" stroke="#FF6B00" stroke-width="1"/>
+      <text x="12" y="20" fill="#94A3B8" font-size="10">H3 Cell: <tspan fill="#F8FAFC" font-family="monospace">87642825fffffff</tspan></text>
+      <text x="12" y="38" fill="#94A3B8" font-size="11">District: <tspan fill="#F8FAFC" font-weight="600">Rangamati</tspan></text>
+      <text x="12" y="56" fill="#94A3B8" font-size="11">Harmonized Events: <tspan fill="#FF6B00" font-weight="700">42.8</tspan></text>
+      <text x="12" y="74" fill="#94A3B8" font-size="11">Est. Radiative Power: <tspan fill="#F8FAFC">184 MW</tspan></text>
+    </g>
+
+    <!-- Inferno Color Legend (Bottom-Left of Map) -->
+    <g transform="translate(24, 760)">
+      <rect x="0" y="0" width="340" height="56" rx="6" fill="#0E141F" fill-opacity="0.9" stroke="#2D3B55" stroke-width="1"/>
+      <text x="12" y="18" fill="#F8FAFC" font-size="11" font-weight="600">Harmonized Fire Events / Month (H3 Res 7)</text>
+      <rect x="12" y="26" width="316" height="10" rx="2" fill="url(#infernoRamp)"/>
+      <text x="12" y="48" fill="#64748B" font-size="10">0 (Quiet)</text>
+      <text x="110" y="48" fill="#64748B" font-size="10">15</text>
+      <text x="200" y="48" fill="#64748B" font-size="10">75</text>
+      <text x="290" y="48" fill="#64748B" font-size="10">300+ (Peak)</text>
+    </g>
+  </g>
+
+  <!-- RIGHT: ANALYTICAL SIDE PANEL (Width: 520px, Height: 836px) -->
+  <g transform="translate(920, 64)">
+    <rect x="0" y="0" width="520" height="836" fill="url(#panelGrad)" stroke="#1F293D" stroke-width="1"/>
+
+    <!-- Side Panel Header -->
+    <text x="24" y="34" fill="#F8FAFC" font-size="16" font-weight="700">FireCalendar Overview</text>
+    <rect x="360" y="18" width="136" height="24" rx="4" fill="#161F30"/>
+    <text x="370" y="34" fill="#FF6B00" font-size="11" font-weight="600">Season: Mar–May</text>
+
+    <!-- Key Metrics Ribbon -->
+    <g transform="translate(24, 52)">
+      <!-- Card 1 -->
+      <rect x="0" y="0" width="150" height="64" rx="6" fill="#161F30" stroke="#1F293D"/>
+      <text x="12" y="20" fill="#94A3B8" font-size="11">Mean Annual Events</text>
+      <text x="12" y="46" fill="#F8FAFC" font-size="20" font-weight="700">384</text>
+      <text x="65" y="46" fill="#10B981" font-size="11">● Normal</text>
+
+      <!-- Card 2 -->
+      <rect x="160" y="0" width="150" height="64" rx="6" fill="#161F30" stroke="#1F293D"/>
+      <text x="12" y="20" fill="#94A3B8" font-size="11">Season Share</text>
+      <text x="12" y="46" fill="#FF6B00" font-size="20" font-weight="700">97.2%</text>
+      <text x="78" y="46" fill="#94A3B8" font-size="11">of yearly</text>
+
+      <!-- Card 3 -->
+      <rect x="320" y="0" width="150" height="64" rx="6" fill="#161F30" stroke="#1F293D"/>
+      <text x="12" y="20" fill="#94A3B8" font-size="11">Peak Month</text>
+      <text x="12" y="46" fill="#F8FAFC" font-size="20" font-weight="700">April</text>
+      <text x="65" y="46" fill="#EF4444" font-size="11">▲ High Risk</text>
+    </g>
+
+    <!-- FireCalendar Matrix (Grid of Years x Months) -->
+    <g transform="translate(24, 136)">
+      <text x="0" y="16" fill="#F8FAFC" font-size="13" font-weight="600">2000–2026 Monthly Anomaly Matrix</text>
+      
+      <!-- Season Bracket Marker -->
+      <rect x="110" y="26" width="90" height="14" rx="3" fill="rgba(255, 107, 0, 0.15)"/>
+      <text x="120" y="37" fill="#FF6B00" font-size="9" font-weight="600">[ Burning Season ]</text>
+
+      <!-- Month Headers -->
+      <g transform="translate(40, 52)" fill="#64748B" font-size="9" font-family="monospace">
+        <text x="0" y="0">J</text><text x="24" y="0">F</text><text x="48" y="0" fill="#FF6B00">M</text>
+        <text x="72" y="0" fill="#FF6B00">A</text><text x="96" y="0" fill="#FF6B00">M</text><text x="120" y="0">J</text>
+        <text x="144" y="0">J</text><text x="168" y="0">A</text><text x="192" y="0">S</text>
+        <text x="216" y="0">O</text><text x="240" y="0">N</text><text x="264" y="0">D</text>
+      </g>
+
+      <!-- Grid Rows (Sample Years) -->
+      <!-- 2024 -->
+      <text x="0" y="74" fill="#94A3B8" font-size="10" font-family="monospace">2024</text>
+      <g transform="translate(36, 62)">
+        <rect x="0" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="24" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="48" y="0" width="20" height="16" rx="2" fill="#D44842" stroke="#F59E0B" stroke-width="1"/><text x="54" y="12" fill="#FFF" font-size="8">▲</text>
+        <rect x="72" y="0" width="20" height="16" rx="2" fill="#FCFFA4" stroke="#EF4444" stroke-width="1.5"/><text x="78" y="12" fill="#000" font-size="8">◆</text>
+        <rect x="96" y="0" width="20" height="16" rx="2" fill="#F57D15"/>
+        <rect x="120" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="144" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="168" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="192" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="216" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="240" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="264" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+      </g>
+
+      <!-- 2023 -->
+      <text x="0" y="96" fill="#94A3B8" font-size="10" font-family="monospace">2023</text>
+      <g transform="translate(36, 84)">
+        <rect x="0" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="24" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="48" y="0" width="20" height="16" rx="2" fill="#651A80"/>
+        <rect x="72" y="0" width="20" height="16" rx="2" fill="#F57D15" stroke="#F59E0B"/><text x="78" y="12" fill="#FFF" font-size="8">▲</text>
+        <rect x="96" y="0" width="20" height="16" rx="2" fill="#280B54"/>
+        <rect x="120" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="144" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="168" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="192" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="216" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="240" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+        <rect x="264" y="0" width="20" height="16" rx="2" fill="#161F30"/>
+      </g>
+
+      <!-- Anomaly Legend -->
+      <g transform="translate(0, 115)">
+        <text x="0" y="10" fill="#94A3B8" font-size="10">Anomaly Keys:</text>
+        <circle cx="95" cy="7" r="4" fill="#10B981"/>
+        <text x="105" y="10" fill="#94A3B8" font-size="10">● Normal (≤90th)</text>
+        <text x="210" y="11" fill="#F59E0B" font-size="10">▲ Elevated (&gt;90th)</text>
+        <text x="320" y="11" fill="#EF4444" font-size="10">◆ Extreme (&gt;95th)</text>
+      </g>
+    </g>
+
+    <!-- Bottom Chart: Time Series Preview -->
+    <g transform="translate(24, 290)">
+      <text x="0" y="16" fill="#F8FAFC" font-size="13" font-weight="600">Harmonized Fire Trend (2000–Present)</text>
+      <rect x="0" y="28" width="470" height="170" rx="6" fill="#161F30" stroke="#1F293D"/>
+      <!-- Grid lines -->
+      <line x1="40" y1="50" x2="450" y2="50" stroke="#1F293D" stroke-dasharray="2 2"/>
+      <line x1="40" y1="95" x2="450" y2="95" stroke="#1F293D" stroke-dasharray="2 2"/>
+      <line x1="40" y1="140" x2="450" y2="140" stroke="#1F293D" stroke-dasharray="2 2"/>
+      <line x1="40" y1="170" x2="450" y2="170" stroke="#2D3B55"/>
+
+      <!-- Spline curve (Harmonized) -->
+      <path d="M40 160 Q 90 155, 140 145 T 240 140 T 320 150 T 400 130 T 440 135" fill="none" stroke="#FF6B00" stroke-width="2.5"/>
+      <!-- Historical Baseline envelope -->
+      <path d="M40 145 L 440 145" stroke="#64748B" stroke-dasharray="4 4" stroke-width="1.2"/>
+      <text x="360" y="140" fill="#94A3B8" font-size="9">25-Yr Baseline Mean</text>
+    </g>
+
+    <!-- Bottom Assistant Callout -->
+    <g transform="translate(24, 500)">
+      <rect x="0" y="0" width="470" height="110" rx="6" fill="#141D2D" stroke="#2D3B55"/>
+      <circle cx="20" cy="24" r="8" fill="#FF6B00"/>
+      <text x="36" y="28" fill="#F8FAFC" font-size="12" font-weight="600">Ask PyroScope Assistant</text>
+      <rect x="365" y="16" width="90" height="18" rx="3" fill="#1F293D"/>
+      <text x="372" y="29" fill="#10B981" font-size="9">Replay Verified</text>
+      <text x="16" y="55" fill="#94A3B8" font-size="11">"When does fire season usually start in the Chittagong Hill Tracts?"</text>
+      <text x="16" y="74" fill="#F8FAFC" font-size="11">→ CHT fire season starts strictly in March and peaks in April (97.2% annual share).</text>
+      <text x="16" y="94" fill="#FF6B00" font-size="10" font-weight="600">[View Grounded Citations &amp; Tool Logs →]</text>
+    </g>
+
+    <!-- Attribution Footer -->
+    <g transform="translate(24, 780)">
+      <text x="0" y="12" fill="#64748B" font-size="9">NASA FIRMS MODIS &amp; VIIRS data courtesy of NASA LANCE / UMD. geoBoundaries CC BY 3.0.</text>
+      <text x="0" y="26" fill="#64748B" font-size="9">Notice: Research &amp; early warning decision support. Not an official emergency evacuation service.</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="100%" height="100%" style="background:#080B10;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E141F"/>
+      <stop offset="100%" stop-color="#141D2D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- HEADER (Height: 64px) -->
+  <rect x="0" y="0" width="1440" height="64" fill="url(#headerGrad)" stroke="#1F293D" stroke-width="1"/>
+  <circle cx="36" cy="32" r="14" fill="#FF6B00"/>
+  <path d="M30 38 Q36 22 42 38 Q36 34 30 38" fill="#FFF"/>
+  <text x="60" y="38" fill="#F8FAFC" font-size="18" font-weight="700">PyroScope</text>
+  <rect x="156" y="22" width="130" height="20" rx="4" fill="#1F293D"/>
+  <text x="164" y="36" fill="#94A3B8" font-size="10" font-weight="600">NASA Space Apps 2026</text>
+
+  <!-- Navigation -->
+  <text x="1115" y="37" fill="#94A3B8" font-size="13">Mission Control</text>
+  <text x="1225" y="37" fill="#94A3B8" font-size="13">Hidden Jump</text>
+  <text x="1310" y="37" fill="#94A3B8" font-size="13">Ask Assistant</text>
+  <text x="1395" y="37" fill="#FF6B00" font-size="13" font-weight="600">Docs</text>
+
+  <!-- CONTENT CONTAINER -->
+  <g transform="translate(60, 90)">
+    <text x="0" y="24" fill="#F8FAFC" font-size="24" font-weight="700">Scientific Methodology &amp; Diagnostic Transparency</text>
+    <text x="0" y="48" fill="#94A3B8" font-size="13">
+      Full disclosure of spatial-temporal clustering algorithms, empirical quantile transfer functions, cross-validation metrics, and scientific limitations.
+    </text>
+
+    <!-- SECTION 1: ST-DBSCAN CLUSTERING DIAGRAM (Width: 640px) -->
+    <g transform="translate(0, 70)">
+      <rect x="0" y="0" width="640" height="250" rx="8" fill="#0E141F" stroke="#1F293D" stroke-width="1"/>
+      <text x="20" y="26" fill="#F8FAFC" font-size="14" font-weight="600">1. Spatio-Temporal Event Clustering (ST-DBSCAN)</text>
+      <text x="20" y="44" fill="#94A3B8" font-size="11">Grouping discrete thermal pixels into coherent physical fire events</text>
+
+      <!-- Diagram visual -->
+      <g transform="translate(30, 60)">
+        <!-- Cluster boundary envelope -->
+        <ellipse cx="140" cy="80" rx="90" ry="50" fill="rgba(255, 107, 0, 0.08)" stroke="#FF6B00" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <!-- Pixels inside cluster -->
+        <circle cx="90" cy="70" r="5" fill="#FF6B00"/>
+        <circle cx="130" cy="60" r="6" fill="#FF6B00"/>
+        <circle cx="160" cy="90" r="7" fill="#FCFFA4"/>
+        <circle cx="180" cy="75" r="5" fill="#FF6B00"/>
+        <text x="90" y="145" fill="#FF6B00" font-size="11" font-weight="600">Physical Fire Event #1042</text>
+        <text x="90" y="160" fill="#94A3B8" font-size="10">Pixels = 4 | Total FRP = 210 MW</text>
+
+        <!-- Noise point outside -->
+        <circle cx="280" cy="110" r="4" fill="#64748B"/>
+        <text x="290" y="114" fill="#64748B" font-size="10">Noise point (dropped, label -1)</text>
+
+        <!-- Algorithm Parameters Callout -->
+        <g transform="translate(360, 10)">
+          <rect x="0" y="0" width="220" height="150" rx="6" fill="#161F30"/>
+          <text x="14" y="24" fill="#F8FAFC" font-size="11" font-weight="700">ST-DBSCAN Parameters:</text>
+          <text x="14" y="46" fill="#94A3B8" font-size="11">• Spatial eps ($\epsilon_s$): <tspan fill="#38BDF8">2,700 m</tspan></text>
+          <text x="14" y="66" fill="#94A3B8" font-size="11">• Temporal eps ($\epsilon_t$): <tspan fill="#38BDF8">24 hours</tspan></text>
+          <text x="14" y="86" fill="#94A3B8" font-size="11">• Min Points ($minPts$): <tspan fill="#38BDF8">2</tspan></text>
+          <text x="14" y="106" fill="#94A3B8" font-size="11">• Metric: <tspan fill="#38BDF8">Haversine (Great Circle)</tspan></text>
+          <text x="14" y="126" fill="#10B981" font-size="10">✓ Filters isolated single-pixel noise</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- SECTION 2: QUANTILE MAPPING CDF MATCHING (Width: 640px) -->
+    <g transform="translate(680, 70)">
+      <rect x="0" y="0" width="640" height="250" rx="8" fill="#0E141F" stroke="#1F293D" stroke-width="1"/>
+      <text x="20" y="26" fill="#F8FAFC" font-size="14" font-weight="600">2. Empirical Quantile Mapping (Calibration Engine)</text>
+      <text x="20" y="44" fill="#94A3B8" font-size="11">Transfer function: mapping VIIRS cumulative probability to MODIS baseline</text>
+
+      <!-- CDF Curve Graphic -->
+      <g transform="translate(40, 60)">
+        <line x1="0" y1="130" x2="260" y2="130" stroke="#2D3B55" stroke-width="1.5"/>
+        <line x1="0" y1="0" x2="0" y2="130" stroke="#2D3B55" stroke-width="1.5"/>
+        <text x="-30" y="15" fill="#64748B" font-size="10">1.0</text>
+        <text x="-30" y="70" fill="#64748B" font-size="10">0.5</text>
+        <text x="-30" y="130" fill="#64748B" font-size="10">0.0</text>
+        <text x="240" y="145" fill="#64748B" font-size="10">Count</text>
+
+        <!-- VIIRS CDF (shifted right, higher values) -->
+        <path d="M0 130 Q 80 125, 140 70 T 240 10" fill="none" stroke="#F43F5E" stroke-width="2" stroke-dasharray="3 3"/>
+        <text x="160" y="45" fill="#F43F5E" font-size="10">CDF (VIIRS)</text>
+
+        <!-- MODIS Target CDF (shifted left, lower values) -->
+        <path d="M0 130 Q 40 120, 80 65 T 160 10" fill="none" stroke="#38BDF8" stroke-width="2"/>
+        <text x="75" y="40" fill="#38BDF8" font-size="10">CDF (MODIS)</text>
+
+        <!-- Mapping Arrow -->
+        <line x1="180" y1="35" x2="115" y2="35" stroke="#FF6B00" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="130" y="25" fill="#FF6B00" font-size="9" font-weight="700">Transfer Knots</text>
+
+        <!-- Formula Callout -->
+        <g transform="translate(300, 10)">
+          <rect x="0" y="0" width="280" height="150" rx="6" fill="#161F30"/>
+          <text x="14" y="24" fill="#F8FAFC" font-size="11" font-weight="700">Transfer Formulation:</text>
+          <text x="14" y="46" fill="#FF6B00" font-size="12" font-family="monospace">y = F_MODIS⁻¹( F_VIIRS(x) )</text>
+          <text x="14" y="70" fill="#94A3B8" font-size="10">• Pooled 3-month window: [m-1, m, m+1]</text>
+          <text x="14" y="86" fill="#94A3B8" font-size="10">• Leave-one-year-out Cross-Validation</text>
+          <text x="14" y="102" fill="#94A3B8" font-size="10">• Downscaling to cells: proportional conservation</text>
+          <text x="14" y="126" fill="#10B981" font-size="10">✓ Preserves true regional trends</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- SECTION 3: CROSS-VALIDATION DIAGNOSTIC TABLE (Width: 1320px) -->
+    <g transform="translate(0, 340)">
+      <rect x="0" y="0" width="1320" height="180" rx="8" fill="#0E141F" stroke="#1F293D" stroke-width="1"/>
+      <text x="24" y="26" fill="#F8FAFC" font-size="14" font-weight="600">3. Leave-One-Year-Out Cross-Validation Metrics (Overlap Period: 2012–2026)</text>
+      
+      <!-- Table Header -->
+      <g transform="translate(24, 46)">
+        <rect x="0" y="0" width="1272" height="30" rx="4" fill="#161F30"/>
+        <text x="16" y="20" fill="#94A3B8" font-size="11" font-weight="600">Calibration Region</text>
+        <text x="240" y="20" fill="#94A3B8" font-size="11" font-weight="600">Method Selected</text>
+        <text x="440" y="20" fill="#94A3B8" font-size="11" font-weight="600">CV RMSE (QM vs Ratio)</text>
+        <text x="660" y="20" fill="#94A3B8" font-size="11" font-weight="600">CV MAE</text>
+        <text x="860" y="20" fill="#94A3B8" font-size="11" font-weight="600">CV Mean Bias</text>
+        <text x="1080" y="20" fill="#94A3B8" font-size="11" font-weight="600">Spearman Rank Corr</text>
+      </g>
+
+      <!-- Row 1: PRESET-CHT -->
+      <g transform="translate(24, 84)">
+        <text x="16" y="18" fill="#FF6B00" font-size="12" font-weight="600">Chittagong Hill Tracts (CHT)</text>
+        <text x="240" y="18" fill="#F8FAFC" font-size="11">Quantile Mapping</text>
+        <text x="440" y="18" fill="#10B981" font-size="11" font-family="monospace">14.2 vs 28.6 (-50%)</text>
+        <text x="660" y="18" fill="#F8FAFC" font-size="11" font-family="monospace">8.4 events</text>
+        <text x="860" y="18" fill="#10B981" font-size="11" font-family="monospace">+0.3 (Unbiased)</text>
+        <text x="1080" y="18" fill="#10B981" font-size="11" font-family="monospace">0.942 (p &lt; 0.001)</text>
+      </g>
+      <line x1="24" y1="112" x2="1296" y2="112" stroke="#1F293D"/>
+
+      <!-- Row 2: National Bangladesh -->
+      <g transform="translate(24, 122)">
+        <text x="16" y="18" fill="#F8FAFC" font-size="12" font-weight="600">Bangladesh (National Total)</text>
+        <text x="240" y="18" fill="#F8FAFC" font-size="11">Bottom-up District Sum</text>
+        <text x="440" y="18" fill="#10B981" font-size="11" font-family="monospace">22.8 vs 44.1 (-48%)</text>
+        <text x="660" y="18" fill="#F8FAFC" font-size="11" font-family="monospace">15.1 events</text>
+        <text x="860" y="18" fill="#10B981" font-size="11" font-family="monospace">-0.1 (Unbiased)</text>
+        <text x="1080" y="18" fill="#10B981" font-size="11" font-family="monospace">0.968 (p &lt; 0.001)</text>
+      </g>
+      <line x1="24" y1="150" x2="1296" y2="150" stroke="#1F293D"/>
+      <text x="40" y="168" fill="#64748B" font-size="10">Leave-one-year-out cross validation tests stability across 14 independent test folds (2012–2025).</text>
+    </g>
+
+    <!-- SECTION 4: SCIENTIFIC HONESTY & LIMITATIONS (Width: 1320px) -->
+    <g transform="translate(0, 540)">
+      <rect x="0" y="0" width="1320" height="190" rx="8" fill="#161F30" stroke="#F59E0B" stroke-width="1"/>
+      <text x="24" y="26" fill="#F59E0B" font-size="14" font-weight="700">4. Scientific Limitations &amp; Ethical Disclosures</text>
+
+      <g transform="translate(24, 46)" fill="#94A3B8" font-size="11">
+        <text x="0" y="14">• <tspan fill="#F8FAFC" font-weight="600">Not Burned Area:</tspan> Active-fire counts represent thermal hot spot detections at time of satellite overpass, NOT total burned area in hectares.</text>
+        <text x="0" y="34">• <tspan fill="#F8FAFC" font-weight="600">Pre-2012 Extrapolation Assumption:</tspan> Quantile calibration assumes the empirical relationship observed in 2012–2026 also held during 2000–2011.</text>
+        <text x="0" y="54">• <tspan fill="#F8FAFC" font-weight="600">MODIS Sensor Drift:</tspan> Terra and Aqua orbits drifted slightly in late life; Terra was joined by Aqua in mid-2002 (noted in data manifest).</text>
+        <text x="0" y="74">• <tspan fill="#F8FAFC" font-weight="600">Cloud &amp; Monsoon Under-Detection:</tspan> Heavy cloud cover attenuates thermal infrared detection; zero detections in July does not guarantee absence of small ground fires.</text>
+        <text x="0" y="94">• <tspan fill="#F8FAFC" font-weight="600">Advisory Decision Support:</tspan> PyroScope provides retrospective science and situational awareness; it is not an official tactical dispatch authority.</text>
+      </g>
+
+      <g transform="translate(24, 150)">
+        <rect x="0" y="0" width="180" height="26" rx="4" fill="#0E141F" stroke="#2D3B55"/>
+        <text x="14" y="17" fill="#38BDF8" font-size="10">Download manifest.json</text>
+        
+        <rect x="195" y="0" width="200" height="26" rx="4" fill="#0E141F" stroke="#2D3B55"/>
+        <text x="209" y="17" fill="#38BDF8" font-size="10">View Calibration Coefficients (Parquet)</text>
+      </g>
+    </g>
+  </g>
+</svg>
