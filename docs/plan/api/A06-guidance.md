@@ -18,6 +18,6 @@ Rule-based, sourced prevention and mitigation checklists tied to the area's cale
 Season start 3, end 5: month 2 -> `pre_season` (March 1 is within 30 days of mid-February; define "within 30 days" as the month before the start month); month 4 -> `in_season`; month 6 -> `post_season`; month 9 with latest class `extreme` -> `extreme`; month 9 normal -> `off_season`.
 
 ## Tasks
-- [ ] Content file with sourced items and `verified` flags
-- [ ] Rules, service, endpoint and tests (the five fixtures)
-- [ ] Master plan row A06 set to `[x]`
+- [x] Content file with sourced items and `verified` flags
+- [x] Rules, service, endpoint and tests (the five fixtures)
+- [x] Master plan row A06 set to `[x]`
