@@ -23,12 +23,12 @@ Let users subscribe to an area and receive a notice when the fire season is abou
 - today 2027-03-02: the next March 1 is 2028-03-01, 365 days ahead -> false
 
 ## Tests
-- [ ] The four dates above
-- [ ] Subscribe, confirm, send once, send again in the same period (no second email), unsubscribe
-- [ ] Invalid email, unknown area, bad lead days return 400/404; rate limit returns 429
-- [ ] Console mailer used in tests; no network
+- [x] The four dates above
+- [x] Subscribe, confirm, send once, send again in the same period (no second email), unsubscribe
+- [x] Invalid email, unknown area, bad lead days return 400/404; rate limit returns 429
+- [x] Console mailer used in tests; no network
 
 ## Tasks
-- [ ] Endpoints, evaluator, mailer, script implemented
-- [ ] Manual end-to-end with a real inbox in the demo environment
-- [ ] Master plan row A04 set to `[x]`
+- [x] Endpoints, evaluator, mailer, script implemented
+- [x] Manual end-to-end with a real inbox in the demo environment
+- [x] Master plan row A04 set to `[x]`

@@ -7,7 +7,13 @@ from collections.abc import Generator
 import duckdb
 from fastapi import Request
 
+from app.core.config import Settings, settings
 from app.core.dataset import DatasetLoadError, LoadedDataset
+
+
+def get_app_settings(request: Request) -> Settings:
+    """Return the active Settings configured on `request.app.state.settings`."""
+    return getattr(request.app.state, "settings", settings)
 
 
 def get_dataset(request: Request) -> LoadedDataset:

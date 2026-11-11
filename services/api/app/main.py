@@ -26,6 +26,7 @@ from app.core.ratelimit import (
     limiter,
     rate_limit_exception_handler,
 )
+from app.features.alerts import router as alerts_router
 from app.features.areas import router as areas_router
 from app.features.ask import router as ask_router
 from app.features.calendar import router as calendar_router
@@ -74,6 +75,7 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
 
     # Eagerly load dataset so both lifespan and direct TestClient(app) usage work seamlessly
     app_instance.state.dataset = load_dataset(cfg.data_dir, reference_dir=cfg.reference_dir)
+    app_instance.state.settings = cfg
     app_instance.state.limiter = limiter
 
     # Middleware: CORS restricted strictly to WEB_ORIGIN, Request-ID, and per-IP Rate Limiting
@@ -107,6 +109,7 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
     app_instance.include_router(methodology_router)
     app_instance.include_router(ask_router)
     app_instance.include_router(guidance_router)
+    app_instance.include_router(alerts_router)
 
     return app_instance
 
