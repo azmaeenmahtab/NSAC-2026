@@ -8,6 +8,7 @@ import { FireCalendar } from "@/features/calendar";
 import { SeriesChart } from "@/features/series";
 import { YearlyBars, YearlyTable, useYearlyStats } from "@/features/stats";
 import { ActionPlanner } from "@/features/guidance";
+import { AlertBanner, SubscribeForm, useActiveAlerts } from "@/features/alerts";
 import { useViewState } from "@/features/areas";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +66,9 @@ function YearlyStatsView({ areaId }: { areaId: string }) {
 
 function MainContent() {
   const [viewMode, setViewMode] = React.useState<ViewMode>("map");
+  const [showSubscribeModal, setShowSubscribeModal] = React.useState(false);
   const { area } = useViewState();
+  const { data: activeAlerts } = useActiveAlerts(area);
 
   return (
     <AppShell
@@ -73,6 +76,13 @@ function MainContent() {
       sidePanelContent={<SidePanelContent />}
     >
       <div className="relative flex flex-1 flex-col h-full overflow-hidden">
+        {/* Active Alert Banner */}
+        <AlertBanner
+          areaId={area}
+          alerts={activeAlerts}
+          onOpenSubscribe={() => setShowSubscribeModal(true)}
+        />
+
         {/* View Switcher Segmented Control Bar */}
         <div className="z-20 flex items-center justify-between border-b border-[#1f293d] bg-[#0e141f]/90 px-4 py-2 backdrop-blur-md">
           <div className="flex items-center gap-1 rounded-lg bg-[#080b10] p-1 border border-[#1f293d] overflow-x-auto">
@@ -168,6 +178,28 @@ function MainContent() {
             </div>
           )}
         </div>
+
+        {/* Subscribe Modal Dialog */}
+        {showSubscribeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
+            <div className="relative w-full max-w-md">
+              <button
+                type="button"
+                onClick={() => setShowSubscribeModal(false)}
+                className="absolute top-3 right-3 text-[#94a3b8] hover:text-white text-sm z-10"
+                aria-label="Close dialog"
+              >
+                ✕
+              </button>
+              <SubscribeForm
+                areaId={area}
+                onSuccess={() =>
+                  setTimeout(() => setShowSubscribeModal(false), 2500)
+                }
+              />
+            </div>
+          </div>
+        )}
       </div>
     </AppShell>
   );

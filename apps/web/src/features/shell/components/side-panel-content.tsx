@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { AreaSelector, AreaBreadcrumb, BBoxDraw, useViewState } from "@/features/areas";
+import { AlertStateCard, SubscribeForm, useActiveAlerts } from "@/features/alerts";
 
 export function SidePanelContent() {
   const { area, setArea } = useViewState();
+  const { data: alerts } = useActiveAlerts(area);
+  const [showSubscribe, setShowSubscribe] = useState(false);
 
   return (
     <div className="space-y-4">
@@ -22,6 +25,21 @@ export function SidePanelContent() {
         onSelectBBox={setArea}
         onClear={() => setArea("PRESET-CHT")}
       />
+
+      <AlertStateCard
+        areaId={area}
+        alerts={alerts}
+        onSubscribeClick={() => setShowSubscribe(!showSubscribe)}
+      />
+
+      {showSubscribe && (
+        <div className="pt-2">
+          <SubscribeForm
+            areaId={area}
+            onSuccess={() => setTimeout(() => setShowSubscribe(false), 3000)}
+          />
+        </div>
+      )}
     </div>
   );
 }
