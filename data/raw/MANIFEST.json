@@ -1,0 +1,57 @@
+{
+  "created_at": "2026-11-11T02:28:58.794845+00:00",
+  "area": "Bangladesh",
+  "bbox": [
+    88.0,
+    20.5,
+    92.8,
+    26.7
+  ],
+  "source": "NASA FIRMS Archive Download",
+  "files": [
+    {
+      "file_name": "fire_archive_M-C61_842592.csv",
+      "sensor": "MODIS_C6.1_Archive",
+      "request_id": "842592",
+      "row_count": 264682,
+      "file_size_bytes": 20700015,
+      "sha256": "172ab134ef0fa17a7b9990b92de2e412fff99f07cd5657857df76d8c19384991",
+      "date_min": "2000-11-02",
+      "date_max": "2026-08-28",
+      "download_date": "2026-11-11"
+    },
+    {
+      "file_name": "fire_archive_SV-C2_842593.csv",
+      "sensor": "VIIRS_SNPP_C2_Archive",
+      "request_id": "842593",
+      "row_count": 572044,
+      "file_size_bytes": 45962465,
+      "sha256": "bbeb52016680dba95cc0c65dfba2753d6486a0f554db2a958b0fec6c861e49e6",
+      "date_min": "2012-01-20",
+      "date_max": "2026-07-28",
+      "download_date": "2026-11-11"
+    },
+    {
+      "file_name": "fire_nrt_M-C61_842592.csv",
+      "sensor": "MODIS_C6.1_NRT",
+      "request_id": "842592",
+      "row_count": 30,
+      "file_size_bytes": 2682,
+      "sha256": "1915d261d63edfd2e294cb704098a9f603bfb9d563fb76519d17eb0c4463c4f4",
+      "date_min": "2026-09-02",
+      "date_max": "2026-11-01",
+      "download_date": "2026-11-11"
+    },
+    {
+      "file_name": "fire_nrt_SV-C2_842593.csv",
+      "sensor": "VIIRS_SNPP_C2_NRT",
+      "request_id": "842593",
+      "row_count": 412,
+      "file_size_bytes": 34364,
+      "sha256": "32b0c95ddbf4c5232e390fac6f717b64c0106cc8b0c2e9ea0ff2d0b1ff200ae4",
+      "date_min": "2026-08-02",
+      "date_max": "2026-11-01",
+      "download_date": "2026-11-11"
+    }
+  ]
+}

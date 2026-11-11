@@ -6,3 +6,18 @@ dependencies = []
 
 [tool.uv.workspace]
 members = ["pipeline", "services/api"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "h3",
+    "pandas",
+    "pyarrow",
+    "pyarrow.*",
+]
+ignore_missing_imports = true
+

@@ -1,0 +1,652 @@
+openapi: 3.1.0
+info:
+  title: PyroScope API Contract
+  version: 0.1.0
+  description: API specifications for PyroScope NASA MODIS & VIIRS fire harmonization platform.
+servers:
+  - url: /api
+    description: Base API path
+
+paths:
+  /health:
+    get:
+      summary: Health check and service status
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: "healthy" }
+                  service: { type: string, example: "PyroScope API" }
+                  version: { type: string, example: "0.1.0" }
+                required: [status, service, version]
+
+  /meta:
+    get:
+      summary: Metadata, active data version, and data lineage summary
+      operationId: getMeta
+      responses:
+        '200':
+          description: Metadata response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetaEnvelope'
+
+  /areas:
+    get:
+      summary: List all available regions and presets
+      operationId: getAreas
+      parameters:
+        - name: level
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [country, adm1, adm2, preset]
+      responses:
+        '200':
+          description: List of area definitions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AreasEnvelope'
+
+  /heatmap:
+    get:
+      summary: Retrieve H3 hexagonal cells with fire density within a bounding box
+      operationId: getHeatmap
+      parameters:
+        - name: bbox
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "88.0,20.5,92.8,26.7"
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "2020-01"
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "2020-12"
+        - name: metric
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [harmonized, raw_modis, raw_viirs]
+            default: harmonized
+        - name: res
+          in: query
+          required: false
+          schema:
+            type: integer
+            enum: [5, 6, 7]
+            default: 7
+      responses:
+        '200':
+          description: Heatmap cell data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeatmapEnvelope'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /series:
+    get:
+      summary: Monthly time series comparing raw vs harmonized values
+      operationId: getSeries
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "BGD"
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "2000-11"
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "2025-12"
+      responses:
+        '200':
+          description: Monthly series data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeriesEnvelope'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /calendar:
+    get:
+      summary: Grid of years x months with anomalies and climatology for FireCalendar
+      operationId: getCalendar
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "BGD"
+      responses:
+        '200':
+          description: FireCalendar data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalendarEnvelope'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+
+  /stats/yearly:
+    get:
+      summary: Yearly aggregated burning statistics
+      operationId: getYearlyStats
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "BGD"
+      responses:
+        '200':
+          description: Yearly summary rows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YearlyStatsEnvelope'
+
+  /anomalies:
+    get:
+      summary: Anomalous fire months
+      operationId: getAnomalies
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+            example: "BGD"
+        - name: year
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: class
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [normal, elevated, extreme]
+      responses:
+        '200':
+          description: List of anomalous months
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnomaliesEnvelope'
+
+  /methodology:
+    get:
+      summary: Methodology report, cross-validation metrics, and jump statistics
+      operationId: getMethodology
+      responses:
+        '200':
+          description: Methodology diagnostics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MethodologyEnvelope'
+
+  /ask:
+    post:
+      summary: Ask PyroScope AI Assistant grounded in typed tool execution
+      operationId: askAssistant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  maxLength: 500
+                  example: "When does the fire season start in Chittagong Hill Tracts?"
+                area_id:
+                  type: string
+                  nullable: true
+                  example: "PRESET-CHT"
+                style:
+                  type: string
+                  enum: [standard, plain]
+                  default: standard
+              required: [question]
+      responses:
+        '200':
+          description: Grounded assistant answer with tool citations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AskEnvelope'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimitedResponse'
+
+  /guidance:
+    get:
+      summary: Wildland action planner rule-based checklist
+      operationId: getGuidance
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: month
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+      responses:
+        '200':
+          description: Checklist items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GuidanceEnvelope'
+
+  /alerts/subscriptions:
+    post:
+      summary: Subscribe to fire calendar warnings
+      operationId: subscribeAlerts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                area_id:
+                  type: string
+                rule:
+                  type: string
+                  enum: [season_approaching, above_normal, both]
+                lead_days:
+                  type: integer
+                  default: 14
+              required: [email, area_id, rule]
+      responses:
+        '200':
+          description: Subscription request accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      message: { type: string }
+                      status: { type: string, example: "pending_confirmation" }
+                    required: [message, status]
+
+  /alerts/subscriptions/confirm:
+    get:
+      summary: Confirm email subscription
+      operationId: confirmAlerts
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Subscription confirmed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      confirmed: { type: boolean, example: true }
+                    required: [confirmed]
+
+  /alerts/active:
+    get:
+      summary: Active alert status for a given region
+      operationId: getActiveAlerts
+      parameters:
+        - name: area_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current alert states
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveAlertsEnvelope'
+
+components:
+  responses:
+    ErrorResponse:
+      description: Standard API Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RateLimitedResponse:
+      description: Rate Limit Exceeded
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  schemas:
+    MetaResponse:
+      type: object
+      properties:
+        dataVersion: { type: string, example: "v0.1.0-fixtures" }
+        asOf: { type: string, example: "2025-12-31" }
+        provisionalFrom: { type: string, nullable: true }
+        parametersSummary: { type: object }
+        sources: { type: array, items: { type: object } }
+        counts: { type: object }
+        attribution: { type: string }
+      required: [dataVersion, asOf, attribution]
+
+    MetaEnvelope:
+      type: object
+      properties:
+        data: { $ref: '#/components/schemas/MetaResponse' }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    AreaItem:
+      type: object
+      properties:
+        id: { type: string, example: "BGD" }
+        name: { type: string, example: "Bangladesh" }
+        level: { type: string, enum: [country, adm1, adm2, preset] }
+        parent_id: { type: string, nullable: true }
+        bbox: { type: array, items: { type: number }, example: [88.0, 20.5, 92.8, 26.7] }
+        aliases: { type: array, items: { type: string } }
+      required: [id, name, level, bbox]
+
+    AreasEnvelope:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/AreaItem' } }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    HeatmapCell:
+      type: object
+      properties:
+        h3: { type: string, example: "87642825fffffff" }
+        value: { type: number, example: 4.5 }
+      required: [h3, value]
+
+    HeatmapStats:
+      type: object
+      properties:
+        min: { type: number }
+        max: { type: number }
+        p95: { type: number }
+      required: [min, max, p95]
+
+    HeatmapEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cells: { type: array, items: { $ref: '#/components/schemas/HeatmapCell' } }
+            stats: { $ref: '#/components/schemas/HeatmapStats' }
+          required: [cells, stats]
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    SeriesPoint:
+      type: object
+      properties:
+        year: { type: integer }
+        month: { type: integer }
+        raw_modis: { type: number, nullable: true }
+        raw_viirs: { type: number, nullable: true }
+        naive_splice: { type: number }
+        harmonized: { type: number }
+        in_overlap: { type: boolean }
+        source_used: { type: string, enum: [modis_raw, viirs_calibrated] }
+        provisional: { type: boolean, default: false }
+      required: [year, month, naive_splice, harmonized, in_overlap, source_used]
+
+    SeriesEnvelope:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/SeriesPoint' } }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    CalendarCell:
+      type: object
+      properties:
+        year: { type: integer }
+        month: { type: integer }
+        value: { type: number }
+        class: { type: string, enum: [normal, elevated, extreme] }
+        percentile_rank: { type: number }
+      required: [year, month, value, class, percentile_rank]
+
+    MonthClimatology:
+      type: object
+      properties:
+        month: { type: integer }
+        mean: { type: number }
+        p50: { type: number }
+        p90: { type: number }
+        p95: { type: number }
+      required: [month, mean, p50, p90, p95]
+
+    FireSeason:
+      type: object
+      properties:
+        start_month: { type: integer }
+        peak_month: { type: integer }
+        end_month: { type: integer }
+        share_of_annual: { type: number }
+      required: [start_month, peak_month, end_month, share_of_annual]
+
+    CalendarEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            grid: { type: array, items: { $ref: '#/components/schemas/CalendarCell' } }
+            climatology: { type: array, items: { $ref: '#/components/schemas/MonthClimatology' } }
+            season: { $ref: '#/components/schemas/FireSeason' }
+          required: [grid, climatology, season]
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    YearlyStatRow:
+      type: object
+      properties:
+        year: { type: integer }
+        harmonized_total: { type: number }
+        frp_sum: { type: number }
+        rank: { type: integer }
+        vs_mean_pct: { type: number }
+        peak_month: { type: integer }
+      required: [year, harmonized_total, rank, vs_mean_pct, peak_month]
+
+    YearlyStatsEnvelope:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/YearlyStatRow' } }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    AnomalyItem:
+      type: object
+      properties:
+        year: { type: integer }
+        month: { type: integer }
+        value: { type: number }
+        percentile_rank: { type: number }
+        class: { type: string, enum: [normal, elevated, extreme] }
+      required: [year, month, value, percentile_rank, class]
+
+    AnomaliesEnvelope:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/AnomalyItem' } }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    MethodologyData:
+      type: object
+      properties:
+        parameters: { type: object }
+        calibration_summary: { type: array, items: { type: object } }
+        jump_metrics:
+          type: object
+          properties:
+            naive_ratio: { type: number }
+            harmonized_ratio: { type: number }
+            overlap_cv_rmse: { type: number }
+            overlap_cv_bias: { type: number }
+          required: [naive_ratio, harmonized_ratio]
+        limitations: { type: array, items: { type: string } }
+      required: [parameters, jump_metrics, limitations]
+
+    MethodologyEnvelope:
+      type: object
+      properties:
+        data: { $ref: '#/components/schemas/MethodologyData' }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    Citation:
+      type: object
+      properties:
+        tool: { type: string }
+        areaId: { type: string, nullable: true }
+        years: { type: array, items: { type: integer } }
+        dataVersion: { type: string }
+      required: [tool, dataVersion]
+
+    ToolCallLog:
+      type: object
+      properties:
+        name: { type: string }
+        args: { type: object }
+        durationMs: { type: number }
+      required: [name, args, durationMs]
+
+    AskResponse:
+      type: object
+      properties:
+        answer: { type: string }
+        citations: { type: array, items: { $ref: '#/components/schemas/Citation' } }
+        toolCalls: { type: array, items: { $ref: '#/components/schemas/ToolCallLog' } }
+        mode: { type: string, enum: [live, replay] }
+      required: [answer, citations, toolCalls, mode]
+
+    AskEnvelope:
+      type: object
+      properties:
+        data: { $ref: '#/components/schemas/AskResponse' }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    GuidanceItem:
+      type: object
+      properties:
+        id: { type: string }
+        stage: { type: string, enum: [pre_season, in_season, post_season, extreme] }
+        audience: { type: string }
+        text: { type: string }
+        source_title: { type: string }
+        source_url: { type: string }
+        verified: { type: boolean }
+      required: [id, stage, text, verified]
+
+    GuidanceEnvelope:
+      type: object
+      properties:
+        data: { type: array, items: { $ref: '#/components/schemas/GuidanceItem' } }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    ActiveAlertsEnvelope:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            season_approaching: { type: boolean }
+            above_normal: { type: boolean }
+            current_month_class: { type: string, enum: [normal, elevated, extreme] }
+          required: [season_approaching, above_normal]
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
+
+    ResponseMeta:
+      type: object
+      properties:
+        dataVersion: { type: string, example: "v0.1.0-fixtures" }
+        asOf: { type: string, example: "2025-12-31" }
+      required: [dataVersion, asOf]
+
+    ErrorDetail:
+      type: object
+      properties:
+        code: { type: string, example: "VALIDATION_ERROR" }
+        message: { type: string, example: "Invalid area identifier" }
+        requestId: { type: string, example: "req-12345" }
+      required: [code, message, requestId]
+
+    ErrorEnvelope:
+      type: object
+      properties:
+        error: { $ref: '#/components/schemas/ErrorDetail' }
+      required: [error]
+

@@ -14,9 +14,9 @@ Raw CSVs for MODIS (2000-11 to latest) and VIIRS S-NPP (2012-01 to latest) cover
 - Storage: `data/raw/<sensor>/<name>.csv` on the shared drive; never commit. Create `data/raw/MANIFEST.json` listing file name, sensor, date range, row count, sha256, download date, request id or URL (without the MAP_KEY).
 
 ## Tasks
-- [ ] Archive requests submitted for MODIS and VIIRS S-NPP (record request ids and submission time)
-- [ ] Fallback downloader written and tested on one month (only start it if the archive request is slow or fails)
-- [ ] Files downloaded; row counts per file logged; manifest with checksums created
-- [ ] Coverage check: first and last date per sensor, list of missing days
-- [ ] Shared drive link and manifest committed (manifest only) to `data/raw/MANIFEST.json`
-- [ ] Master plan row P01 set to `[x]`
+- [x] Archive requests submitted for MODIS and VIIRS S-NPP (request IDs 842592 and 842593)
+- [x] Fallback downloader written and tested on one month (archive succeeded directly)
+- [x] Files downloaded; row counts per file logged; manifest with checksums created (837,168 total fire detections)
+- [x] Coverage check: first and last date per sensor verified (2000-11-02 to 2026-11-01)
+- [x] Shared drive link and manifest committed (manifest only) to `data/raw/MANIFEST.json`
+- [x] Master plan row P01 set to `[x]`

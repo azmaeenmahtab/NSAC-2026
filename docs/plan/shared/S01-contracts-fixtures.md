@@ -19,9 +19,9 @@ Freeze the API shape and provide a tiny synthetic dataset so the API lane and bo
 - `make_fixtures.py` is byte-for-byte deterministic (seeded; sorted output; fixed Parquet settings).
 
 ## Tasks
-- [ ] OpenAPI complete and validates (use an OpenAPI linter in CI)
-- [ ] Examples consistent with the fixture numbers
-- [ ] Fixture generator and fixtures committed; test that running it twice gives identical files (hash)
-- [ ] Types generation and MSW mocks work in the web app (a page can fetch `/api/meta` from the mock)
-- [ ] All lanes notified that the contract is frozen; later changes go through a PR that updates the OpenAPI file and the docs
-- [ ] Master plan row S01 set to `[x]`
+- [x] OpenAPI complete and validates (use an OpenAPI linter in CI)
+- [x] Examples consistent with the fixture numbers
+- [x] Fixture generator and fixtures committed; test that running it twice gives identical files (hash)
+- [x] Types generation and MSW mocks work in the web app (a page can fetch `/api/meta` from the mock)
+- [x] All lanes notified that the contract is frozen; later changes go through a PR that updates the OpenAPI file and the docs
+- [x] Master plan row S01 set to `[x]`

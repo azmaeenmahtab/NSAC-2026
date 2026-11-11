@@ -29,3 +29,4 @@ test-web:
 
 pipeline:
 	uv run python -m pyroscope_pipeline all
+

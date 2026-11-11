@@ -1,0 +1,34 @@
+{
+  "data_version": "v0.1.0-fixtures",
+  "pipeline_version": "0.1.0",
+  "created_at": "2026-11-11T02:10:43.529116+00:00",
+  "git_commit": "fixtures-deterministic",
+  "as_of_date": "2025-12-31",
+  "provisional_from": null,
+  "parameters": {
+    "eps_spatial_meters": 2700.0,
+    "eps_temporal_hours": 24.0
+  },
+  "sources": [
+    {
+      "file_name": "synthetic_modis.csv",
+      "sensor": "MODIS",
+      "row_count": 1407,
+      "sha256": "deterministic-fixtures-sha256",
+      "date_range": [
+        "2000-11-01",
+        "2025-12-31"
+      ]
+    }
+  ],
+  "counts": {
+    "detections_raw": 10000,
+    "detections_kept": 10000,
+    "detections_dropped_confidence": 0,
+    "detections_dropped_duplicate": 0,
+    "events_created": 906,
+    "noise_points": 0,
+    "events_outside_roi": 0
+  },
+  "unallocated_harmonized": 0.0
+}
