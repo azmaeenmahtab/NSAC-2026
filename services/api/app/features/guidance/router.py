@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, Query
 
 from app.core.dataset import LoadedDataset
 from app.core.db import get_dataset, get_db_cursor
+from app.core.errors import ValidationAPIError
 from app.features.guidance.schemas import GuidanceEnvelope
 from app.features.guidance.service import get_guidance
 
@@ -25,9 +26,10 @@ CursorDep = Annotated[duckdb.DuckDBPyConnection, Depends(get_db_cursor)]
     operation_id="getGuidance",
 )
 def get_guidance_endpoint(
-    area_id: Annotated[str, Query(description="Target area or region ID")],
     dataset: DatasetDep,
     cursor: CursorDep,
+    area_id: Annotated[str | None, Query(description="Target area or region ID")] = None,
+    area: Annotated[str | None, Query(description="Alias for area_id")] = None,
     month: Annotated[int | None, Query(ge=1, le=12, description="Calendar month (1-12)")] = None,
     stage: Annotated[str | None, Query(description="Optional override stage filter")] = None,
     audience: Annotated[
@@ -36,10 +38,13 @@ def get_guidance_endpoint(
     ] = None,
 ) -> GuidanceEnvelope:
     """Return wildland fire checklist items and advisory stage for the area."""
+    target_area = area_id or area
+    if not target_area:
+        raise ValidationAPIError("Query parameter 'area_id' (or 'area') is required")
     return get_guidance(
         dataset=dataset,
         cursor=cursor,
-        area_id=area_id,
+        area_id=target_area,
         month=month,
         stage_override=stage,
         audience=audience,

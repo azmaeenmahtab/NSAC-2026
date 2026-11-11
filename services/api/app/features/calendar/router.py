@@ -22,7 +22,18 @@ CursorDep = Annotated[duckdb.DuckDBPyConnection, Depends(get_db_cursor)]
 async def get_calendar(
     dataset: DatasetDep,
     cursor: CursorDep,
-    area_id: Annotated[str, Query(description="Region ID or preset ID")],
+    area_id: Annotated[
+        str | None,
+        Query(description="Region ID or preset ID"),
+    ] = None,
+    area: Annotated[
+        str | None,
+        Query(description="Alias for area_id"),
+    ] = None,
 ) -> CalendarEnvelope:
     """Grid of years x months with anomalies and climatology for FireCalendar."""
-    return get_calendar_envelope(dataset=dataset, cursor=cursor, area_id=area_id)
+    target_area = area_id or area
+    if not target_area:
+        from app.core.errors import ValidationAPIError
+        raise ValidationAPIError("Query parameter 'area_id' (or 'area') is required")
+    return get_calendar_envelope(dataset=dataset, cursor=cursor, area_id=target_area)

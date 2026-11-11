@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, Query
 from app.core.config import Settings
 from app.core.dataset import LoadedDataset
 from app.core.db import get_app_settings, get_dataset, get_db_cursor
+from app.core.errors import ValidationAPIError
 from app.features.alerts.schemas import (
     ActiveAlertsEnvelope,
     ConfirmEnvelope,
@@ -83,7 +84,17 @@ async def delete_subscription(
 async def get_active(
     dataset: DatasetDep,
     cursor: CursorDep,
-    area_id: Annotated[str, Query(description="Region ID, preset ID, or bbox:<w>,<s>,<e>,<n>")],
+    area_id: Annotated[
+        str | None,
+        Query(description="Region ID, preset ID, or bbox:<w>,<s>,<e>,<n>"),
+    ] = None,
+    area: Annotated[
+        str | None,
+        Query(description="Alias for area_id"),
+    ] = None,
 ) -> ActiveAlertsEnvelope:
     """Active advisory alert status for an area."""
-    return get_active_alerts(dataset=dataset, cursor=cursor, area_id=area_id)
+    target_area = area_id or area
+    if not target_area:
+        raise ValidationAPIError("Query parameter 'area_id' (or 'area') is required")
+    return get_active_alerts(dataset=dataset, cursor=cursor, area_id=target_area)

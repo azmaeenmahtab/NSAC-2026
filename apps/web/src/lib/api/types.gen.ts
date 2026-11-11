@@ -62,7 +62,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Retrieve H3 hexagonal cells with fire density within a bounding box */
+        /** Retrieve H3 hexagonal cells with fire density within a bounding box or area */
         get: operations["getHeatmap"];
         put?: never;
         post?: never;
@@ -202,7 +202,8 @@ export interface paths {
         put?: never;
         /** Subscribe to fire calendar warnings */
         post: operations["subscribeAlerts"];
-        delete?: never;
+        /** Unsubscribe from alert notifications */
+        delete: operations["unsubscribeAlerts"];
         options?: never;
         head?: never;
         patch?: never;
@@ -292,8 +293,11 @@ export interface components {
         };
         HeatmapStats: {
             min: number;
-            max: number;
+            p50?: number;
             p95: number;
+            max: number;
+            sum?: number;
+            count?: number;
         };
         HeatmapEnvelope: {
             data: {
@@ -391,7 +395,14 @@ export interface components {
                 harmonized_ratio: number;
                 overlap_cv_rmse?: number;
                 overlap_cv_bias?: number;
+                rank_correlation?: number;
             };
+            qq_data?: {
+                quantile: number;
+                modis: number;
+                viirs_raw: number;
+                viirs_harmonized: number;
+            }[];
             limitations: string[];
         };
         MethodologyEnvelope: {
@@ -423,7 +434,7 @@ export interface components {
         GuidanceItem: {
             id: string;
             /** @enum {string} */
-            stage: "pre_season" | "in_season" | "post_season" | "extreme";
+            stage: "pre_season" | "in_season" | "post_season" | "extreme" | "off_season";
             audience?: string;
             text: string;
             source_title?: string;
@@ -564,10 +575,12 @@ export interface operations {
     };
     getHeatmap: {
         parameters: {
-            query: {
-                bbox: string;
-                from: string;
-                to: string;
+            query?: {
+                bbox?: string;
+                /** @description Area ID or preset ID (used when bbox is omitted) */
+                area?: string;
+                from?: string;
+                to?: string;
                 metric?: "harmonized" | "raw_modis" | "raw_viirs";
                 res?: 5 | 6 | 7;
             };
@@ -744,6 +757,8 @@ export interface operations {
             query: {
                 area_id: string;
                 month?: number;
+                stage?: "pre_season" | "in_season" | "post_season" | "extreme" | "off_season";
+                audience?: string;
             };
             header?: never;
             path?: never;
@@ -798,6 +813,38 @@ export interface operations {
                     };
                 };
             };
+        };
+    };
+    unsubscribeAlerts: {
+        parameters: {
+            query: {
+                /** @description Unique unsubscribe token */
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Subscription cancelled */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data?: {
+                            /** @example true */
+                            unsubscribed: boolean;
+                            /** @example Unsubscribed successfully */
+                            message?: string;
+                        };
+                    };
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
+            404: components["responses"]["ErrorResponse"];
         };
     };
     confirmAlerts: {

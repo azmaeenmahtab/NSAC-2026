@@ -20,6 +20,8 @@ class YearlyStatRow(BaseModel):
     rank: int
     vs_mean_pct: float
     peak_month: int
+    total_events: int | None = None
+    total_frp_mw: float | None = None
 
 
 class YearlyStatsEnvelope(BaseModel):

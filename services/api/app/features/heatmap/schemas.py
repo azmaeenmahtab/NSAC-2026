@@ -22,8 +22,11 @@ class HeatmapStats(BaseModel):
     """Summary distribution statistics across returned heatmap cells."""
 
     min: float
-    max: float
+    p50: float = 0.0
     p95: float
+    max: float
+    sum: float = 0.0
+    count: int = 0
 
 
 class HeatmapData(BaseModel):

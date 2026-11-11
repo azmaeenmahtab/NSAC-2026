@@ -42,7 +42,7 @@ class ConsoleMailer:
         self.sent_messages.clear()
 
     def send_confirmation(self, to_email: str, area_id: str, token: str) -> bool:
-        confirm_url = f"{settings.web_origin}/api/alerts/subscriptions/confirm?token={token}"
+        confirm_url = f"{settings.web_origin}/alerts/confirm?token={token}"
         msg = {
             "type": "confirmation",
             "to": to_email,
@@ -126,7 +126,7 @@ class SMTPMailer:
             return False
 
     def send_confirmation(self, to_email: str, area_id: str, token: str) -> bool:
-        confirm_url = f"{settings.web_origin}/api/alerts/subscriptions/confirm?token={token}"
+        confirm_url = f"{settings.web_origin}/alerts/confirm?token={token}"
         subject = f"[PyroScope] Confirm your fire advisory subscription for {area_id}"
         body = (
             f"Please confirm your fire advisory subscription for area {area_id}.\n\n"

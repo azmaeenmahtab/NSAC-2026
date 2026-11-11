@@ -7,7 +7,7 @@ The machine-readable contract is `contracts/openapi.yaml` (chunk S01 writes it f
 | GET /api/health | A01 | liveness; reports `dataLoaded` and `dataVersion` |
 | GET /api/meta | A01 | data version, as-of date, provisional-from, parameters summary, sources, counts, attribution text |
 | GET /api/areas | A01 | list presets and regions: id, name, level, parent, bbox, aliases; `?level=` filter |
-| GET /api/heatmap | A02 | `bbox`, `from` (YYYY-MM), `to`, `metric` = `harmonized`\|`raw_modis`\|`raw_viirs`, `res` = 5\|6\|7. Returns `{ res, metric, from, to, cells: [{ h3, value }], stats: { min, max, p95 } }`; max 40,000 cells |
+| GET /api/heatmap | A02 | `bbox` (or `area`), `from` (YYYY-MM), `to`, `metric` = `harmonized`\|`raw_modis`\|`raw_viirs`, `res` = 5\|6\|7. Returns `{ res, metric, from, to, cells: [{ h3, value }], stats: { min, p50, p95, max, sum, count } }`; max 40,000 cells |
 | GET /api/series | A02 | `area_id`, optional `from`/`to`. Monthly records: `raw_modis`, `raw_viirs`, `naive_splice` (MODIS before 2012-02 then VIIRS raw), `harmonized`, flags `in_overlap`, `source_used`, `provisional` |
 | GET /api/calendar | A03 | `area_id`. Years x months grid of harmonized values with `class` (normal/elevated/extreme), `percentile_rank`; the climatology (mean, p50, p90, p95) per month; the fire season (start, peak, end, share) |
 | GET /api/stats/yearly | A03 | `area_id`. Rows from `yearly`: total, FRP, rank, vs mean, peak month |

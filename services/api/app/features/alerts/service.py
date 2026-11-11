@@ -102,6 +102,7 @@ def unsubscribe(
         raise NotFoundAPIError("Invalid or unknown unsubscribe token")
 
     return UnsubscribeResponseData(
+        unsubscribed=True,
         message="Unsubscribed successfully",
     )
 

@@ -146,11 +146,14 @@ def get_heatmap_envelope(
         vals_arr = np.array([c.value for c in cells], dtype=np.float64)
         stats = HeatmapStats(
             min=round(float(np.min(vals_arr)), 6),
-            max=round(float(np.max(vals_arr)), 6),
+            p50=round(float(np.percentile(vals_arr, 50)), 6),
             p95=round(float(np.percentile(vals_arr, 95)), 6),
+            max=round(float(np.max(vals_arr)), 6),
+            sum=round(float(np.sum(vals_arr)), 6),
+            count=len(cells),
         )
     else:
-        stats = HeatmapStats(min=0.0, max=0.0, p95=0.0)
+        stats = HeatmapStats(min=0.0, p50=0.0, p95=0.0, max=0.0, sum=0.0, count=0)
 
     envelope = HeatmapEnvelope(
         data=HeatmapData(

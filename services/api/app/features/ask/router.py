@@ -14,6 +14,7 @@ _default_service = AskService()
 
 @router.post(
     "/api/ask",
+    operation_id="askAssistant",
     response_model=AskEnvelope,
     summary="Ask PyroScope AI Assistant grounded in typed tool execution",
     description="Ask a fire-history question; answered only through typed tools with citations and replay mode.",

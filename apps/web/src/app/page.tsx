@@ -11,7 +11,7 @@ import { ActionPlanner } from "@/features/guidance";
 import { AlertBanner, SubscribeForm, useActiveAlerts } from "@/features/alerts";
 import { DemoGuide } from "@/components/demo/demo-guide";
 import { QueryBoundary } from "@/components/feedback/query-boundary";
-import { useViewState } from "@/features/areas";
+import { useAreas, useViewState } from "@/features/areas";
 import { cn } from "@/lib/utils";
 
 const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
@@ -61,7 +61,17 @@ function YearlyStatsView({ areaId }: { areaId: string }) {
 function MainContent() {
   const [viewMode, setViewMode] = React.useState<ViewMode>("map");
   const [showSubscribeModal, setShowSubscribeModal] = React.useState(false);
-  const { area } = useViewState();
+  const { area, setArea } = useViewState();
+  const { data: areasEnvelope } = useAreas();
+
+  React.useEffect(() => {
+    const list = areasEnvelope?.data;
+    if (!list || list.length === 0) return;
+    if (!area.startsWith("bbox:") && !list.some((a) => a.id === area)) {
+      setArea(list[0].id);
+    }
+  }, [area, areasEnvelope?.data, setArea]);
+
   const { data: activeAlerts } = useActiveAlerts(area);
 
   return (

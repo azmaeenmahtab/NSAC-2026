@@ -62,6 +62,7 @@ class ConfirmEnvelope(BaseModel):
 class UnsubscribeResponseData(BaseModel):
     """Data payload for subscription removal."""
 
+    unsubscribed: bool = True
     message: str = "Unsubscribed successfully"
 
 

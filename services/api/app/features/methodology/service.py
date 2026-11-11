@@ -12,6 +12,7 @@ from app.features.meta.service import _filter_safe_parameters
 from app.features.methodology.repository import (
     compute_jump_metrics,
     fetch_calibration_summary,
+    fetch_qq_data,
 )
 from app.features.methodology.schemas import (
     MethodologyData,
@@ -49,12 +50,14 @@ def get_methodology_envelope(
     params = _filter_safe_parameters(dataset.manifest.get("parameters", {}))
     jump_metrics = compute_jump_metrics(cursor, region_id="BGD")
     cal_summary = fetch_calibration_summary(cursor, dataset.registered_views)
+    qq_data = fetch_qq_data(cursor, region_id="BGD")
 
     envelope = MethodologyEnvelope(
         data=MethodologyData(
             parameters=params,
             calibration_summary=cal_summary,
             jump_metrics=jump_metrics,
+            qq_data=qq_data,
             limitations=list(METHODOLOGY_LIMITATIONS),
         ),
         meta=ResponseMeta(dataVersion=dataset.data_version, asOf=dataset.as_of),

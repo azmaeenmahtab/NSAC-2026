@@ -6,7 +6,11 @@ export function useCalendar(area = "PRESET-CHT") {
   return useQuery({
     queryKey: ["calendar", area],
     queryFn: ({ signal }) =>
-      apiGet<ApiResponse<CalendarData>>("/calendar", { area }, { signal }),
+      apiGet<ApiResponse<CalendarData>>(
+        "/calendar",
+        { area_id: area },
+        { signal }
+      ),
     staleTime: 5 * 60 * 1000,
   });
 }

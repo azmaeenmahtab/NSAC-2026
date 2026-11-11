@@ -60,24 +60,31 @@ paths:
 
   /heatmap:
     get:
-      summary: Retrieve H3 hexagonal cells with fire density within a bounding box
+      summary: Retrieve H3 hexagonal cells with fire density within a bounding box or area
       operationId: getHeatmap
       parameters:
         - name: bbox
           in: query
-          required: true
+          required: false
           schema:
             type: string
             example: "88.0,20.5,92.8,26.7"
+        - name: area
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "PRESET-CHT"
+          description: Area ID or preset ID (used when bbox is omitted)
         - name: from
           in: query
-          required: true
+          required: false
           schema:
             type: string
             example: "2020-01"
         - name: to
           in: query
-          required: true
+          required: false
           schema:
             type: string
             example: "2020-12"
@@ -329,6 +336,34 @@ paths:
                       message: { type: string }
                       status: { type: string, example: "pending_confirmation" }
                     required: [message, status]
+    delete:
+      summary: Unsubscribe from alert notifications
+      operationId: unsubscribeAlerts
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Unique unsubscribe token
+      responses:
+        '200':
+          description: Subscription cancelled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      unsubscribed: { type: boolean, example: true }
+                      message: { type: string, example: "Unsubscribed successfully" }
+                    required: [unsubscribed]
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/ErrorResponse'
 
   /alerts/subscriptions/confirm:
     get:
@@ -440,8 +475,11 @@ components:
       type: object
       properties:
         min: { type: number }
-        max: { type: number }
+        p50: { type: number }
         p95: { type: number }
+        max: { type: number }
+        sum: { type: number }
+        count: { type: integer }
       required: [min, max, p95]
 
     HeatmapEnvelope:
@@ -570,7 +608,18 @@ components:
             harmonized_ratio: { type: number }
             overlap_cv_rmse: { type: number }
             overlap_cv_bias: { type: number }
+            rank_correlation: { type: number }
           required: [naive_ratio, harmonized_ratio]
+        qq_data:
+          type: array
+          items:
+            type: object
+            properties:
+              quantile: { type: number }
+              modis: { type: number }
+              viirs_raw: { type: number }
+              viirs_harmonized: { type: number }
+            required: [quantile, modis, viirs_raw, viirs_harmonized]
         limitations: { type: array, items: { type: string } }
       required: [parameters, jump_metrics, limitations]
 

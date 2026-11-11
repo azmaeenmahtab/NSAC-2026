@@ -16,6 +16,16 @@ class JumpMetrics(BaseModel):
     harmonized_ratio: float = Field(..., examples=[1.0])
     overlap_cv_rmse: float | None = Field(default=None, examples=[0.0])
     overlap_cv_bias: float | None = Field(default=None, examples=[0.0])
+    rank_correlation: float | None = Field(default=None, examples=[1.0])
+
+
+class QQPoint(BaseModel):
+    """Quantile-quantile empirical alignment point."""
+
+    quantile: float
+    modis: float
+    viirs_raw: float
+    viirs_harmonized: float
 
 
 class MethodologyData(BaseModel):
@@ -24,6 +34,7 @@ class MethodologyData(BaseModel):
     parameters: dict[str, Any] = Field(default_factory=dict)
     calibration_summary: list[dict[str, Any]] = Field(default_factory=list)
     jump_metrics: JumpMetrics
+    qq_data: list[QQPoint] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
 
 

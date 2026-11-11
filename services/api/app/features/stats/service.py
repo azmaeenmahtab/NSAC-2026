@@ -64,14 +64,18 @@ def _compute_bbox_yearly_stats(
     for _, row in yearly_df.iterrows():
         y = int(row["year"])
         frp_val = frp_by_year.get(y, float(row["frp_sum"]))
+        harm_tot = round(float(row["harmonized_total"]), 4)
+        frp_tot = round(frp_val, 4)
         rows.append(
             YearlyStatRow(
                 year=y,
-                harmonized_total=round(float(row["harmonized_total"]), 4),
-                frp_sum=round(frp_val, 4),
+                harmonized_total=harm_tot,
+                frp_sum=frp_tot,
                 rank=int(row["rank"]),
                 vs_mean_pct=round(float(row["vs_mean_pct"]), 4),
                 peak_month=int(row["peak_month"]),
+                total_events=round(harm_tot),
+                total_frp_mw=frp_tot,
             )
         )
 

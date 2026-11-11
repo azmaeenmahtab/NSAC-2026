@@ -37,6 +37,8 @@ def fetch_yearly_stats(
             rank=int(rk),
             vs_mean_pct=round(float(vmp), 4),
             peak_month=int(pm),
+            total_events=round(float(ht)),
+            total_frp_mw=round(float(frp), 4),
         )
         for y, ht, frp, rk, vmp, pm in rows
     ]
