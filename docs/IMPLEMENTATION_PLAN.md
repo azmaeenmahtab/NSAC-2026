@@ -68,7 +68,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 | [ ] | F05 | Yearly stats, guidance and action planner UI | P1 | EVENT | F04 | 3 | plan/web/F05-stats-guidance.md | |
 | [ ] | F06 | Alerts UI | P1 | EVENT | F03 | 3 | plan/web/F06-alerts-ui.md | |
 | [x] | F07 | Ask PyroScope chat UI | P0 | EVENT | F01 | 4 | plan/web/F07-ask-ui.md | @Aragon |
-| [ ] | F08 | Methodology and transparency page | P0 | EVENT | F01 | 3 | plan/web/F08-methodology.md | |
+| [~] | F08 | Methodology and transparency page | P0 | EVENT | F01 | 3 | plan/web/F08-methodology.md | @Aragon |
 | [ ] | F09 | Polish, accessibility, performance | P1 | EVENT | F02-F08 | 3 | plan/web/F09-polish.md | |
 
 ## Deliver
