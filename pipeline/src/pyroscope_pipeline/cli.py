@@ -37,7 +37,14 @@ def main() -> None:
         cluster_summary = run_clustering()
         logger.info(f"Clustering complete: {cluster_summary}")
 
-    if args.stage not in ("help", "ingest", "cluster", "all"):
+    if args.stage in ("aggregate", "all"):
+        logger.info("Executing aggregate stage...")
+        from pyroscope_pipeline.aggregate.run import run_aggregation
+
+        agg_summary = run_aggregation()
+        logger.info(f"Aggregation complete: {agg_summary}")
+
+    if args.stage not in ("help", "ingest", "cluster", "aggregate", "all"):
         logger.info(f"Stage '{args.stage}' requested (placeholder until stage implementation).")
 
 
