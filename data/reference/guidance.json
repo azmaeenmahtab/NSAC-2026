@@ -1,0 +1,138 @@
+[
+  {
+    "id": "g-01",
+    "stage": "pre_season",
+    "audience": "community",
+    "text": "Clear 10m defensible space around residential perimeters and remove accumulated dry leaf litter.",
+    "source_title": "Community Wildfire Preparedness Guide",
+    "source_url": "https://bforest.gov.bd/prep",
+    "verified": true
+  },
+  {
+    "id": "g-02",
+    "stage": "pre_season",
+    "audience": "land_manager",
+    "text": "Establish and clear strategic firebreaks along vulnerable forest boundaries and plantation edges.",
+    "source_title": "FAO Fire Management Voluntary Guidelines (Paper 163)",
+    "source_url": "https://www.fao.org/forestry/fire-management",
+    "verified": true
+  },
+  {
+    "id": "g-03",
+    "stage": "pre_season",
+    "audience": "responder",
+    "text": "Inspect community water sources, test portable pumps, and establish village communication phone trees.",
+    "source_title": "Standing Orders on Disaster (SOD) 2019 - MoDMR",
+    "source_url": "https://modmr.gov.bd/sod",
+    "verified": true
+  },
+  {
+    "id": "g-04",
+    "stage": "in_season",
+    "audience": "community",
+    "text": "Clear 10m defensible space around residential perimeters and remove dry slash.",
+    "source_title": "Bangladesh Forest Department Wildfire Guidelines",
+    "source_url": "https://bforest.gov.bd/guidelines",
+    "verified": true
+  },
+  {
+    "id": "g-05",
+    "stage": "in_season",
+    "audience": "land_manager",
+    "text": "Restrict agricultural residue burning during daytime peak thermal inversion hours (11:00-15:00).",
+    "source_title": "FAO Agricultural Fire Management Manual",
+    "source_url": "https://www.fao.org/forestry/fire-management",
+    "verified": true
+  },
+  {
+    "id": "g-06",
+    "stage": "in_season",
+    "audience": "responder",
+    "text": "Pre-stage rapid response water tenders and beat patrol units in high-risk H3 clusters.",
+    "source_title": "Local Forest Beat Emergency SOP",
+    "source_url": "https://bforest.gov.bd/sop",
+    "verified": false
+  },
+  {
+    "id": "g-07",
+    "stage": "post_season",
+    "audience": "community",
+    "text": "Report lingering smoldering tree roots or peat subsurface hot spots to local forest range offices.",
+    "source_title": "Community Wildfire Preparedness Guide",
+    "source_url": "https://bforest.gov.bd/prep",
+    "verified": true
+  },
+  {
+    "id": "g-08",
+    "stage": "post_season",
+    "audience": "land_manager",
+    "text": "Implement post-burn slope stabilization and native vegetative seeding to prevent monsoon soil erosion.",
+    "source_title": "FAO Post-Fire Rehabilitation Technical Manual",
+    "source_url": "https://www.fao.org/forestry/fire-management",
+    "verified": true
+  },
+  {
+    "id": "g-09",
+    "stage": "post_season",
+    "audience": "responder",
+    "text": "Conduct post-incident equipment maintenance, inventory replenishment, and community debriefs.",
+    "source_title": "Standing Orders on Disaster (SOD) 2019 - MoDMR",
+    "source_url": "https://modmr.gov.bd/sod",
+    "verified": true
+  },
+  {
+    "id": "g-10",
+    "stage": "extreme",
+    "audience": "community",
+    "text": "Enact immediate open-flame bans within 500m of forest borders and prepare emergency evacuation kits.",
+    "source_title": "National Disaster Management Protocol",
+    "source_url": "https://modmr.gov.bd/protocol",
+    "verified": true
+  },
+  {
+    "id": "g-11",
+    "stage": "extreme",
+    "audience": "land_manager",
+    "text": "Suspend all permitted burning operations and close tourist access to high-risk protected forest blocks.",
+    "source_title": "Bangladesh Forest Department Wildfire Guidelines",
+    "source_url": "https://bforest.gov.bd/guidelines",
+    "verified": true
+  },
+  {
+    "id": "g-12",
+    "stage": "extreme",
+    "audience": "responder",
+    "text": "Activate mutual aid agreements and establish daily aerial and satellite active fire detection patrols.",
+    "source_title": "National Disaster Management Protocol",
+    "source_url": "https://modmr.gov.bd/protocol",
+    "verified": true
+  },
+  {
+    "id": "g-13",
+    "stage": "off_season",
+    "audience": "community",
+    "text": "Participate in local community forestry fire prevention awareness workshops and hazard mapping.",
+    "source_title": "UNDRR Community-Based Fire Management Handbook",
+    "source_url": "https://www.undrr.org/cbfim",
+    "verified": true
+  },
+  {
+    "id": "g-14",
+    "stage": "off_season",
+    "audience": "land_manager",
+    "text": "Conduct planned fuel reduction treatments and inspect buffer zone access roads during dry weather.",
+    "source_title": "FAO Fire Management Voluntary Guidelines (Paper 163)",
+    "source_url": "https://www.fao.org/forestry/fire-management",
+    "verified": true
+  },
+  {
+    "id": "g-15",
+    "stage": "off_season",
+    "audience": "responder",
+    "text": "Review multi-agency mutual aid coordination plans and refresh field firefighter safety equipment.",
+    "source_title": "Standing Orders on Disaster (SOD) 2019 - MoDMR",
+    "source_url": "https://modmr.gov.bd/sod",
+    "verified": false
+  }
+]
+
