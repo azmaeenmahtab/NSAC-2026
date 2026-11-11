@@ -1,0 +1,41 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: services/api/Dockerfile
+    container_name: pyroscope-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_DIR=${DATA_DIR:-/workspace/data/fixtures}
+      - REFERENCE_DIR=/workspace/data/reference
+      - WEB_ORIGIN=${WEB_ORIGIN:-http://localhost:3000}
+      - LLM_PROVIDER=${LLM_PROVIDER:-replay}
+      - PORT=8000
+    volumes:
+      - ./data:/workspace/data:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    container_name: pyroscope-web
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+

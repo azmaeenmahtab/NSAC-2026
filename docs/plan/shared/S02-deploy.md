@@ -13,9 +13,9 @@ A public URL for the web app and the API, loaded with the real processed data, w
 - Smoke test script `scripts/smoke.sh`: health, meta, one heatmap, one calendar, one ask (replay).
 
 ## Tasks
-- [ ] Draft API and web deployed with fixture data (Day 1)
-- [ ] Real data deployed; smoke script passes against production
-- [ ] CORS, secrets and rate limits verified in production
-- [ ] `docker compose up` works from a clean clone
-- [ ] Rollback note: how to redeploy the previous data version
-- [ ] Master plan row S02 set to `[x]`
+- [x] Draft API and web deployed with fixture data (Day 1)
+- [x] Real data deployed; smoke script passes against production
+- [x] CORS, secrets and rate limits verified in production
+- [x] `docker compose up` works from a clean clone
+- [x] Rollback note: how to redeploy the previous data version
+- [x] Master plan row S02 set to `[x]`
