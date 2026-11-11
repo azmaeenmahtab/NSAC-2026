@@ -17,13 +17,13 @@ Keep the dataset alive: fetch recent detections, run the same pipeline on the ne
 - Publish: new `data/processed/<version>/`, `current` pointer updated, API reload endpoint or restart (see A01).
 
 ## Tests
-- [ ] `plan.py`: given `as_of_date = 2026-11-01` and today `2026-11-04`, plans days Nov 2 to Nov 3
-- [ ] `merge.py`: appending a day to a fixture changes only the affected month rows; boundary-spanning event re-clustered correctly (fixture with a 2-day event across the boundary)
-- [ ] Provisional rows excluded from climatology (fixture)
-- [ ] Mocked FIRMS responses for the fetch (success, 504 then success, empty day)
+- [x] `plan.py`: given `as_of_date = 2026-11-01` and today `2026-11-04`, plans days Nov 2 to Nov 3
+- [x] `merge.py`: appending a day to a fixture changes only the affected month rows; boundary-spanning event re-clustered correctly (fixture with a 2-day event across the boundary)
+- [x] Provisional rows excluded from climatology (fixture)
+- [x] Mocked FIRMS responses for the fetch (success, 504 then success, empty day)
 
 ## Tasks
-- [ ] Plan, fetch, merge, run implemented
+- [x] Plan, fetch, merge, run implemented
 - [ ] Manual run against the live FIRMS service with a real MAP_KEY for 3 days; results logged
-- [ ] Scheduled workflow committed (disabled until the key is added as a secret)
+- [x] Scheduled workflow committed (disabled until the key is added as a secret)
 - [ ] Master plan row D08 set to `[x]`

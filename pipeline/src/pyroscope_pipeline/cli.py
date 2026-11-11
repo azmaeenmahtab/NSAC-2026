@@ -14,7 +14,7 @@ def main() -> None:
         "stage",
         nargs="?",
         default="help",
-        choices=["help", "ingest", "cluster", "aggregate", "harmonize", "stats", "all"],
+        choices=["help", "ingest", "cluster", "aggregate", "harmonize", "stats", "nrt", "all"],
         help="Pipeline stage to execute",
     )
     args = parser.parse_args()
@@ -57,6 +57,13 @@ def main() -> None:
 
         stats_summary = run_stats()
         logger.info(f"Stats assembly complete: {stats_summary}")
+
+    if args.stage == "nrt":
+        logger.info("Executing NRT incremental update stage...")
+        from pyroscope_pipeline.nrt.run import run_nrt
+
+        nrt_summary = run_nrt()
+        logger.info(f"NRT update complete: {nrt_summary}")
 
 
 if __name__ == "__main__":
