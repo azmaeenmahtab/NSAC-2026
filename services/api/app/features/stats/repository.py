@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import duckdb
+import pandas as pd
 
 from app.features.stats.schemas import AnomalyItem, YearlyStatRow
 
@@ -82,3 +83,57 @@ def fetch_anomalies(
         )
         for y, m, v, pr, cls in rows
     ]
+
+
+def fetch_bbox_harmonized_monthly(
+    cursor: duckdb.DuckDBPyConnection,
+    bbox: tuple[float, float, float, float],
+) -> pd.DataFrame:
+    """Aggregate monthly harmonized fire events over cells within a bounding box."""
+    west, south, east, north = bbox
+    sql = """
+        WITH bbox_cells AS (
+            SELECT h3_r7
+            FROM cell_centroids
+            WHERE lon >= ? AND lon <= ? AND lat >= ? AND lat <= ?
+        )
+        SELECT
+            CAST('bbox' AS VARCHAR) AS region_id,
+            CAST(hc.year AS INTEGER) AS year,
+            CAST(hc.month AS INTEGER) AS month,
+            CAST(SUM(hc.harmonized) AS DOUBLE) AS harmonized
+        FROM harmonized_cell hc
+        JOIN bbox_cells bc ON hc.h3_r7 = bc.h3_r7
+        GROUP BY hc.year, hc.month
+        ORDER BY hc.year, hc.month
+    """
+    return cursor.execute(sql, [west, east, south, north]).df()
+
+
+def fetch_bbox_monthly_frp(
+    cursor: duckdb.DuckDBPyConnection,
+    bbox: tuple[float, float, float, float],
+) -> dict[tuple[int, int], float]:
+    """Aggregate monthly FRP over cells within a bounding box if monthly_cell exists."""
+    has_mc = cursor.execute(
+        "SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'monthly_cell'"
+    ).fetchone()
+    if not has_mc or has_mc[0] == 0:
+        return {}
+    west, south, east, north = bbox
+    sql = """
+        WITH bbox_cells AS (
+            SELECT h3_r7
+            FROM cell_centroids
+            WHERE lon >= ? AND lon <= ? AND lat >= ? AND lat <= ?
+        )
+        SELECT
+            CAST(mc.year AS INTEGER) AS y,
+            CAST(mc.month AS INTEGER) AS m,
+            CAST(SUM(mc.frp_sum) AS DOUBLE) AS frp
+        FROM monthly_cell mc
+        JOIN bbox_cells bc ON mc.h3_r7 = bc.h3_r7
+        GROUP BY y, m
+    """
+    rows = cursor.execute(sql, [west, east, south, north]).fetchall()
+    return {(int(y), int(m)): float(frp) for y, m, frp in rows}

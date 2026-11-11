@@ -140,15 +140,82 @@ def test_methodology_keys_and_limitations(client: TestClient) -> None:
     assert any("MODIS-equivalent fire events" in s for s in limitations)
 
 
-def test_validation_and_404_errors(client: TestClient) -> None:
-    """Validation errors on bbox stubs, bad class filter, and 404 for unknown area."""
-    # Bbox queries return 400 validation error explaining D07 prerequisite
-    res_bbox = client.get("/api/calendar", params={"area_id": "bbox:88.0,20.5,92.8,26.7"})
-    assert res_bbox.status_code == 400
-    assert "Custom bbox" in res_bbox.json()["error"]["message"]
+def test_calendar_bbox_covers_country_reproduces_bgd(client: TestClient) -> None:
+    """On-the-fly bbox covering all fixture cells reproduces the country season and calendar."""
+    res = client.get("/api/calendar", params={"area_id": "bbox:88.0,20.5,93.0,27.0"})
+    assert res.status_code == 200
+    payload = res.json()
+    data = payload["data"]
 
-    res_bbox_stats = client.get("/api/stats/yearly", params={"area_id": "bbox:88.0,20.5,92.8,26.7"})
-    assert res_bbox_stats.status_code == 400
+    # Season check: start 4, peak 5, end 6
+    season = data["season"]
+    assert season["start_month"] == 4
+    assert season["peak_month"] == 5
+    assert season["end_month"] == 6
+    assert season["share_of_annual"] == pytest.approx(0.7093, abs=1e-3)
+
+    # Climatology check: 12 calendar months
+    climatology = data["climatology"]
+    assert len(climatology) == 12
+    assert [c["month"] for c in climatology] == list(range(1, 13))
+
+    # Grid check: 2020-05 cell is extreme with value 300.0 (alpha 200 + beta 100)
+    grid = data["grid"]
+    by_ym = {(c["year"], c["month"]): c for c in grid}
+    cell_2020_05 = by_ym[(2020, 5)]
+    assert cell_2020_05["value"] == pytest.approx(300.0, abs=1e-4)
+    assert cell_2020_05["class"] == "extreme"
+    assert cell_2020_05["percentile_rank"] == pytest.approx(1.0, abs=1e-4)
+
+    # Normal month check: 2020-04 is normal
+    cell_2020_04 = by_ym[(2020, 4)]
+    assert cell_2020_04["class"] == "normal"
+
+
+def test_stats_bbox_yearly_and_anomalies(client: TestClient) -> None:
+    """On-the-fly bbox yearly stats and anomalies."""
+    res_yearly = client.get("/api/stats/yearly", params={"area_id": "bbox:88.0,20.5,93.0,27.0"})
+    assert res_yearly.status_code == 200
+    yearly_rows = res_yearly.json()["data"]
+    assert len(yearly_rows) == 25  # complete years 2001-2025
+    by_year = {r["year"]: r for r in yearly_rows}
+
+    # 2020 has rank 1, peak month 5, and vs_mean_pct > 0
+    row_2020 = by_year[2020]
+    assert row_2020["rank"] == 1
+    assert row_2020["peak_month"] == 5
+    assert row_2020["harmonized_total"] == pytest.approx(660.0, abs=1e-4)
+    assert row_2020["vs_mean_pct"] > 0.0
+
+    # Anomalies filtered for extreme in bbox
+    res_anom = client.get(
+        "/api/anomalies",
+        params={"area_id": "bbox:88.0,20.5,93.0,27.0", "class": "extreme"},
+    )
+    assert res_anom.status_code == 200
+    anom_items = res_anom.json()["data"]
+    assert len(anom_items) == 1
+    assert anom_items[0]["year"] == 2020
+    assert anom_items[0]["month"] == 5
+
+
+def test_validation_and_404_errors(client: TestClient) -> None:
+    """Validation errors on invalid bbox, bad class filter, and 404 for unknown area."""
+    # Invalid bbox format returns 400
+    res_bad_format = client.get("/api/calendar", params={"area_id": "bbox:invalid,format"})
+    assert res_bad_format.status_code == 400
+
+    # Inverted bbox (west >= east) returns 400
+    res_inverted = client.get("/api/calendar", params={"area_id": "bbox:95.0,20.0,85.0,25.0"})
+    assert res_inverted.status_code == 400
+
+    # Span > 20 degrees returns 400
+    res_too_large = client.get("/api/calendar", params={"area_id": "bbox:60.0,10.0,90.0,25.0"})
+    assert res_too_large.status_code == 400
+
+    # Bbox covering no fire data returns 404
+    res_ocean = client.get("/api/calendar", params={"area_id": "bbox:70.0,0.0,71.0,1.0"})
+    assert res_ocean.status_code == 404
 
     # 404 on unknown area
     res_404 = client.get("/api/calendar", params={"area_id": "nonexistent-area"})

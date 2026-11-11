@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import duckdb
+import pandas as pd
 
 from app.features.calendar.schemas import CalendarCell, FireSeason, MonthClimatology
 
@@ -106,3 +107,28 @@ def fetch_season(
         end_month=int(row[2]),
         share_of_annual=round(float(row[3]), 4),
     )
+
+
+def fetch_bbox_harmonized_monthly(
+    cursor: duckdb.DuckDBPyConnection,
+    bbox: tuple[float, float, float, float],
+) -> pd.DataFrame:
+    """Aggregate monthly harmonized fire events over cells within a bounding box."""
+    west, south, east, north = bbox
+    sql = """
+        WITH bbox_cells AS (
+            SELECT h3_r7
+            FROM cell_centroids
+            WHERE lon >= ? AND lon <= ? AND lat >= ? AND lat <= ?
+        )
+        SELECT
+            CAST('bbox' AS VARCHAR) AS region_id,
+            CAST(hc.year AS INTEGER) AS year,
+            CAST(hc.month AS INTEGER) AS month,
+            CAST(SUM(hc.harmonized) AS DOUBLE) AS harmonized
+        FROM harmonized_cell hc
+        JOIN bbox_cells bc ON hc.h3_r7 = bc.h3_r7
+        GROUP BY hc.year, hc.month
+        ORDER BY hc.year, hc.month
+    """
+    return cursor.execute(sql, [west, east, south, north]).df()

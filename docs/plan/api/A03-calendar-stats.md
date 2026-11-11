@@ -18,11 +18,11 @@ Each with `router.py`, `service.py`, `repository.py`, `schemas.py`, `tests/`.
 ## Tests
 - [x] Fixture calendar for alpha: season start 4, peak 5, end 6, share 0.7059; the 2020-05 cell is `extreme`
 - [x] Yearly ranks and `vs_mean_pct` match the fixture values
-- [ ] On-the-fly bbox covering all fixture cells reproduces the country calendar exactly (deferred per user decision 1.(a) until D07 stats engine)
+- [x] On-the-fly bbox covering all fixture cells reproduces the country calendar exactly
 - [x] Methodology payload contains every required key; limitations list is non-empty and unchanged from the brief
 - [x] Validation, 404 and size-limit tests
 
 ## Tasks
 - [x] Three features implemented with tests (calendar, stats/anomalies, methodology)
 - [x] OpenAPI and examples updated
-- [ ] Master plan row A03 set to `[x]` (kept as `[~]` per decision 2 until bbox on-the-fly and D06/D07 land)
+- [x] Master plan row A03 set to `[x]`
