@@ -51,8 +51,12 @@ def main() -> None:
         harm_summary = run_harmonization()
         logger.info(f"Harmonization complete: {harm_summary}")
 
-    if args.stage not in ("help", "ingest", "cluster", "aggregate", "harmonize", "all"):
-        logger.info(f"Stage '{args.stage}' requested (placeholder until stage implementation).")
+    if args.stage in ("stats", "all"):
+        logger.info("Executing stats stage...")
+        from pyroscope_pipeline.stats.run import run_stats
+
+        stats_summary = run_stats()
+        logger.info(f"Stats assembly complete: {stats_summary}")
 
 
 if __name__ == "__main__":

@@ -218,4 +218,36 @@ Applying Space-Time DBSCAN clustering (2,700 m spatial radius, 24-hour temporal 
 - **Method Breakdown**: 1 unit (`BGD-ADM1-barishal`) chose **Quantile Mapping**, while 10 units chose **Ratio**.
 - **Conservation**: Cell downscaling achieved exact mathematical conservation ($\sum cell_{harm} = district_{harm}$) across all 20,626 cell-months with zero unallocated events.
 
+---
+
+## 11. Calendar Statistics & CHT Season Review (D07 Empirical Verification)
+
+**Dataset Version**: `v2026-10-31-f4296770` (processed complete baseline years **2001–2025**, 25 years; partial boundary months `2000-11..2000-12` and `2026-01..2026-10` excluded from climatology baselines and yearly ranking, evaluated in `anomalies`).
+
+### CHT Preset (`PRESET-CHT`) Fire Season Window
+Under the shortest circular consecutive window capturing $\ge 70\%$ of mean annual harmonized events:
+- **`PRESET-CHT` Season**: **March–April** (`start_month = 3`, `peak_month = 4`, `end_month = 4`, `window_length = 2`), holding **97.07%** of annual harmonized burning (`461.11` of `475.05` mean annual events; `86.6%` of Bangladesh's `548.55` mean annual events).
+- **Why March–April (not March–May)**: May averages `5.75` harmonized events (`1.21%`), so March (`197.57`) and April (`263.54`) already exceed the 70% threshold in 2 months (March–May combined reaches `98.28%`).
+- **Within-CHT District Breakdown**:
+  - `BGD-ADM2-bandarban`: March–April (`start = 3, peak = 4, end = 4`, `96.86%`; Apr `136.98` vs Mar `58.51`).
+  - `BGD-ADM2-rangamati`: March–April (`start = 3, peak = 3, end = 4`, `97.49%`; Mar `94.92` vs Apr `93.74`).
+  - `BGD-ADM2-khagrachari`: March–April (`start = 3, peak = 3, end = 4`, `96.58%`; Mar `44.14` vs Apr `32.82`).
+
+### National & Divisional Season Diversity
+- **National (`BGD`)**: March–April (`start = 3, peak = 4, end = 4`, `92.51%`, `window_length = 2`).
+- **Circular Wrap-Around Divisions**: `BGD-ADM1-rajshahi` (`start = 12, peak = 12, end = 4`, `89.64%`, `window_length = 5`) and `BGD-ADM1-rangpur` (`start = 12, peak = 2, end = 4`, `79.99%`, `window_length = 5`) span the winter–premonsoon boundary.
+- **Zero-Fire Delta Districts**: Six districts (`Barguna`, `Barishal`, `Bhola`, `Jhalokati`, `Pirojpur`, `Satkhira`) recorded `0.00` fire events across all 25 baseline years (`share_of_annual = 0.0`).
+
+### CHT Extreme Years & Anomalous Months (`PRESET-CHT`)
+| Metric / Category | Verified Finding (`PRESET-CHT`, 2001–2025 complete years) |
+| :--- | :--- |
+| **Top 5 Highest Years** | **2006** (#1, `738.00`, `+59.0%`, FRP `336,856.2 MW`), **2009** (#2, `700.00`, `+50.3%`), **2014** (#3, `625.65`, `+33.5%`), **2008** (#4, `623.00`, `+32.9%`), **2007** (#5, `616.00`, `+31.3%`) |
+| **Lowest Years (Terra-only artifact)** | **2002** (#25, `16.00`, `-96.8%`), **2001** (#24, `154.00`, `-68.5%`) — reflects Terra-only pre-Aqua under-sampling (Section 7); lowest dual-platform/VIIRS year is **2017** (#23, `329.28`, `-31.6%`) |
+| **Peak-Season Extreme Months (`> p95`)** | `2004-03` (`377.00`), `2005-04` (`416.00`), `2006-03` (`482.00`), `2007-04` (`418.00`), `2014-04` (`428.66`) |
+| **Shoulder-Season Extreme Months (`> p95`)** | `2012-02` (`31.69` vs Feb mean `6.42`), `2015-05` (`14.23`), `2020-05` (`15.28`), `2023-02` (`15.39`) |
+| **Partial Year `2026` (Jan–Oct)** | Normal peak activity: `2026-03` (`116.38`, `normal`, rank `0.28`), `2026-04` (`258.74`, `normal`, rank `0.52`), `2026-05` (`3.10`, `normal`) |
+| **Off-Season Sensitivity Note** | During monsoon/post-monsoon months (Jun–Jan), `p95` is `0.00–2.22` events, so small counts (`0.22–3.17`, e.g., `2025-11` = `0.72`) classify as `extreme` by percentile rank even when absolute fire load is negligible; always interpret `class` alongside absolute `value`. |
+
+Across all 74 regions (`23,088` region-months in `anomalies.parquet`), `21,884` are `normal`, `333` are `elevated`, `871` are `extreme`, and `0` are `insufficient_data`.
+
 

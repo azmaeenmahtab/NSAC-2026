@@ -23,8 +23,8 @@ Pure statistics that turn the harmonized record into the calendar: normal levels
 5. Yearly: totals `[10, 20, 30]` for 3 years: ranks `[3, 2, 1]`; `vs_mean_pct` for the year with 30 = (30 - 15) / 15 x 100 = 100.
 
 ## Tasks
-- [ ] Climatology, anomalies, seasons, yearly implemented as pure functions
-- [ ] All five fixtures pass
-- [ ] Stage assembles the processed folder; `manifest.json` complete; `current` updated; API can read it (check with the A01 loader)
-- [ ] Human review of results for the CHT preset: season months, which years are extreme; write the findings in `docs/DATA_FINDINGS.md` (do not force the expected March-May result; report what the data says)
-- [ ] Master plan row D07 set to `[x]`
+- [x] Climatology, anomalies, seasons, yearly implemented as pure functions
+- [x] All five fixtures pass
+- [x] Stage assembles the processed folder; `manifest.json` complete; `current` updated; API can read it (check with the A01 loader)
+- [x] Human review of results for the CHT preset: season months, which years are extreme; write the findings in `docs/DATA_FINDINGS.md` (do not force the expected March-May result; report what the data says)
+- [x] Master plan row D07 set to `[x]`
