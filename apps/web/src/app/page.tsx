@@ -9,6 +9,8 @@ import { SeriesChart } from "@/features/series";
 import { YearlyBars, YearlyTable, useYearlyStats } from "@/features/stats";
 import { ActionPlanner } from "@/features/guidance";
 import { AlertBanner, SubscribeForm, useActiveAlerts } from "@/features/alerts";
+import { DemoGuide } from "@/components/demo/demo-guide";
+import { QueryBoundary } from "@/components/feedback/query-boundary";
 import { useViewState } from "@/features/areas";
 import { cn } from "@/lib/utils";
 
@@ -29,38 +31,30 @@ const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
 type ViewMode = "map" | "calendar" | "series" | "stats" | "planner";
 
 function YearlyStatsView({ areaId }: { areaId: string }) {
-  const { data: stats = [], isLoading, error } = useYearlyStats(areaId);
+  const { data: stats = [], isLoading, isError, error, refetch } = useYearlyStats(areaId);
   const [selectedYear, setSelectedYear] = React.useState<number | null>(null);
 
-  if (isLoading) {
-    return (
-      <div className="py-12 text-center text-xs text-[#94a3b8] animate-pulse">
-        Loading historical annual statistics...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="py-6 px-4 rounded-xl bg-red-950/30 border border-red-800/40 text-xs text-red-300">
-        Failed to load annual statistics for this area.
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-6">
-      <YearlyBars
-        data={stats}
-        selectedYear={selectedYear}
-        onSelectYear={setSelectedYear}
-      />
-      <YearlyTable
-        data={stats}
-        selectedYear={selectedYear}
-        onSelectYear={setSelectedYear}
-      />
-    </div>
+    <QueryBoundary
+      isLoading={isLoading}
+      isError={isError}
+      error={error}
+      data={stats}
+      onRetry={() => refetch()}
+    >
+      <div className="space-y-6">
+        <YearlyBars
+          data={stats}
+          selectedYear={selectedYear}
+          onSelectYear={setSelectedYear}
+        />
+        <YearlyTable
+          data={stats}
+          selectedYear={selectedYear}
+          onSelectYear={setSelectedYear}
+        />
+      </div>
+    </QueryBoundary>
   );
 }
 
@@ -178,6 +172,9 @@ function MainContent() {
             </div>
           )}
         </div>
+
+        {/* Demo Pitch Guide Helper */}
+        <DemoGuide onSelectView={setViewMode} />
 
         {/* Subscribe Modal Dialog */}
         {showSubscribeModal && (
