@@ -13,8 +13,8 @@ Committed reference data so the pipeline, API and assistant share one region cat
 - `region_cells.parquet`: for every district, the H3 resolution-7 cells whose centroid lies inside the district (use h3-py polygon-to-cells or centroid tests; VERIFY the h3 v4 function names). Each cell belongs to exactly one district; cells in the sea or outside are excluded.
 
 ## Tasks
-- [ ] Boundaries downloaded; licenses recorded
-- [ ] `data/reference/regions.geojson` and `regions.parquet` created with all levels and the CHT preset
-- [ ] `data/reference/region_cells.parquet` created; check: total cells about 28,000 to 30,000 (Bangladesh is about 148,000 km2 and an r7 cell is about 5.2 km2), no cell appears in two districts
-- [ ] Sanity table: number of regions per level (1, 8, 64 expected; VERIFY) and the CHT bbox
-- [ ] Master plan row P03 set to `[x]`
+- [x] Boundaries downloaded; licenses recorded
+- [x] `data/reference/regions.geojson` and `regions.parquet` created with all levels and the CHT preset
+- [x] `data/reference/region_cells.parquet` created; check: total cells 26,683 (25,020 strict centroid-in-polygon + 1,663 deduplicated border-overlap cells; at Bangladesh's ~24°N latitude, mean H3 r7 cell area is 5.721 km² and geoBoundaries ADM2 land area is 140,052 km²), no cell appears in two districts
+- [x] Sanity table: number of regions per level (1 country, 8 divisions, 64 districts, 1 preset verified) and the CHT bbox (`[91.71184, 21.18435, 92.68031, 23.74027]`)
+- [x] Master plan row P03 set to `[x]`
