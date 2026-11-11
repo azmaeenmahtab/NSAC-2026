@@ -12,7 +12,7 @@ Decide the look and the screens before coding, so the two front-end lanes build 
 - Component list (shell, area selector, legend, calendar grid, chart toggles, chat bubble, tool-call timeline).
 
 ## Tasks
-- [ ] Wireframes for the 6 screens
-- [ ] Tokens and copy deck
-- [ ] Review by the frontend lanes and the pitch owner; changes noted
-- [ ] Master plan row P05 set to `[x]`
+- [x] Wireframes for the 6 screens
+- [x] Tokens and copy deck
+- [x] Review by the frontend lanes and the pitch owner; changes noted
+- [x] Master plan row P05 set to `[x]`

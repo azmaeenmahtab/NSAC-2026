@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="100%" height="100%" style="background:#080B10;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E141F"/>
+      <stop offset="100%" stop-color="#141D2D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- HEADER (Height: 64px) -->
+  <rect x="0" y="0" width="1440" height="64" fill="url(#headerGrad)" stroke="#1F293D" stroke-width="1"/>
+  <circle cx="36" cy="32" r="14" fill="#FF6B00"/>
+  <path d="M30 38 Q36 22 42 38 Q36 34 30 38" fill="#FFF"/>
+  <text x="60" y="38" fill="#F8FAFC" font-size="18" font-weight="700">PyroScope</text>
+  <rect x="156" y="22" width="130" height="20" rx="4" fill="#1F293D"/>
+  <text x="164" y="36" fill="#94A3B8" font-size="10" font-weight="600">NASA Space Apps 2026</text>
+
+  <!-- Navigation -->
+  <text x="1115" y="37" fill="#94A3B8" font-size="13">Mission Control</text>
+  <text x="1225" y="37" fill="#94A3B8" font-size="13">Hidden Jump</text>
+  <text x="1310" y="37" fill="#94A3B8" font-size="13">Ask Assistant</text>
+  <text x="1395" y="37" fill="#94A3B8" font-size="13">Docs</text>
+
+  <!-- PAGE CONTAINER (TWO SECTIONS: ALERTS MODAL & ACTION PLANNER) -->
+  <g transform="translate(60, 90)">
+    <text x="0" y="24" fill="#F8FAFC" font-size="24" font-weight="700">Early Warning Alerts &amp; Wildland Action Planner (P1)</text>
+    <text x="0" y="48" fill="#94A3B8" font-size="13">
+      Translating climatological predictions into proactive community safeguards and automated fire season notifications.
+    </text>
+
+    <!-- LEFT COLUMN: ALERTS SUBSCRIPTION MODAL (Width: 520px) -->
+    <g transform="translate(0, 70)">
+      <rect x="0" y="0" width="520" height="680" rx="10" fill="#0E141F" stroke="#1F293D" stroke-width="1.5"/>
+
+      <!-- Modal Header -->
+      <g transform="translate(28, 28)">
+        <circle cx="16" cy="16" r="16" fill="rgba(255, 107, 0, 0.15)"/>
+        <text x="10" y="21" fill="#FF6B00" font-size="16">🔔</text>
+        <text x="44" y="16" fill="#F8FAFC" font-size="16" font-weight="700">Subscribe to Early Warning Alerts</text>
+        <text x="44" y="34" fill="#94A3B8" font-size="11">Automated email alerts when fire conditions escalate</text>
+      </g>
+
+      <!-- Form Inputs -->
+      <g transform="translate(28, 90)">
+        <!-- Input 1: Email -->
+        <text x="0" y="14" fill="#F8FAFC" font-size="12" font-weight="600">Email Address (for confirmation &amp; alerts)</text>
+        <rect x="0" y="24" width="464" height="42" rx="6" fill="#161F30" stroke="#2D3B55"/>
+        <text x="16" y="50" fill="#94A3B8" font-size="12">forester.rangamati@forest.gov.bd</text>
+
+        <!-- Input 2: Target Area -->
+        <text x="0" y="96" fill="#F8FAFC" font-size="12" font-weight="600">Target Region / District</text>
+        <rect x="0" y="106" width="464" height="42" rx="6" fill="#161F30" stroke="#2D3B55"/>
+        <text x="16" y="132" fill="#FF6B00" font-size="12" font-weight="600">BGD-ADM2-rangamati (Rangamati Hill District)</text>
+
+        <!-- Input 3: Notification Rules -->
+        <text x="0" y="180" fill="#F8FAFC" font-size="12" font-weight="600">Trigger Conditions (Select Rule)</text>
+        
+        <!-- Option 1 -->
+        <g transform="translate(0, 192)">
+          <rect x="0" y="0" width="464" height="48" rx="6" fill="#161F30" stroke="#FF6B00" stroke-width="1.5"/>
+          <circle cx="24" cy="24" r="8" fill="#FF6B00"/>
+          <circle cx="24" cy="24" r="3" fill="#FFF"/>
+          <text x="44" y="22" fill="#F8FAFC" font-size="12" font-weight="600">Both Conditions (Recommended)</text>
+          <text x="44" y="38" fill="#94A3B8" font-size="10">Alert on Season Approach + Elevated/Extreme Anomaly</text>
+        </g>
+
+        <!-- Option 2 -->
+        <g transform="translate(0, 250)">
+          <rect x="0" y="0" width="464" height="48" rx="6" fill="#161F30" stroke="#1F293D"/>
+          <circle cx="24" cy="24" r="8" fill="#0E141F" stroke="#64748B"/>
+          <text x="44" y="22" fill="#F8FAFC" font-size="12">Season Approaching Only</text>
+          <text x="44" y="38" fill="#94A3B8" font-size="10">Notifies N days before historical onset month (March)</text>
+        </g>
+
+        <!-- Option 3 -->
+        <g transform="translate(0, 308)">
+          <rect x="0" y="0" width="464" height="48" rx="6" fill="#161F30" stroke="#1F293D"/>
+          <circle cx="24" cy="24" r="8" fill="#0E141F" stroke="#64748B"/>
+          <text x="44" y="22" fill="#F8FAFC" font-size="12">Above-Normal Anomaly Exceeded (&gt;90th %ile)</text>
+          <text x="44" y="38" fill="#94A3B8" font-size="10">Notifies when real-time satellite fire events exceed threshold</text>
+        </g>
+
+        <!-- Input 4: Lead Days Slider -->
+        <text x="0" y="390" fill="#F8FAFC" font-size="12" font-weight="600">Advance Warning Window: <tspan fill="#FF6B00">14 Days</tspan></text>
+        <line x1="0" y1="414" x2="464" y2="414" stroke="#2D3B55" stroke-width="4" stroke-linecap="round"/>
+        <line x1="0" y1="414" x2="230" y2="414" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="230" cy="414" r="8" fill="#FF6B00" stroke="#FFF" stroke-width="2"/>
+        <text x="0" y="434" fill="#64748B" font-size="10">7 Days</text>
+        <text x="215" y="434" fill="#94A3B8" font-size="10">14 Days</text>
+        <text x="430" y="434" fill="#64748B" font-size="10">30 Days</text>
+
+        <!-- Submit Button -->
+        <g transform="translate(0, 460)">
+          <rect x="0" y="0" width="464" height="44" rx="6" fill="#FF6B00"/>
+          <text x="160" y="27" fill="#FFF" font-size="13" font-weight="700">Activate Alert Subscription</text>
+          
+          <!-- Legal / Consent notice -->
+          <text x="0" y="65" fill="#64748B" font-size="9">
+            Includes 1-click unsubscribe link in every email. No spam. Email stored in SQLite app.db.
+          </text>
+        </g>
+      </g>
+    </g>
+
+    <!-- RIGHT COLUMN: WILDLAND ACTION PLANNER CHECKLISTS (Width: 760px) -->
+    <g transform="translate(560, 70)">
+      <rect x="0" y="0" width="760" height="680" rx="10" fill="#0E141F" stroke="#1F293D" stroke-width="1.5"/>
+
+      <!-- Header -->
+      <g transform="translate(32, 28)">
+        <text x="0" y="16" fill="#F8FAFC" font-size="18" font-weight="700">Wildland Action Planner: Seasonal Preparedness</text>
+        <text x="0" y="36" fill="#94A3B8" font-size="12">
+          Grounded operational checklist based on Bangladesh Forest Department guidelines and fire climatology.
+        </text>
+      </g>
+
+      <!-- Checklist Stages -->
+      <g transform="translate(32, 85)">
+        <!-- STAGE 1: PRE-SEASON (Jan–Feb) -->
+        <g transform="translate(0, 0)">
+          <rect x="0" y="0" width="696" height="150" rx="6" fill="#161F30" stroke="#38BDF8" stroke-width="1"/>
+          
+          <rect x="16" y="14" width="130" height="20" rx="4" fill="#0E141F"/>
+          <text x="24" y="28" fill="#38BDF8" font-size="10" font-weight="700">STAGE: PRE-SEASON (JAN–FEB)</text>
+          
+          <text x="16" y="54" fill="#F8FAFC" font-size="13" font-weight="600">Vegetation Clearance &amp; Community Firebreaks</text>
+          
+          <g transform="translate(16, 70)" fill="#94A3B8" font-size="11">
+            <text x="0" y="0">☑ Clear 5-meter mineral soil firebreaks around vulnerable jhum agricultural plots and reserve edges.</text>
+            <text x="0" y="20">☑ Inspect community gravity-fed water tanks and test portable back-pack spray pumps.</text>
+            <text x="0" y="40">☑ Conduct village awareness meetings on controlled burn timing before dry winds strengthen.</text>
+            <text x="0" y="60" fill="#64748B" font-size="10">Source: Bangladesh Forest Department Wildfire Prevention Circular (Verified ✓)</text>
+          </g>
+        </g>
+
+        <!-- STAGE 2: IN-SEASON (Mar–May) -->
+        <g transform="translate(0, 168)">
+          <rect x="0" y="0" width="696" height="150" rx="6" fill="#161F30" stroke="#EF4444" stroke-width="1.5"/>
+          
+          <rect x="16" y="14" width="150" height="20" rx="4" fill="#0E141F"/>
+          <text x="24" y="28" fill="#EF4444" font-size="10" font-weight="700">STAGE: IN-SEASON PEAK (MAR–MAY)</text>
+          
+          <text x="16" y="54" fill="#F8FAFC" font-size="13" font-weight="600">Active Vigilance &amp; Burn Prohibition</text>
+          
+          <g transform="translate(16, 70)" fill="#94A3B8" font-size="11">
+            <text x="0" y="0">☑ Restrict open slash-and-burn operations on days with humidity &lt;30% and winds &gt;20 km/h.</text>
+            <text x="0" y="20">☑ Establish 24-hour observation posts on elevated ridges across Rangamati &amp; Bandarban.</text>
+            <text x="0" y="40">☑ Review daily PyroScope NRT satellite hotspot updates for unexpected smoke plumes.</text>
+            <text x="0" y="60" fill="#64748B" font-size="10">Source: CHT District Administration Fire Safety Protocol (Verified ✓)</text>
+          </g>
+        </g>
+
+        <!-- STAGE 3: POST-SEASON (Jun–Aug) -->
+        <g transform="translate(0, 336)">
+          <rect x="0" y="0" width="696" height="150" rx="6" fill="#161F30" stroke="#10B981" stroke-width="1"/>
+          
+          <rect x="16" y="14" width="150" height="20" rx="4" fill="#0E141F"/>
+          <text x="24" y="28" fill="#10B981" font-size="10" font-weight="700">STAGE: POST-SEASON (JUN–AUG)</text>
+          
+          <text x="16" y="54" fill="#F8FAFC" font-size="13" font-weight="600">Slope Stabilization &amp; Reforestation</text>
+          
+          <g transform="translate(16, 70)" fill="#94A3B8" font-size="11">
+            <text x="0" y="0">☑ Inspect scorched hill slopes for monsoon mudslide and soil erosion vulnerabilities.</text>
+            <text x="0" y="20">☑ Seed native vetiver grass and pioneer shrubs along burned ridge shoulders before heavy rain.</text>
+            <text x="0" y="40">☑ Collate seasonal burn log and archive community lessons learned for subsequent year baseline.</text>
+            <text x="0" y="60" fill="#64748B" font-size="10">Source: FAO / MoEFCC Watershed Restoration Guidelines (Verified ✓)</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
+

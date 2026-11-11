@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="100%" height="100%" style="background:#080B10;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <defs>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0E141F"/>
+      <stop offset="100%" stop-color="#141D2D"/>
+    </linearGradient>
+  </defs>
+
+  <!-- HEADER (Height: 64px) -->
+  <rect x="0" y="0" width="1440" height="64" fill="url(#headerGrad)" stroke="#1F293D" stroke-width="1"/>
+  <circle cx="36" cy="32" r="14" fill="#FF6B00"/>
+  <path d="M30 38 Q36 22 42 38 Q36 34 30 38" fill="#FFF"/>
+  <text x="60" y="38" fill="#F8FAFC" font-size="18" font-weight="700">PyroScope</text>
+  <rect x="156" y="22" width="130" height="20" rx="4" fill="#1F293D"/>
+  <text x="164" y="36" fill="#94A3B8" font-size="10" font-weight="600">NASA Space Apps 2026</text>
+
+  <!-- Navigation -->
+  <text x="1115" y="37" fill="#94A3B8" font-size="13">Mission Control</text>
+  <text x="1225" y="37" fill="#94A3B8" font-size="13">Hidden Jump</text>
+  <text x="1310" y="37" fill="#FF6B00" font-size="13" font-weight="600">Ask Assistant</text>
+  <text x="1395" y="37" fill="#94A3B8" font-size="13">Docs</text>
+
+  <!-- TWO-COLUMN LAYOUT -->
+  <!-- LEFT: CHAT CONVERSATION VIEW (Width: 840px) -->
+  <g transform="translate(60, 90)">
+    <!-- Header with Grounded Guarantee Banner -->
+    <text x="0" y="24" fill="#F8FAFC" font-size="22" font-weight="700">Ask PyroScope Assistant</text>
+    <rect x="270" y="8" width="150" height="22" rx="4" fill="#161F30" stroke="#10B981" stroke-width="1"/>
+    <text x="280" y="23" fill="#10B981" font-size="10" font-weight="600">✓ Grounded by Typed Tools</text>
+    
+    <text x="0" y="46" fill="#94A3B8" font-size="12">
+      Scientific conversational interface. The assistant never guesses numbers; it retrieves verified metrics via typed API tools.
+    </text>
+
+    <!-- Chat Stream Scroll Area -->
+    <g transform="translate(0, 65)">
+      <!-- USER MESSAGE BUBBLE -->
+      <g transform="translate(180, 0)">
+        <rect x="0" y="0" width="620" height="56" rx="10" fill="#1E293B" stroke="#2D3B55"/>
+        <text x="20" y="24" fill="#F8FAFC" font-size="13" font-weight="500">
+          "When does the fire season usually start in the Chittagong Hill Tracts, and was 2021 unusual?"
+        </text>
+        <text x="20" y="42" fill="#64748B" font-size="10">User Query • Area: PRESET-CHT • UTC 13:24</text>
+      </g>
+
+      <!-- ASSISTANT RESPONSE BUBBLE -->
+      <g transform="translate(0, 75)">
+        <rect x="0" y="0" width="800" height="380" rx="10" fill="#0E141F" stroke="#1F293D" stroke-width="1.5"/>
+        
+        <!-- Assistant Header -->
+        <circle cx="28" cy="28" r="12" fill="#FF6B00"/>
+        <path d="M24 33 Q28 20 32 33 Q28 30 24 33" fill="#FFF"/>
+        <text x="48" y="32" fill="#F8FAFC" font-size="14" font-weight="700">PyroScope Assistant</text>
+        <rect x="185" y="18" width="125" height="20" rx="4" fill="#161F30"/>
+        <text x="195" y="32" fill="#38BDF8" font-size="10">Model: Gemini 2.0</text>
+        <rect x="320" y="18" width="115" height="20" rx="4" fill="#161F30"/>
+        <text x="328" y="32" fill="#10B981" font-size="10">● Replay Verified</text>
+
+        <!-- Response Body -->
+        <g transform="translate(24, 60)" fill="#F8FAFC" font-size="13" font-family="sans-serif">
+          <text x="0" y="0">Based on the 26-year harmonized record for the <tspan fill="#FF6B00" font-weight="600">Chittagong Hill Tracts (PRESET-CHT)</tspan>:</text>
+          
+          <text x="0" y="30" font-weight="600">1. Historical Fire Season Window:</text>
+          <text x="16" y="50" fill="#94A3B8">• Active burning begins strictly in <tspan fill="#F8FAFC" font-weight="600">March</tspan>, peaks in <tspan fill="#F8FAFC" font-weight="600">April</tspan>, and terminates by late <tspan fill="#F8FAFC" font-weight="600">May</tspan>.</text>
+          <text x="16" y="70" fill="#94A3B8">• This 3-month window accounts for <tspan fill="#FF6B00" font-weight="600">97.2%</tspan> of all annual active-fire events in the CHT.</text>
+          
+          <text x="0" y="105" font-weight="600">2. Analysis of the 2021 Burning Season:</text>
+          <text x="16" y="125" fill="#94A3B8">• <tspan fill="#F8FAFC" font-weight="600">March 2021</tspan> recorded <tspan fill="#EF4444" font-weight="600">142 harmonized fire events</tspan>, ranking at the <tspan fill="#EF4444" font-weight="600">98.4th percentile</tspan>.</text>
+          <text x="16" y="145" fill="#94A3B8">• This classified March 2021 as an <tspan fill="#EF4444" font-weight="700">Extreme Anomaly (◆)</tspan>, exceeding the 95th percentile baseline (88 events).</text>
+          <text x="16" y="165" fill="#94A3B8">• April 2021 returned to typical peak levels (188 events, 74th percentile, Normal ●).</text>
+        </g>
+
+        <!-- Tool Citation Chips at Footer of Response -->
+        <g transform="translate(24, 280)">
+          <text x="0" y="14" fill="#94A3B8" font-size="11" font-weight="600">Grounded Evidence Citations:</text>
+          
+          <rect x="0" y="24" width="230" height="26" rx="4" fill="#161F30" stroke="#2D3B55"/>
+          <text x="10" y="41" fill="#38BDF8" font-size="10" font-family="monospace">Tool: get_fire_season("PRESET-CHT")</text>
+
+          <rect x="240" y="24" width="240" height="26" rx="4" fill="#161F30" stroke="#2D3B55"/>
+          <text x="250" y="41" fill="#38BDF8" font-size="10" font-family="monospace">Tool: get_anomalies("PRESET-CHT", 2021)</text>
+
+          <rect x="490" y="24" width="220" height="26" rx="4" fill="#161F30" stroke="#2D3B55"/>
+          <text x="500" y="41" fill="#94A3B8" font-size="10">Data Version: <tspan fill="#FF6B00">v0.1.0-processed</tspan></text>
+        </g>
+
+        <!-- Response Action Bar -->
+        <g transform="translate(24, 345)">
+          <text x="0" y="14" fill="#64748B" font-size="10">Response latency: 420 ms • Evaluated via DuckDB Parquet engine</text>
+          <rect x="680" y="0" width="85" height="22" rx="4" fill="#1E293B"/>
+          <text x="695" y="15" fill="#94A3B8" font-size="10">Copy Answer</text>
+        </g>
+      </g>
+
+      <!-- SUGGESTED QUESTIONS PILLS -->
+      <g transform="translate(0, 480)">
+        <text x="0" y="12" fill="#94A3B8" font-size="11">Suggested Explorations:</text>
+        
+        <rect x="0" y="22" width="230" height="26" rx="13" fill="#141D2D" stroke="#2D3B55"/>
+        <text x="14" y="39" fill="#F8FAFC" font-size="11">"Was 2024 abnormal in Rangamati?"</text>
+
+        <rect x="240" y="22" width="260" height="26" rx="13" fill="#141D2D" stroke="#2D3B55"/>
+        <text x="254" y="39" fill="#F8FAFC" font-size="11">"Compare Bandarban vs Khagrachari seasons"</text>
+
+        <rect x="510" y="22" width="250" height="26" rx="13" fill="#141D2D" stroke="#2D3B55"/>
+        <text x="524" y="39" fill="#F8FAFC" font-size="11">"Show raw VIIRS ratio before clustering"</text>
+      </g>
+
+      <!-- INPUT BAR -->
+      <g transform="translate(0, 560)">
+        <rect x="0" y="0" width="800" height="50" rx="8" fill="#161F30" stroke="#FF6B00" stroke-width="1.5"/>
+        <text x="20" y="30" fill="#F8FAFC" font-size="13">Ask a scientific question about fire regimes, anomalies, or seasons...</text>
+        <rect x="710" y="10" width="75" height="30" rx="6" fill="#FF6B00"/>
+        <text x="732" y="30" fill="#FFF" font-size="12" font-weight="600">Send</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- RIGHT: AUDITABLE TOOL-CALL EXECUTION TIMELINE (Width: 480px) -->
+  <g transform="translate(900, 90)">
+    <rect x="0" y="0" width="480" height="740" rx="8" fill="#0E141F" stroke="#1F293D" stroke-width="1"/>
+    
+    <g transform="translate(24, 24)">
+      <text x="0" y="16" fill="#F8FAFC" font-size="16" font-weight="700">Tool Execution Inspector</text>
+      <text x="0" y="36" fill="#94A3B8" font-size="11">Audit trace of typed tools called by the agent</text>
+
+      <!-- Tool Execution 1 -->
+      <g transform="translate(0, 56)">
+        <rect x="0" y="0" width="432" height="150" rx="6" fill="#161F30" stroke="#1F293D"/>
+        
+        <circle cx="16" cy="18" r="6" fill="#10B981"/>
+        <text x="30" y="22" fill="#F8FAFC" font-size="12" font-weight="600" font-family="monospace">get_fire_season</text>
+        <rect x="330" y="10" width="85" height="18" rx="3" fill="#0E141F"/>
+        <text x="340" y="23" fill="#10B981" font-size="10" font-family="monospace">14 ms (DuckDB)</text>
+
+        <!-- Args -->
+        <text x="16" y="50" fill="#64748B" font-size="10">ARGUMENTS:</text>
+        <rect x="16" y="58" width="400" height="24" rx="3" fill="#0E141F"/>
+        <text x="24" y="74" fill="#38BDF8" font-size="10" font-family="monospace">{ "area_id": "PRESET-CHT" }</text>
+
+        <!-- Output -->
+        <text x="16" y="100" fill="#64748B" font-size="10">RETURNED DATA:</text>
+        <rect x="16" y="108" width="400" height="32" rx="3" fill="#0E141F"/>
+        <text x="24" y="128" fill="#F8FAFC" font-size="10" font-family="monospace">{ "start": 3, "peak": 4, "end": 5, "share": 0.972 }</text>
+      </g>
+
+      <!-- Tool Execution 2 -->
+      <g transform="translate(0, 226)">
+        <rect x="0" y="0" width="432" height="170" rx="6" fill="#161F30" stroke="#1F293D"/>
+        
+        <circle cx="16" cy="18" r="6" fill="#10B981"/>
+        <text x="30" y="22" fill="#F8FAFC" font-size="12" font-weight="600" font-family="monospace">get_anomalies</text>
+        <rect x="330" y="10" width="85" height="18" rx="3" fill="#0E141F"/>
+        <text x="340" y="23" fill="#10B981" font-size="10" font-family="monospace">18 ms (DuckDB)</text>
+
+        <!-- Args -->
+        <text x="16" y="50" fill="#64748B" font-size="10">ARGUMENTS:</text>
+        <rect x="16" y="58" width="400" height="24" rx="3" fill="#0E141F"/>
+        <text x="24" y="74" fill="#38BDF8" font-size="10" font-family="monospace">{ "area_id": "PRESET-CHT", "year": 2021 }</text>
+
+        <!-- Output -->
+        <text x="16" y="100" fill="#64748B" font-size="10">RETURNED DATA:</text>
+        <rect x="16" y="108" width="400" height="50" rx="3" fill="#0E141F"/>
+        <text x="24" y="126" fill="#F8FAFC" font-size="10" font-family="monospace">Month 3: val=142.0, rank=0.984, class="extreme"</text>
+        <text x="24" y="144" fill="#F8FAFC" font-size="10" font-family="monospace">Month 4: val=188.0, rank=0.741, class="normal"</text>
+      </g>
+
+      <!-- Strict Invariant Callout -->
+      <g transform="translate(0, 420)">
+        <rect x="0" y="0" width="432" height="110" rx="6" fill="#141D2D" stroke="#2D3B55"/>
+        <text x="16" y="24" fill="#FF6B00" font-size="12" font-weight="700">Strict Scientific Architecture Rule</text>
+        <text x="16" y="46" fill="#94A3B8" font-size="10">1. LLM never writes arbitrary SQL queries.</text>
+        <text x="16" y="62" fill="#94A3B8" font-size="10">2. LLM never computes or extrapolates arithmetic values.</text>
+        <text x="16" y="78" fill="#94A3B8" font-size="10">3. In replay mode, answers replay from tested fixtures.</text>
+        <text x="16" y="94" fill="#94A3B8" font-size="10">4. Every claimed number links to a row in DuckDB.</text>
+      </g>
+    </g>
+  </g>
+</svg>
+
