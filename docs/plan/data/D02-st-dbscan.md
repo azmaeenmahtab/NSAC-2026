@@ -26,7 +26,7 @@ Use `eps_s_m = 2700`, `eps_t_hours = 24`, `min_pts = 2`.
 Also a property test: no cluster contains two points with a chain break (every cluster is connected under the neighbor relation through core points).
 
 ## Tasks
-- [ ] Implementation per spec with docstrings stating units
-- [ ] All six fixtures pass; property test passes
-- [ ] Performance check on 250,000 synthetic points (record seconds and memory in the PR; target under 3 minutes)
-- [ ] Master plan row D02 set to `[x]`
+- [x] Implementation per spec with docstrings stating units
+- [x] All six fixtures pass; property test passes
+- [x] Performance check on 250,000 synthetic points (record seconds and memory in the PR; target under 3 minutes)
+- [x] Master plan row D02 set to `[x]`
