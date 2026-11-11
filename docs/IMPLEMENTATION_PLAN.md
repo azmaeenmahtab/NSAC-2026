@@ -18,7 +18,7 @@ Read order for any chunk: `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DB_SCHEMA.m
 
 | Status | ID | Title | Pri | Window | Depends | Est h | Chunk file | Owner |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [~] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
+| [x] | P00 | Lead setup: rules check, accounts, keys, tool install | P0 | PRE | none | 2 | plan/pre/P00-lead-setup.md | @azmaeenmahtab |
 | [x] | P01 | Acquire historical FIRMS archives (MODIS, VIIRS S-NPP) | P0 | PRE | P00 | 3 | plan/pre/P01-data-acquisition.md | @azmaeenmahtab |
 | [x] | P02 | Explore data and verify the report's claims | P0 | PRE | P01 | 3 | plan/pre/P02-data-exploration.md | @adityasaha03 |
 | [x] | P03 | Region catalog and boundaries (reference data) | P0 | PRE | P00 | 2 | plan/pre/P03-regions-reference.md | @Aragon |
