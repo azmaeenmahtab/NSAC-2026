@@ -141,3 +141,65 @@ def test_cross_sensor_factor_requires_2_years_or_unadjusted_label() -> None:
     assert model.n_shared_months == 24
     assert model.unit_month_ratios[("DIST-1", 3)] == pytest.approx(0.5, abs=1e-9)
     assert model.cv_rmse == pytest.approx(0.0, abs=1e-9)
+
+
+def test_fetch_mid_range_snpp_cutoff_switches_to_noaa20_without_overlap() -> None:
+    """When S-NPP stops at 2026-11-01 mid-window, fetch only post-cutoff days from NOAA-20."""
+    assert (
+        unadjusted_provisional_label("VIIRS_SNPP_NRT+VIIRS_NOAA20_NRT")
+        == "provisional, unadjusted NOAA-20"
+    )
+    snpp_csv = (
+        "latitude,longitude,bright_ti4,scan,track,acq_date,acq_time,satellite,instrument,confidence,version,bright_ti5,frp,daynight\n"
+        "23.0,91.0,320.0,0.4,0.4,2026-11-01,0730,N,VIIRS,n,2.0NRT,295.0,15.0,D\n"
+    )
+    noaa20_csv = (
+        "latitude,longitude,bright_ti4,scan,track,acq_date,acq_time,satellite,instrument,confidence,version,bright_ti5,frp,daynight\n"
+        "23.0,91.0,321.0,0.4,0.4,2026-11-01,0735,N20,VIIRS,n,2.0NRT,295.0,14.0,D\n"
+        "23.1,91.1,322.0,0.4,0.4,2026-11-02,0740,N20,VIIRS,n,2.0NRT,295.0,16.0,D\n"
+        "23.2,91.2,323.0,0.4,0.4,2026-11-03,0745,N20,VIIRS,n,2.0NRT,295.0,17.0,D\n"
+    )
+    modis_header = "latitude,longitude,brightness,scan,track,acq_date,acq_time,satellite,instrument,confidence,version,bright_t31,frp,daynight\n"
+
+    requested_urls: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        url = str(request.url)
+        requested_urls.append(url)
+        if "MODIS_NRT" in url:
+            return httpx.Response(200, text=modis_header)
+        if "VIIRS_SNPP_NRT" in url:
+            return httpx.Response(200, text=snpp_csv)
+        if "VIIRS_NOAA20_NRT" in url:
+            return httpx.Response(200, text=noaa20_csv)
+        return httpx.Response(200, text="")
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    limiter = TokenBucket(capacity=1000.0, refill_time_sec=60.0)
+    windows = [FetchWindow(start_date="2026-11-01", days=3, end_date="2026-11-03")]
+
+    res = fetch_nrt_detections(
+        windows=windows,
+        bbox=[88.0, 20.5, 92.8, 26.7],
+        map_key="SECRET_TEST_KEY",
+        client=client,
+        limiter=limiter,
+    )
+    assert res.viirs_source_used == "VIIRS_SNPP_NRT+VIIRS_NOAA20_NRT"
+    assert res.snpp_available is False
+    assert len(res.viirs_raw) == 3
+    dates_sats = list(
+        zip(
+            res.viirs_raw["acq_date"].astype(str).tolist(),
+            res.viirs_raw["satellite"].astype(str).tolist(),
+            strict=True,
+        )
+    )
+    assert dates_sats == [
+        ("2026-11-01", "N"),
+        ("2026-11-02", "N20"),
+        ("2026-11-03", "N20"),
+    ]
+    noaa20_urls = [u for u in requested_urls if "VIIRS_NOAA20_NRT" in u]
+    assert len(noaa20_urls) == 1
+    assert "/2/2026-11-02" in noaa20_urls[0]

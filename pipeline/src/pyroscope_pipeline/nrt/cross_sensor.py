@@ -131,8 +131,8 @@ def fit_cross_sensor_factor(
 
 def unadjusted_provisional_label(viirs_source_used: str) -> str | None:
     """Return honest provisional label when a non-S-NPP VIIRS feed is used without factor."""
-    if viirs_source_used == "VIIRS_NOAA20_NRT":
+    if "VIIRS_NOAA20_NRT" in viirs_source_used:
         return "provisional, unadjusted NOAA-20"
-    if viirs_source_used == "VIIRS_NOAA21_NRT":
+    if "VIIRS_NOAA21_NRT" in viirs_source_used:
         return "provisional, unadjusted NOAA-21"
     return None
