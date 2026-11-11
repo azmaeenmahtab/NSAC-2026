@@ -8,11 +8,19 @@ export interface JumpCaptionProps {
 }
 
 export function JumpCaption({ metrics, className }: JumpCaptionProps) {
-  if (!metrics || metrics.naive_ratio === undefined) return null;
+  const jumpObj = (metrics as { jump_metrics?: MethodologyJumpMetrics })?.jump_metrics || metrics;
+  if (!jumpObj || jumpObj.naive_ratio === undefined) return null;
 
-  const naiveRatioFormatted = metrics.naive_ratio.toFixed(2);
-  const harmonizedRatioFormatted = metrics.harmonized_ratio.toFixed(2);
-  const reductionFormatted = Math.round(metrics.jump_reduction_pct);
+  const naiveRatioFormatted = jumpObj.naive_ratio.toFixed(2);
+  const harmonizedRatioFormatted = jumpObj.harmonized_ratio.toFixed(2);
+  const reductionFormatted =
+    jumpObj.jump_reduction_pct !== undefined
+      ? Math.round(jumpObj.jump_reduction_pct)
+      : Math.round(
+          ((jumpObj.naive_ratio - jumpObj.harmonized_ratio) /
+            (jumpObj.naive_ratio - 1.0)) *
+            100
+        );
 
   return (
     <div

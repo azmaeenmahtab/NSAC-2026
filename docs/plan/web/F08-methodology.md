@@ -16,7 +16,7 @@ Show the validity of the work: how harmonization works, the measured validation,
 - Every number comes from the API; no hard-coded results in the front end.
 
 ## Tasks
-- [ ] Sections implemented with the mock data and then the real data
-- [ ] Q-Q chart with accessible data table
-- [ ] RTL tests: limitations always rendered, jump caption absent when metrics are missing
-- [ ] Master plan row F08 set to `[x]`
+- [x] Sections implemented with the mock data and then the real data
+- [x] Q-Q chart with accessible data table
+- [x] RTL tests: limitations always rendered, jump caption absent when metrics are missing
+- [x] Master plan row F08 set to `[x]`
