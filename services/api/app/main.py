@@ -27,6 +27,7 @@ from app.core.ratelimit import (
     rate_limit_exception_handler,
 )
 from app.features.areas import router as areas_router
+from app.features.ask import router as ask_router
 from app.features.calendar import router as calendar_router
 from app.features.heatmap import router as heatmap_router
 from app.features.meta import router as meta_router
@@ -103,6 +104,7 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
     app_instance.include_router(calendar_router)
     app_instance.include_router(stats_router)
     app_instance.include_router(methodology_router)
+    app_instance.include_router(ask_router)
 
     return app_instance
 

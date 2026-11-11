@@ -1,0 +1,44 @@
+{
+  "intents": [
+    {
+      "id": "season_and_anomaly",
+      "keywords": ["season", "unusual", "start"],
+      "tools": ["get_season", "get_anomalies"]
+    },
+    {
+      "id": "season_only",
+      "keywords": ["season", "peak", "start", "when"],
+      "tools": ["get_season"]
+    },
+    {
+      "id": "anomalies_only",
+      "keywords": ["unusual", "anomaly", "extreme", "elevated", "normal"],
+      "tools": ["get_anomalies"]
+    },
+    {
+      "id": "compare_years",
+      "keywords": ["compare", "vs", "versus", "between"],
+      "tools": ["compare_years"]
+    },
+    {
+      "id": "yearly_stats",
+      "keywords": ["how many", "events", "fires", "total", "stats"],
+      "tools": ["get_yearly_stats"]
+    }
+  ],
+  "month_names": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  }
+}
+
