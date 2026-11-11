@@ -158,7 +158,12 @@ GET_VALUE_DECLARATION = {
     "description": "Return harmonized MODIS-equivalent fire event count and peak season for an area.",
     "parameters": {
         "type": "object",
-        "properties": {"area": {"type": "string", "description": "Region ID such as PRESET-CHT or BGD"}},
+        "properties": {
+            "area": {
+                "type": "string",
+                "description": "Region ID such as PRESET-CHT or BGD",
+            }
+        },
         "required": ["area"],
     },
 }
@@ -179,12 +184,14 @@ function_results = []
 for step in interaction.steps:
     if getattr(step, "type", None) == "function_call" and step.name == "get_value":
         res = get_value(str(step.arguments.get("area", "PRESET-CHT")))
-        function_results.append({
-            "type": "function_result",
-            "name": step.name,
-            "call_id": step.id,
-            "result": [{"type": "text", "text": json.dumps(res)}],
-        })
+        function_results.append(
+            {
+                "type": "function_result",
+                "name": step.name,
+                "call_id": step.id,
+                "result": [{"type": "text", "text": json.dumps(res)}],
+            }
+        )
 
 final_turn = client.interactions.create(
     model=os.environ.get("LLM_MODEL", "gemini-3.8-flash"),

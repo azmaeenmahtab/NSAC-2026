@@ -1,4 +1,5 @@
 """Tests for data findings constants and data manifest integrity (Chunk P02)."""
+
 import json
 from pathlib import Path
 

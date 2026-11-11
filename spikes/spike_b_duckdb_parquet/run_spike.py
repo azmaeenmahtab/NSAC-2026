@@ -39,8 +39,12 @@ def run_spike() -> dict[str, object]:
     t0 = time.perf_counter()
     cells_hex = generate_bangladesh_r7_cells(30_000)
     r7_uint64 = np.array([int(c, 16) for c in cells_hex], dtype=np.uint64)
-    r6_uint64 = np.array([int(h3.cell_to_parent(c, 6), 16) for c in cells_hex], dtype=np.uint64)
-    r5_uint64 = np.array([int(h3.cell_to_parent(c, 5), 16) for c in cells_hex], dtype=np.uint64)
+    r6_uint64 = np.array(
+        [int(h3.cell_to_parent(c, 6), 16) for c in cells_hex], dtype=np.uint64
+    )
+    r5_uint64 = np.array(
+        [int(h3.cell_to_parent(c, 5), 16) for c in cells_hex], dtype=np.uint64
+    )
     coords = [h3.cell_to_latlng(c) for c in cells_hex]
     cell_lats = np.array([lat for lat, _ in coords], dtype=np.float64)
     cell_lons = np.array([lon for _, lon in coords], dtype=np.float64)
@@ -166,7 +170,9 @@ def run_spike() -> dict[str, object]:
         ).fetchall()
         assert col_types[0][1] == "UBIGINT", f"Expected UBIGINT, got {col_types[0][1]}"
         rows_cold = con_cold.execute(query_sql, params).fetchall()
-        cells_json = [{"h3": format(int(h), "x"), "value": float(v)} for h, v in rows_cold]
+        cells_json = [
+            {"h3": format(int(h), "x"), "value": float(v)} for h, v in rows_cold
+        ]
         cold_ms = (time.perf_counter() - t_cold0) * 1000.0
         con_cold.close()
 
@@ -201,7 +207,9 @@ def run_spike() -> dict[str, object]:
             stats_row = con_warm.execute(stats_sql, warm_params).fetchone()
             assert stats_row is not None
             payload = {
-                "cells": [{"h3": format(int(h), "x"), "value": float(v)} for h, v in rows_warm],
+                "cells": [
+                    {"h3": format(int(h), "x"), "value": float(v)} for h, v in rows_warm
+                ],
                 "stats": {
                     "min": float(stats_row[0]),
                     "max": float(stats_row[1]),
@@ -221,7 +229,9 @@ def run_spike() -> dict[str, object]:
         f"median={warm_median_ms:.1f} ms, p95={warm_p95_ms:.1f} ms"
     )
     # Verify round-trip hex validity
-    assert all(len(c["h3"]) == 15 and c["h3"] == c["h3"].lower() for c in cells_json[:100])
+    assert all(
+        len(c["h3"]) == 15 and c["h3"] == c["h3"].lower() for c in cells_json[:100]
+    )
     assert all(h3.is_valid_cell(c["h3"]) for c in cells_json[:100])
 
     return {
