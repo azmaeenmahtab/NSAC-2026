@@ -250,4 +250,19 @@ Under the shortest circular consecutive window capturing $\ge 70\%$ of mean annu
 
 Across all 74 regions (`23,088` region-months in `anomalies.parquet`), `21,884` are `normal`, `333` are `elevated`, `871` are `extreme`, and `0` are `insufficient_data`.
 
+---
+
+## 12. Live NRT Incremental Update Verification (D08 Empirical Verification)
+
+**Dataset Version**: `v2026-11-10-3206108c` (`as_of_date = 2026-11-10`, `provisional_from = 2026-11-01`; `provisional_note`: `"provisional, unadjusted NOAA-20; Month-to-date anomaly approximation for 2026-11: climatological baseline scaled by 10/30 elapsed days."`).
+
+### Live NASA FIRMS Sensor Transition (`2026-11-01` .. `2026-11-10`)
+- **3-day live probe (`2026-11-08`..`2026-11-10`)**: `MODIS_NRT` returned `2` rows (`2026-11-09`), `VIIRS_SNPP_NRT` returned `0` rows, and automatic fallback selected `VIIRS_NOAA20_NRT` (`55` rows across `2026-11-08..10`; `53` kept after confidence filtering).
+- **Mid-range S-NPP retirement (`2026-11-01`..`2026-11-10`)**: During the full `nrt` incremental run from `as_of_date = 2026-10-31`, `VIIRS_SNPP_NRT` returned detections strictly through `2026-11-01` and stopped thereafter; `fetch_nrt_detections` automatically switched to `VIIRS_NOAA20_NRT` for `2026-11-02..2026-11-10` (`viirs_source_used = "VIIRS_SNPP_NRT+VIIRS_NOAA20_NRT"`), yielding `127` raw NRT rows (`119` kept).
+
+### Provisional November 2026 Activity & Baseline Isolation
+- **Boundary clustering & ROI split**: Only month `2026-11` required updates (`18` events created in the bbox `2026-11-01..10`, of which `6` fell inside Bangladesh districts — 1 each in `Barishal`, `Dhaka`, `Faridpur`, `Feni`, `Lakshmipur`, and `Tangail` — and `12` outside the border in surrounding bbox areas).
+- **National & CHT status**: `BGD` `2026-11` recorded `raw_modis = 0.0`, `raw_viirs = 6.0`, `harmonized = 0.3071` (`class = "normal"`, `percentile_rank = 0.12`, `provisional = true`); `PRESET-CHT` recorded `0.0` (`class = "normal"`, `percentile_rank = 0.48`, `provisional = true`).
+- **Climatology protection**: `climatology.parquet` remains strictly fixed on complete years **`2001–2025`**, excluding all provisional `2026-11` rows.
+
 

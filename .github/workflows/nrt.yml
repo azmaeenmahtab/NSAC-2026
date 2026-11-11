@@ -1,0 +1,51 @@
+name: NRT Incremental Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_lookback_days:
+        description: "Maximum trailing UTC days to fetch"
+        required: false
+        default: "30"
+        type: string
+  # Disabled until FIRMS_MAP_KEY secret and ENABLE_NRT_CRON=true repository variable are configured:
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  nrt-update:
+    name: Fetch FIRMS NRT and Refresh Processed Dataset
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || vars.ENABLE_NRT_CRON == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check FIRMS_MAP_KEY secret
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+        run: |
+          if [ -z "$FIRMS_MAP_KEY" ]; then
+            echo "FIRMS_MAP_KEY secret is not configured; skipping NRT run."
+            exit 0
+          fi
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install pipeline dependencies
+        run: uv sync --package pyroscope-pipeline
+
+      - name: Run NRT Incremental Pipeline
+        env:
+          FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
+        run: |
+          if [ -z "$FIRMS_MAP_KEY" ]; then
+            echo "FIRMS_MAP_KEY missing; skipping."
+            exit 0
+          fi
+          uv run python -m pyroscope_pipeline nrt

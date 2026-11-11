@@ -67,7 +67,7 @@ Dedup key: `(sensor, lat, lon, acq_ts)`; duplicates dropped.
 `region_id` (district level), `sensor_family`, `year`, `month`, `event_count`, `frp_sum`. Dense: one row for every district x family x month in that family's coverage (zeros included). Unique `(region_id, sensor_family, year, month)`. Coverage: MODIS from 2000-11, VIIRS from 2012-02 (first complete month; VERIFY from data).
 
 ### harmonized_region
-`region_id` (country, division, district), `year`, `month`, `raw_modis`, `raw_viirs` (nullable before 2012-02), `harmonized` FLOAT64 (MODIS-equivalent events), `source_used` (`modis_raw`|`viirs_calibrated`), `method` (`quantile_map`|`ratio`|`none`), `calibration_unit_id`, `in_overlap` BOOL. Division and country rows are the sum of their districts. Unique `(region_id, year, month)`.
+`region_id` (country, division, district), `year`, `month`, `raw_modis`, `raw_viirs` (nullable before 2012-02), `harmonized` FLOAT64 (MODIS-equivalent events), `source_used` (`modis_raw`|`viirs_calibrated`), `method` (`quantile_map`|`ratio`|`none`), `calibration_unit_id`, `in_overlap` BOOL, and optional `provisional` BOOL (set by D08 for NRT months `>= provisional_from`). Division and country rows are the sum of their districts. Unique `(region_id, year, month)`.
 
 ### calibration_report
 `calibration_unit_id`, `method_chosen`, `cv_rmse_qm`, `cv_rmse_ratio`, `cv_mae_qm`, `cv_mae_ratio`, `cv_bias_qm`, `cv_bias_ratio`, `spearman_qm`, `n_overlap_months`, `fallback_to_parent` BOOL, plus the fitted transfer-function knots as JSON (`knots_v`, `knots_m`) per month-group.
@@ -79,7 +79,7 @@ Dedup key: `(sensor, lat, lon, acq_ts)`; duplicates dropped.
 `region_id`, `month`, `n_years`, `mean`, `p50`, `p90`, `p95`, `baseline_year_min`, `baseline_year_max`.
 
 ### anomalies
-`region_id`, `year`, `month`, `value`, `percentile_rank` (share of baseline values <= value), `class` (`normal`|`elevated`|`extreme`). Baseline excludes the evaluated year.
+`region_id`, `year`, `month`, `value`, `percentile_rank` (share of baseline values <= value), `class` (`normal`|`elevated`|`extreme`|`insufficient_data`), and optional `provisional` BOOL (D08). Baseline excludes the evaluated year and excludes provisional rows; current partial NRT month scales baseline by `days_elapsed / days_in_month`.
 
 ### seasons
 `region_id`, `start_month`, `peak_month`, `end_month`, `share_of_annual` (0-1), `window_length`.
@@ -88,7 +88,7 @@ Dedup key: `(sensor, lat, lon, acq_ts)`; duplicates dropped.
 `region_id`, `year`, `harmonized_total`, `frp_sum`, `rank` (1 = most), `vs_mean_pct` (percent vs mean of other years), `peak_month`.
 
 ### manifest.json
-`data_version`, `created_at`, `git_commit`, `as_of_date` (last data date), `provisional_from` (first date of NRT-only data, nullable), `parameters` (copy of config), `sources` (file names, row counts, checksums), `counts` (detections kept/dropped by reason, events, noise points, events outside Bangladesh), `unallocated_harmonized`, `pipeline_version`.
+`data_version`, `created_at`, `git_commit`, `as_of_date` (last data date), `provisional_from` (first date of NRT-only data, nullable), `provisional_note` (nullable note on NOAA-20 cross-sensor/unadjusted status and MTD baseline scaling), `parameters` (copy of config), `sources` (file names, row counts, checksums), `counts` (detections kept/dropped by reason, events, noise points, events outside Bangladesh), `unallocated_harmonized`, `pipeline_version`.
 
 ## 4. App state (SQLite `app.db`, P1)
 

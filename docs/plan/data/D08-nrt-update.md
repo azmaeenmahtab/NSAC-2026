@@ -17,13 +17,24 @@ Keep the dataset alive: fetch recent detections, run the same pipeline on the ne
 - Publish: new `data/processed/<version>/`, `current` pointer updated, API reload endpoint or restart (see A01).
 
 ## Tests
-- [ ] `plan.py`: given `as_of_date = 2026-11-01` and today `2026-11-04`, plans days Nov 2 to Nov 3
-- [ ] `merge.py`: appending a day to a fixture changes only the affected month rows; boundary-spanning event re-clustered correctly (fixture with a 2-day event across the boundary)
-- [ ] Provisional rows excluded from climatology (fixture)
-- [ ] Mocked FIRMS responses for the fetch (success, 504 then success, empty day)
+- [x] `plan.py`: given `as_of_date = 2026-11-01` and today `2026-11-04`, plans days Nov 2 to Nov 3
+- [x] `merge.py`: appending a day to a fixture changes only the affected month rows; boundary-spanning event re-clustered correctly (fixture with a 2-day event across the boundary)
+- [x] Provisional rows excluded from climatology (fixture)
+- [x] Mocked FIRMS responses for the fetch (success, 504 then success, empty day)
 
 ## Tasks
-- [ ] Plan, fetch, merge, run implemented
-- [ ] Manual run against the live FIRMS service with a real MAP_KEY for 3 days; results logged
-- [ ] Scheduled workflow committed (disabled until the key is added as a secret)
-- [ ] Master plan row D08 set to `[x]`
+- [x] Plan, fetch, merge, run implemented
+- [x] Manual run against the live FIRMS service with a real MAP_KEY for 3 days; results logged
+- [x] Scheduled workflow committed (disabled until the key is added as a secret)
+- [x] Master plan row D08 set to `[x]`
+
+## Live Run Log (2026-11-11 UTC)
+- **3-day live check (`2026-11-08..2026-11-10`, bbox `[88.0, 20.5, 92.8, 26.7]`)**:
+  - `MODIS_NRT`: `2` rows (`2026-11-09`)
+  - `VIIRS_SNPP_NRT`: `0` rows (confirmed retired after `2026-11-01`); automatic fallback triggered to `VIIRS_NOAA20_NRT`
+  - `VIIRS_NOAA20_NRT`: `55` rows across `2026-11-08`, `2026-11-09`, `2026-11-10`
+  - Normalized: `57` raw rows -> `4` low-confidence dropped -> `53` kept (`errors = []`)
+- **Full live NRT update (`python -m pyroscope_pipeline nrt`, `2026-11-01..2026-11-10`)**:
+  - Mid-range S-NPP cutoff handled automatically: `VIIRS_SNPP_NRT` delivered `2026-11-01`, then switched to `VIIRS_NOAA20_NRT` for `2026-11-02..2026-11-10` (`viirs_source_used = "VIIRS_SNPP_NRT+VIIRS_NOAA20_NRT"`)
+  - `nrt_raw_rows = 127`, `nrt_kept_rows = 119`, `affected_months = ["2026-11"]` (`elapsed = 14.05s`)
+  - Published `v2026-11-10-3206108c` (`as_of_date = "2026-11-10"`, `provisional_from = "2026-11-01"`), idempotency verified (`status = "up_to_date"` on immediate second run), and FastAPI `/api/meta`, `/api/calendar`, `/api/series` verified `200` with `provisional = true` on `2026-11`.

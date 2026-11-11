@@ -33,6 +33,7 @@ class DatasetManifest(BaseModel):
     git_commit: str = "unknown"
     as_of_date: str
     provisional_from: str | None = None
+    provisional_note: str | None = None
     parameters: dict[str, Any]
     sources: list[SourceManifest] = Field(default_factory=list)
     counts: PipelineCounts = Field(default_factory=PipelineCounts)
