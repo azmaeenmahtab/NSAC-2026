@@ -19,9 +19,9 @@ An interactive 2D and 3D hexagon map of fire density for the selected area and p
 - Accessibility: a text summary above the map (highest cell value and location name if available), keyboard focus on controls, no information carried by color alone in the legend.
 
 ## Tasks
-- [ ] Map renders fixture hexes with the mock API
-- [ ] Controls, legend, tooltip, selection
-- [ ] Debounced viewport requests with cancellation; resolution by zoom
-- [ ] Measured fps and request timings in the PR
-- [ ] RTL tests for legend, controls and the resolution function (zoom 5 -> 5, 7 -> 6, 9 -> 7 boundaries)
-- [ ] Master plan row F02 set to `[x]`
+- [x] Map renders fixture hexes with the mock API
+- [x] Controls, legend, tooltip, selection
+- [x] Debounced viewport requests with cancellation; resolution by zoom
+- [x] Measured fps and request timings in the PR
+- [x] RTL tests for legend, controls and the resolution function (zoom 5 -> 5, 7 -> 6, 9 -> 7 boundaries)
+- [x] Master plan row F02 set to `[x]`
