@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { FireSeason } from "../types";
 import { formatMonthShort } from "@/lib/format";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export interface SeasonBandProps {
@@ -18,6 +19,7 @@ export function isMonthInSeason(month: number, season?: FireSeason | null): bool
 }
 
 export function SeasonBand({ season, className }: SeasonBandProps) {
+  const { t, isBangla } = useLanguage();
   if (!season) return null;
 
   const sharePct = Math.round(season.share_of_annual * 100);
@@ -38,18 +40,18 @@ export function SeasonBand({ season, className }: SeasonBandProps) {
       <div className="flex items-center gap-2">
         <span className="flex h-2 w-2 rounded-full bg-[#ff6b00] animate-pulse" />
         <span className="font-semibold text-xs text-[#ff6b00]">
-          Burning Season Bracket:
+          {isBangla ? t.calendar.season_bracket : "Burning Season Bracket:"}
         </span>
         <span className="font-mono text-xs text-[#f8fafc]">
           {startName} – {endName}
         </span>
         <span className="rounded bg-[#161f30] px-1.5 py-0.2 text-[10px] font-mono text-[#ff8533] border border-[#2d3b55]">
-          {sharePct}% of annual fires
+          {sharePct}% {isBangla ? t.calendar.annual_share : "of annual fires"}
         </span>
       </div>
 
       <div className="flex items-center gap-1.5 text-[11px] text-[#94a3b8]">
-        <span>Peak activity:</span>
+        <span>{isBangla ? t.calendar.peak_activity : "Peak activity:"}</span>
         <span className="font-semibold text-[#f8fafc] font-mono">
           ★ {peakName}
         </span>
@@ -57,4 +59,3 @@ export function SeasonBand({ season, className }: SeasonBandProps) {
     </div>
   );
 }
-

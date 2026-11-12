@@ -9,12 +9,14 @@ import { ClimatologyStrip } from "./climatology-strip";
 import { MonthDetailDrawer } from "./month-detail-drawer";
 import { QueryBoundary } from "@/components/feedback/query-boundary";
 import { useViewState } from "@/features/areas";
+import { useLanguage } from "@/lib/i18n";
 import { formatMonthShort, formatNumber } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export function FireCalendar({ className }: { className?: string }) {
   const { area } = useViewState();
   const { data: calendarEnvelope, isLoading, isError, error, refetch } = useCalendar(area);
+  const { t, isBangla } = useLanguage();
 
   const [selectedCell, setSelectedCell] = React.useState<CalendarCellType | null>(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -80,25 +82,41 @@ export function FireCalendar({ className }: { className?: string }) {
         {/* Season Bracket Header */}
         <SeasonBand season={season} />
 
+        {/* Plain-Language Explainer Card */}
+        <div className="rounded-lg border border-[#1f293d] bg-[#0e1626] p-3 text-xs text-[#cbd5e1] space-y-1.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5 font-semibold text-white">
+              <span>📅</span>
+              <span>{t.calendar.explainer_title}</span>
+            </div>
+            <span className="text-[10px] text-[#ff8533] hidden sm:inline">
+              {t.calendar.click_hint}
+            </span>
+          </div>
+          <p className="text-[11px] text-[#94a3b8] leading-relaxed">
+            {t.calendar.explainer_text}
+          </p>
+        </div>
+
         {/* Compact Legend Bar */}
-        <div className="flex items-center gap-3 text-[11px] text-[#94a3b8] px-1">
+        <div className="flex items-center gap-3 text-[11px] text-[#94a3b8] px-1 flex-wrap">
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-xs bg-[#10b981]/50" />
-            Normal
+            <span>{isBangla ? `${t.calendar.normal} (Normal)` : "Normal"}</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-xs bg-[#f59e0b]/50" />
-            Elevated
+            <span>{isBangla ? `${t.calendar.elevated} (Elevated)` : "Elevated"}</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-xs bg-[#ef4444] text-white text-[7px] flex items-center justify-center font-bold">
               ◆
             </span>
-            Extreme
+            <span>{isBangla ? `${t.calendar.extreme} (Extreme)` : "Extreme"}</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="text-[#38bdf8] font-bold text-xs leading-none">*</span>
-            Provisional
+            <span>{isBangla ? `${t.calendar.provisional} (Provisional)` : "Provisional"}</span>
           </span>
         </div>
 
@@ -111,7 +129,9 @@ export function FireCalendar({ className }: { className?: string }) {
           >
             <thead>
               <tr className="border-b border-[#1f293d] text-[11px] font-mono text-[#64748b]">
-                <th className="py-2 px-3 font-semibold text-[#94a3b8] w-16">Year</th>
+                <th className="py-2 px-3 font-semibold text-[#94a3b8] w-16">
+                  {isBangla ? t.calendar.year : "Year"}
+                </th>
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
                   const inSeason = isMonthInSeason(m, season);
                   const isPeak = season?.peak_month === m;
@@ -129,7 +149,7 @@ export function FireCalendar({ className }: { className?: string }) {
                   );
                 })}
                 <th className="py-2 px-3 text-right font-semibold text-[#94a3b8] w-20">
-                  Total
+                  {isBangla ? t.calendar.total : "Total"}
                 </th>
               </tr>
             </thead>
