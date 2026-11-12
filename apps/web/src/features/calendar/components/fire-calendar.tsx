@@ -80,6 +80,28 @@ export function FireCalendar({ className }: { className?: string }) {
         {/* Season Bracket Header */}
         <SeasonBand season={season} />
 
+        {/* Compact Legend Bar */}
+        <div className="flex items-center gap-3 text-[11px] text-[#94a3b8] px-1">
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-xs bg-[#10b981]/50" />
+            Normal
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-xs bg-[#f59e0b]/50" />
+            Elevated
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-xs bg-[#ef4444] text-white text-[7px] flex items-center justify-center font-bold">
+              ◆
+            </span>
+            Extreme
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-[#38bdf8] font-bold text-xs leading-none">*</span>
+            Provisional
+          </span>
+        </div>
+
         {/* 2D Matrix Grid */}
         <div className="overflow-x-auto rounded-lg border border-[#1f293d] bg-[#0e141f] p-2">
           <table

@@ -15,9 +15,12 @@ export function SidePanelContent() {
       <AreaBreadcrumb currentAreaId={area} onAreaChange={setArea} />
 
       <div className="rounded-lg border border-[#1f293d] bg-[#161f30] p-3">
-        <h4 className="font-semibold text-xs text-[#f8fafc] mb-2">
-          Select Area of Interest
-        </h4>
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="font-semibold text-xs text-[#f8fafc]">
+            Select Region
+          </h4>
+          <span className="text-[10px] text-[#ff6b00] font-mono">64 Districts</span>
+        </div>
         <AreaSelector selectedId={area} onSelect={setArea} />
       </div>
 

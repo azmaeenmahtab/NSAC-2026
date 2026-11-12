@@ -60,8 +60,8 @@ export function AskPanel({ className }: AskPanelProps) {
             <h3 className="font-semibold text-xs text-[#f8fafc]">
               Ask PyroScope Assistant
             </h3>
-            <p className="text-[10px] text-[#64748b]">
-              Grounded in typed API tools • Active Area:{" "}
+            <p className="text-[10px] text-[#94a3b8]">
+              Answers grounded in verified NASA satellite data • Active Region:{" "}
               <strong className="text-[#ff6b00] font-mono">{area}</strong>
             </p>
           </div>

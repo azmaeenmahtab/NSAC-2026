@@ -116,7 +116,7 @@ export function FireMap() {
       <div className="relative flex-1 w-full h-full">
         {isLoading && (
           <div className="absolute top-4 left-4 z-20 rounded bg-[#0e141f]/80 px-2.5 py-1 text-xs text-[#ff6b00] border border-[#2d3b55]">
-            Loading telemetry...
+            Loading fire data...
           </div>
         )}
 

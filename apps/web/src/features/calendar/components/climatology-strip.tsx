@@ -37,11 +37,19 @@ export function ClimatologyStrip({
     >
       <div className="flex items-center justify-between mb-2">
         <span className="font-semibold text-xs text-[#f8fafc]">
-          Historical Monthly Climatology Baseline
+          Monthly Baseline
         </span>
-        <span className="text-[10px] text-[#64748b] font-mono">
-          Mean with p90 / p95 thresholds
-        </span>
+        <div className="flex items-center gap-2.5 text-[10px] text-[#94a3b8]">
+          <span className="flex items-center gap-1">
+            <span className="h-2 w-2 rounded-xs bg-[#ff6b00]" /> Mean
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="h-0.5 w-2 bg-[#f59e0b]" /> Top 10%
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="h-0.5 w-2 bg-[#ef4444]" /> Top 5%
+          </span>
+        </div>
       </div>
 
       <div className="grid grid-cols-12 gap-1 text-center font-mono">

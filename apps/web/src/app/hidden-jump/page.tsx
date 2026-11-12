@@ -16,7 +16,7 @@ export default function HiddenJumpPage() {
     >
       <AppShell
         activeTab="hidden-jump"
-        sidePanelTitle="Analytical Telemetry"
+        sidePanelTitle="Regional Fire Analysis & Alerts"
         sidePanelContent={<SidePanelContent />}
       >
         <div className="flex-1 overflow-auto bg-[#080b10] p-4 sm:p-6">

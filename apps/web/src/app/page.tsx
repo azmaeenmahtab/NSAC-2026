@@ -9,7 +9,6 @@ import { SeriesChart } from "@/features/series";
 import { YearlyBars, YearlyTable, useYearlyStats } from "@/features/stats";
 import { ActionPlanner } from "@/features/guidance";
 import { AlertBanner, SubscribeForm, useActiveAlerts } from "@/features/alerts";
-import { DemoGuide } from "@/components/demo/demo-guide";
 import { QueryBoundary } from "@/components/feedback/query-boundary";
 import { useAreas, useViewState } from "@/features/areas";
 import { cn } from "@/lib/utils";
@@ -76,7 +75,7 @@ function MainContent() {
 
   return (
     <AppShell
-      sidePanelTitle="Analytical Telemetry"
+      sidePanelTitle="Regional Fire Analysis & Alerts"
       sidePanelContent={<SidePanelContent />}
     >
       <div className="relative flex flex-1 flex-col h-full overflow-hidden">
@@ -100,7 +99,7 @@ function MainContent() {
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
             >
-              🗺️ Hex Map
+              🗺️ Fire Map
             </button>
             <button
               type="button"
@@ -112,7 +111,7 @@ function MainContent() {
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
             >
-              📅 FireCalendar
+              📅 Fire Calendar
             </button>
             <button
               type="button"
@@ -124,7 +123,7 @@ function MainContent() {
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
             >
-              📈 The Hidden Jump
+              📈 Satellite Jump (Comparison)
             </button>
             <button
               type="button"
@@ -136,7 +135,7 @@ function MainContent() {
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
             >
-              📊 Annual Stats
+              📊 Annual Trends
             </button>
             <button
               type="button"
@@ -154,7 +153,7 @@ function MainContent() {
 
           <div className="hidden lg:flex items-center gap-2 text-xs text-[#64748b]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b00]" />
-            <span>Harmonized 2000–Present Active Fire Baseline</span>
+            <span>Harmonized 2000–Present NASA Active Fire Baseline</span>
           </div>
         </div>
 
@@ -162,29 +161,26 @@ function MainContent() {
         <div className="relative flex-1 overflow-auto bg-[#080b10]">
           {viewMode === "map" && <FireMap />}
           {viewMode === "calendar" && (
-            <div className="max-w-7xl mx-auto p-4">
+            <div className="max-w-7xl mx-auto p-4 sm:p-6">
               <FireCalendar />
             </div>
           )}
           {viewMode === "series" && (
-            <div className="max-w-7xl mx-auto p-4">
+            <div className="max-w-7xl mx-auto p-4 sm:p-6">
               <SeriesChart />
             </div>
           )}
           {viewMode === "stats" && (
-            <div className="max-w-7xl mx-auto p-4">
+            <div className="max-w-7xl mx-auto p-4 sm:p-6">
               <YearlyStatsView areaId={area} />
             </div>
           )}
           {viewMode === "planner" && (
-            <div className="max-w-5xl mx-auto p-4">
+            <div className="max-w-5xl mx-auto p-4 sm:p-6">
               <ActionPlanner areaId={area} />
             </div>
           )}
         </div>
-
-        {/* Demo Pitch Guide Helper */}
-        <DemoGuide onSelectView={setViewMode} />
 
         {/* Subscribe Modal Dialog */}
         {showSubscribeModal && (

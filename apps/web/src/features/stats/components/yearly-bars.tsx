@@ -25,6 +25,21 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
   // Sort chronologically for chart display
   const chartData = [...data].sort((a, b) => a.year - b.year);
 
+  const peakYearRow = React.useMemo(() => {
+    if (!data.length) return null;
+    return [...data].reduce((max, r) => {
+      const val = r.harmonized_total ?? r.total_events ?? 0;
+      const maxVal = max.harmonized_total ?? max.total_events ?? 0;
+      return val > maxVal ? r : max;
+    }, data[0]);
+  }, [data]);
+
+  const avgAnnualEvents = React.useMemo(() => {
+    if (!data.length) return 0;
+    const sum = data.reduce((acc, r) => acc + (r.harmonized_total ?? r.total_events ?? 0), 0);
+    return Math.round(sum / data.length);
+  }, [data]);
+
   return (
     <div className="bg-[#0e1626]/80 border border-[#1e293b] rounded-xl p-4 sm:p-5 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -48,6 +63,28 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
           {showTable ? "Hide accessible table" : "Show accessible table"}
         </button>
       </div>
+
+      {/* 3-Stat Summary Cards */}
+      {data.length > 0 && (
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Timeline</span>
+            <span className="text-sm font-bold text-white font-mono">{data.length} Years</span>
+          </div>
+          <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Peak Year</span>
+            <span className="text-sm font-bold text-[#ef4444] font-mono">
+              {peakYearRow?.year || "—"}
+            </span>
+          </div>
+          <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Average / Yr</span>
+            <span className="text-sm font-bold text-[#ff8533] font-mono">
+              {formatNumber(avgAnnualEvents)}
+            </span>
+          </div>
+        </div>
+      )}
 
       <div className="h-56 w-full" aria-label="Annual fire activity bar chart">
         <ResponsiveContainer width="100%" height="100%">

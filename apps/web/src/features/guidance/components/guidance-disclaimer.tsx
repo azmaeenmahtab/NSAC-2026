@@ -19,9 +19,7 @@ export function GuidanceDisclaimer({ className }: GuidanceDisclaimerProps) {
         <span className="text-[#f59e0b] font-semibold select-none">⚠</span>
         <p>
           <strong className="text-[#f1f5f9] font-medium">Advisory Notice: </strong>
-          Alerts, fire season stages, and action guidance are advisory, not an official warning system.
-          Preparedness action items are sourced from regional forest agencies and wildland manuals for situational awareness.
-          In emergency situations, always defer to official Bangladesh Forest Department or local disaster authority directives.
+          Alerts, fire season stages, and action guidance are advisory. In emergency situations, always defer to official authorities.
         </p>
       </div>
     </div>
