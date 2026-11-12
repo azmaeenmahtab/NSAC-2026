@@ -1,0 +1,95 @@
+{
+  "data_version": "v2026-10-31-f4296770",
+  "pipeline_version": "0.1.0",
+  "created_at": "2026-11-12T06:39:17.131644+00:00",
+  "git_commit": "76f3642",
+  "as_of_date": "2026-10-31",
+  "provisional_from": null,
+  "provisional_note": null,
+  "parameters": {
+    "eps_spatial_meters": 2700.0,
+    "eps_temporal_hours": 24.0,
+    "min_pts": 2,
+    "min_mean_monthly_modis": 3,
+    "month_pool_width": 1,
+    "cv_method": "leave_one_year_out",
+    "methods": [
+      "quantile_map",
+      "ratio"
+    ],
+    "percentiles": [
+      50,
+      90,
+      95
+    ],
+    "season_share_threshold": 0.7,
+    "h3_resolutions": [
+      5,
+      6,
+      7
+    ],
+    "bbox_bangladesh": [
+      88.0,
+      20.5,
+      92.8,
+      26.7
+    ],
+    "modis_min_confidence": 30,
+    "viirs_allowed_confidence": [
+      "n",
+      "h"
+    ]
+  },
+  "sources": [
+    {
+      "file_name": "fire_archive_M-C61_842592.csv",
+      "sensor": "MODIS_C6.1_Archive",
+      "row_count": 264682,
+      "sha256": "172ab134ef0fa17a7b9990b92de2e412fff99f07cd5657857df76d8c19384991",
+      "date_range": [
+        "2000-11-02",
+        "2026-08-28"
+      ]
+    },
+    {
+      "file_name": "fire_archive_SV-C2_842593.csv",
+      "sensor": "VIIRS_SNPP_C2_Archive",
+      "row_count": 572044,
+      "sha256": "bbeb52016680dba95cc0c65dfba2753d6486a0f554db2a958b0fec6c861e49e6",
+      "date_range": [
+        "2012-01-20",
+        "2026-07-28"
+      ]
+    },
+    {
+      "file_name": "fire_nrt_M-C61_842592.csv",
+      "sensor": "MODIS_C6.1_NRT",
+      "row_count": 30,
+      "sha256": "1915d261d63edfd2e294cb704098a9f603bfb9d563fb76519d17eb0c4463c4f4",
+      "date_range": [
+        "2026-09-02",
+        "2026-11-01"
+      ]
+    },
+    {
+      "file_name": "fire_nrt_SV-C2_842593.csv",
+      "sensor": "VIIRS_SNPP_C2_NRT",
+      "row_count": 412,
+      "sha256": "32b0c95ddbf4c5232e390fac6f717b64c0106cc8b0c2e9ea0ff2d0b1ff200ae4",
+      "date_range": [
+        "2026-08-02",
+        "2026-11-01"
+      ]
+    }
+  ],
+  "counts": {
+    "detections_raw": 837168,
+    "detections_kept": 758730,
+    "detections_dropped_confidence": 59644,
+    "detections_dropped_duplicate": 1,
+    "events_created": 109246,
+    "noise_points": 139544,
+    "events_outside_roi": 78672
+  },
+  "unallocated_harmonized": 0.0
+}
