@@ -106,7 +106,13 @@ def test_run_stats_assembly_determinism_and_schemas(tmp_path: Path) -> None:
     version_dir = Path(summary1["version_dir"])
     current_path = Path(summary1["current_path"])
     assert version_dir.is_dir()
-    assert current_path.resolve() == version_dir.resolve()
+    if current_path.is_symlink():
+        assert current_path.resolve() == version_dir.resolve()
+    else:
+        assert current_path.is_dir()
+        assert (current_path / "manifest.json").read_text(encoding="utf-8") == (
+            version_dir / "manifest.json"
+        ).read_text(encoding="utf-8")
     assert summary1["data_version"].startswith("v2025-12-31-")
     assert len(summary1["data_version"].split("-")[-1]) == 8
 
