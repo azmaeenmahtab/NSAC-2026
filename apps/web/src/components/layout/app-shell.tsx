@@ -4,6 +4,7 @@ import * as React from "react";
 import { Header } from "./header";
 import { Attribution } from "./attribution";
 import { SidePanel } from "./side-panel";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export interface AppShellProps {
@@ -28,6 +29,7 @@ export function AppShell({
   onTabChange,
 }: AppShellProps) {
   const [isMobilePanelOpen, setIsMobilePanelOpen] = React.useState(false);
+  const { isBangla } = useLanguage();
 
   return (
     <div className={cn("flex min-h-screen flex-col bg-[#080b10] text-[#f8fafc]", className)}>
@@ -44,9 +46,9 @@ export function AppShell({
               <button
                 type="button"
                 onClick={() => setIsMobilePanelOpen(true)}
-                className="flex items-center gap-1.5 rounded-full bg-[#ff6b00] px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-[#ff6b00]/30 active:scale-95 transition-transform"
+                className="flex items-center gap-1.5 rounded-full bg-[#ff6b00] px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-[#ff6b00]/30 active:scale-95 transition-transform cursor-pointer"
               >
-                <span>📊 Analytics</span>
+                <span>{isBangla ? "📊 তথ্য ও এলাকা" : "📊 Analytics & Area"}</span>
               </button>
             </div>
           )}

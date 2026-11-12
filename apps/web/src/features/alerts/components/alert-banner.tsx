@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/i18n";
 import type { ActiveAlerts } from "../types";
 
 interface AlertBannerProps {
@@ -17,6 +18,7 @@ export function AlertBanner({
   onOpenSubscribe,
 }: AlertBannerProps) {
   const [dismissed, setDismissed] = useState(false);
+  const { t, isBangla } = useLanguage();
   const [notifGranted, setNotifGranted] = useState(
     typeof window !== "undefined" && "Notification" in window
       ? Notification.permission === "granted"
@@ -47,6 +49,22 @@ export function AlertBanner({
     }
   }
 
+  const alertTitle = isBangla
+    ? isExtreme
+      ? t.alerts.banner_extreme
+      : isSeasonApproaching
+        ? t.alerts.banner_approaching
+        : t.alerts.banner_elevated
+    : isExtreme
+      ? "Extreme Anomaly Warning"
+      : isSeasonApproaching
+        ? "Fire Season Approaching"
+        : "Elevated Burning Advisory";
+
+  const daysLabel = isBangla
+    ? `${alerts.days_until_season} ${t.alerts.banner_days_until}`
+    : `${alerts.days_until_season} days until historical season onset`;
+
   return (
     <aside
       role="alert"
@@ -61,11 +79,7 @@ export function AlertBanner({
           <div className="space-y-0.5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-semibold text-xs tracking-wide uppercase text-white">
-                {isExtreme
-                  ? "Extreme Anomaly Warning"
-                  : isSeasonApproaching
-                    ? "Fire Season Approaching"
-                    : "Elevated Burning Advisory"}
+                {alertTitle}
               </span>
               <span className="text-xs text-white/80 font-medium">
                 — {areaName || areaId}
@@ -73,17 +87,20 @@ export function AlertBanner({
               {alerts.days_until_season !== null &&
                 alerts.days_until_season !== undefined && (
                   <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-white/20 text-white">
-                    {alerts.days_until_season} days until historical season onset
+                    {daysLabel}
                   </span>
                 )}
             </div>
 
             <p className="text-xs text-white/90 leading-snug">
               {alerts.reason ||
-                "Seasonal analysis indicates dry transition conditions and heightened fire probability."}{" "}
+                (isBangla
+                  ? "ঋতু পরিবর্তন ও শুষ্ক আবহাওয়ায় এই এলাকায় আগুন লাগার ঝুঁকি বাড়ছে।"
+                  : "Seasonal analysis indicates dry transition conditions and heightened fire probability.")}{" "}
               <span className="opacity-75 italic">
-                (Advisory notice: provisional data as of{" "}
-                {alerts.provisional_as_of || "latest satellite pass"})
+                {isBangla
+                  ? `(সতর্কতামূলক বিজ্ঞপ্তি: ${alerts.provisional_as_of || "সর্বশেষ উপগ্রহ পর্যবেক্ষণ"} তারিখের তথ্য)`
+                  : `(Advisory notice: provisional data as of ${alerts.provisional_as_of || "latest satellite pass"})`}
               </span>
             </p>
           </div>
@@ -94,9 +111,9 @@ export function AlertBanner({
             <button
               type="button"
               onClick={requestNotificationPermission}
-              className="text-xs px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors"
+              className="text-xs px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors cursor-pointer"
             >
-              🔔 Enable Notifications
+              🔔 {isBangla ? t.alerts.enable_notifications : "Enable Notifications"}
             </button>
           )}
 
@@ -104,9 +121,9 @@ export function AlertBanner({
             <button
               type="button"
               onClick={onOpenSubscribe}
-              className="text-xs px-3 py-1 rounded bg-white text-black font-semibold hover:bg-white/90 transition-colors shadow-xs"
+              className="text-xs px-3 py-1 rounded bg-white text-black font-semibold hover:bg-white/90 transition-colors shadow-xs cursor-pointer"
             >
-              Subscribe to Alerts
+              {isBangla ? t.alerts.subscribe_btn : "Subscribe to Alerts"}
             </button>
           )}
 
@@ -114,7 +131,7 @@ export function AlertBanner({
             type="button"
             onClick={() => setDismissed(true)}
             aria-label="Dismiss alert banner"
-            className="text-white/60 hover:text-white text-sm p-1 ml-1"
+            className="text-white/60 hover:text-white text-sm p-1 ml-1 cursor-pointer"
           >
             ✕
           </button>
@@ -123,4 +140,3 @@ export function AlertBanner({
     </aside>
   );
 }
-

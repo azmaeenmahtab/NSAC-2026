@@ -7,6 +7,7 @@ import { SuggestedQuestions } from "./suggested-questions";
 import { MessageList } from "./message-list";
 import { Button } from "@/components/ui/button";
 import { useViewState } from "@/features/areas";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export interface AskPanelProps {
@@ -15,6 +16,7 @@ export interface AskPanelProps {
 
 export function AskPanel({ className }: AskPanelProps) {
   const { area, setArea } = useViewState();
+  const { t, isBangla } = useLanguage();
   const {
     messages,
     input,
@@ -58,10 +60,10 @@ export function AskPanel({ className }: AskPanelProps) {
           <span className="text-base">🔥</span>
           <div>
             <h3 className="font-semibold text-xs text-[#f8fafc]">
-              Ask PyroScope Assistant
+              {isBangla ? `${t.ask.title} (Ask Assistant)` : "Ask PyroScope Assistant"}
             </h3>
             <p className="text-[10px] text-[#94a3b8]">
-              Answers grounded in verified NASA satellite data • Active Region:{" "}
+              {isBangla ? t.ask.subtitle : "Answers grounded in verified NASA satellite data"} • {isBangla ? "অঞ্চল" : "Active Region"}:{" "}
               <strong className="text-[#ff6b00] font-mono">{area}</strong>
             </p>
           </div>
@@ -76,7 +78,7 @@ export function AskPanel({ className }: AskPanelProps) {
               onClick={clearConversation}
               className="h-7 text-xs text-[#64748b] hover:text-[#f8fafc]"
             >
-              Clear
+              {isBangla ? t.ask.clear : "Clear"}
             </Button>
           )}
         </div>
@@ -93,7 +95,11 @@ export function AskPanel({ className }: AskPanelProps) {
           messages={messages}
           onSelectCandidate={(cand) => {
             setArea(cand.id);
-            sendMessage(`Tell me about fire activity in ${cand.name}`);
+            sendMessage(
+              isBangla
+                ? `${cand.name} এলাকার আগুনের ইতিহাস ও মৌসুম সম্পর্কে বলুন`
+                : `Tell me about fire activity in ${cand.name}`
+            );
           }}
           onRetry={retryLast}
         />
@@ -112,8 +118,12 @@ export function AskPanel({ className }: AskPanelProps) {
             disabled={isSubmitting || cooldown !== null}
             placeholder={
               cooldown !== null
-                ? `Rate limited. Available in ${cooldown}s...`
-                : "Ask about fire seasonality, anomalies, or year comparisons..."
+                ? isBangla
+                  ? `অনুরোধের সীমা শেষ। অপেক্ষা করুন ${cooldown} সেকেন্ড...`
+                  : `Rate limited. Available in ${cooldown}s...`
+                : isBangla
+                  ? t.ask.placeholder
+                  : "Ask about fire seasonality, anomalies, or year comparisons..."
             }
             rows={2}
             aria-label="Ask assistant question"
@@ -131,20 +141,20 @@ export function AskPanel({ className }: AskPanelProps) {
                   : "text-[#64748b]"
               )}
             >
-              {input.length} / 500 characters
+              {input.length} / 500 {isBangla ? "অক্ষর" : "characters"}
             </span>
 
             <div className="flex items-center gap-2">
               <span className="hidden sm:inline text-[10px] text-[#64748b]">
-                ↵ to send, shift+↵ for newline
+                {isBangla ? "↵ পাঠাতে, shift+↵ নতুন লাইনে" : "↵ to send, shift+↵ for newline"}
               </span>
               <Button
                 type="submit"
                 size="sm"
                 disabled={isOverLimit || isInputEmpty || isSubmitting || cooldown !== null}
-                className="h-7 px-3 text-xs font-semibold bg-[#ff6b00] hover:bg-[#ff8533] text-white"
+                className="h-7 px-3 text-xs font-semibold bg-[#ff6b00] hover:bg-[#ff8533] text-white cursor-pointer"
               >
-                {isSubmitting ? "Sending..." : "Ask"}
+                {isSubmitting ? (isBangla ? "পাঠানো হচ্ছে..." : "Sending...") : "Ask"}
               </Button>
             </div>
           </div>
@@ -153,4 +163,3 @@ export function AskPanel({ className }: AskPanelProps) {
     </div>
   );
 }
-

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import dynamic from "next/dynamic";
 import { AppShell } from "@/components/layout/app-shell";
 import { SidePanelContent } from "@/features/shell";
@@ -11,6 +11,7 @@ import { ActionPlanner } from "@/features/guidance";
 import { AlertBanner, SubscribeForm, useActiveAlerts } from "@/features/alerts";
 import { QueryBoundary } from "@/components/feedback/query-boundary";
 import { useAreas, useViewState } from "@/features/areas";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 const FireMap = dynamic(() => import("@/features/map").then((m) => m.FireMap), {
@@ -58,10 +59,12 @@ function YearlyStatsView({ areaId }: { areaId: string }) {
 }
 
 function MainContent() {
-  const [viewMode, setViewMode] = React.useState<ViewMode>("map");
-  const [showSubscribeModal, setShowSubscribeModal] = React.useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("map");
+  const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+  const [showGuideBanner, setShowGuideBanner] = useState(true);
   const { area, setArea } = useViewState();
   const { data: areasEnvelope } = useAreas();
+  const { t, isBangla } = useLanguage();
 
   React.useEffect(() => {
     const list = areasEnvelope?.data;
@@ -75,7 +78,7 @@ function MainContent() {
 
   return (
     <AppShell
-      sidePanelTitle="Regional Fire Analysis & Alerts"
+      sidePanelTitle={t.side_panel.title}
       sidePanelContent={<SidePanelContent />}
     >
       <div className="relative flex flex-1 flex-col h-full overflow-hidden">
@@ -85,6 +88,101 @@ function MainContent() {
           alerts={activeAlerts}
           onOpenSubscribe={() => setShowSubscribeModal(true)}
         />
+
+        {/* Non-technical Welcome & Rural Fire Awareness Guide */}
+        {showGuideBanner ? (
+          <div className="z-10 bg-[#0e1626] border-b border-[#1e293b] px-4 py-3 text-xs text-[#cbd5e1] transition-all">
+            <div className="max-w-7xl mx-auto space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-base select-none">🌾🔥</span>
+                  <span className="font-semibold text-white text-xs sm:text-sm">
+                    {t.intro_guide.title}
+                  </span>
+                  <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-medium bg-[#ff6b00]/15 text-[#ff8533] border border-[#ff6b00]/30">
+                    {t.intro_guide.badge}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowGuideBanner(false)}
+                  className="text-[11px] text-[#94a3b8] hover:text-white px-2 py-0.5 rounded hover:bg-[#162238] transition-colors cursor-pointer"
+                  title="Minimize intro guide"
+                >
+                  {t.intro_guide.hide_btn} ✕
+                </button>
+              </div>
+
+              <p className="text-[11px] sm:text-xs text-[#94a3b8] leading-relaxed">
+                {t.intro_guide.subtitle}
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setViewMode("map")}
+                  className="text-left p-2.5 rounded-lg bg-[#141e30] border border-[#21304b] hover:border-[#ff6b00]/40 transition-colors cursor-pointer space-y-1 group"
+                >
+                  <p className="font-semibold text-white text-xs flex items-center justify-between">
+                    <span>{t.intro_guide.card1_title}</span>
+                    <span className="text-[10px] text-[#ff8533] group-hover:underline">
+                      {isBangla ? "দেখুন →" : "View →"}
+                    </span>
+                  </p>
+                  <p className="text-[11px] text-[#94a3b8] leading-snug">
+                    {t.intro_guide.card1_desc}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setViewMode("calendar")}
+                  className="text-left p-2.5 rounded-lg bg-[#141e30] border border-[#21304b] hover:border-[#ff6b00]/40 transition-colors cursor-pointer space-y-1 group"
+                >
+                  <p className="font-semibold text-white text-xs flex items-center justify-between">
+                    <span>{t.intro_guide.card2_title}</span>
+                    <span className="text-[10px] text-[#ff8533] group-hover:underline">
+                      {isBangla ? "দেখুন →" : "View →"}
+                    </span>
+                  </p>
+                  <p className="text-[11px] text-[#94a3b8] leading-snug">
+                    {t.intro_guide.card2_desc}
+                  </p>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setViewMode("planner")}
+                  className="text-left p-2.5 rounded-lg bg-[#141e30] border border-[#21304b] hover:border-[#ff6b00]/40 transition-colors cursor-pointer space-y-1 group"
+                >
+                  <p className="font-semibold text-white text-xs flex items-center justify-between">
+                    <span>{t.intro_guide.card3_title}</span>
+                    <span className="text-[10px] text-[#ff8533] group-hover:underline">
+                      {isBangla ? "চেকলিস্ট →" : "Checklist →"}
+                    </span>
+                  </p>
+                  <p className="text-[11px] text-[#94a3b8] leading-snug">
+                    {t.intro_guide.card3_desc}
+                  </p>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="z-10 bg-[#0e1626]/60 border-b border-[#1e293b] px-4 py-1.5 text-[11px] flex items-center justify-between">
+            <span className="text-[#94a3b8] flex items-center gap-1.5">
+              <span>🌾</span>
+              <span>{t.intro_guide.emergency_tag}</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowGuideBanner(true)}
+              className="text-[#ff8533] hover:underline font-medium cursor-pointer"
+            >
+              {t.intro_guide.show_btn} ℹ️
+            </button>
+          </div>
+        )}
 
         {/* View Switcher Segmented Control Bar */}
         <div className="z-20 flex items-center justify-between border-b border-[#1f293d] bg-[#0e141f]/90 px-4 py-2 backdrop-blur-md">
@@ -98,8 +196,9 @@ function MainContent() {
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
+              title={t.view_modes.map_desc}
             >
-              🗺️ Fire Map
+              {t.view_modes.map}
             </button>
             <button
               type="button"
@@ -110,8 +209,9 @@ function MainContent() {
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
+              title={t.view_modes.calendar_desc}
             >
-              📅 Fire Calendar
+              {t.view_modes.calendar}
             </button>
             <button
               type="button"
@@ -122,8 +222,9 @@ function MainContent() {
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
+              title={t.view_modes.series_desc}
             >
-              📈 Satellite Jump (Comparison)
+              {t.view_modes.series}
             </button>
             <button
               type="button"
@@ -134,8 +235,9 @@ function MainContent() {
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
+              title={t.view_modes.stats_desc}
             >
-              📊 Annual Trends
+              {t.view_modes.stats}
             </button>
             <button
               type="button"
@@ -146,14 +248,15 @@ function MainContent() {
                   ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
                   : "text-[#94a3b8] hover:text-[#f8fafc]"
               )}
+              title={t.view_modes.planner_desc}
             >
-              🛡️ Action Planner
+              {t.view_modes.planner}
             </button>
           </div>
 
           <div className="hidden lg:flex items-center gap-2 text-xs text-[#64748b]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b00]" />
-            <span>Harmonized 2000–Present NASA Active Fire Baseline</span>
+            <span>{t.view_modes.baseline_tag}</span>
           </div>
         </div>
 
@@ -189,7 +292,7 @@ function MainContent() {
               <button
                 type="button"
                 onClick={() => setShowSubscribeModal(false)}
-                className="absolute top-3 right-3 text-[#94a3b8] hover:text-white text-sm z-10"
+                className="absolute top-3 right-3 text-[#94a3b8] hover:text-white text-sm z-10 cursor-pointer"
                 aria-label="Close dialog"
               >
                 ✕

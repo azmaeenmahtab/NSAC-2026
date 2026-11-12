@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useMeta } from "@/features/shell";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export interface AttributionProps {
@@ -10,6 +11,7 @@ export interface AttributionProps {
 
 export function Attribution({ className }: AttributionProps) {
   const { data: metaResponse } = useMeta();
+  const { t, isBangla } = useLanguage();
   const [showNotice, setShowNotice] = React.useState(false);
 
   const attributionText =
@@ -31,13 +33,17 @@ export function Attribution({ className }: AttributionProps) {
             onClick={() => setShowNotice(true)}
             className="text-[#ff6b00] hover:underline font-medium cursor-pointer"
           >
-            Safety Notice
+            {t.attribution.safety_notice}
           </button>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span>Team Perceptron</span>
+          <span className="font-medium text-[#94a3b8]">
+            {t.attribution.team}
+          </span>
           <span>•</span>
-          <span>NASA Space Apps Challenge 2026</span>
+          <span>
+            {isBangla ? "নাসা স্পেস অ্যাপস চ্যালেঞ্জ ২০২৬" : "NASA Space Apps Challenge 2026"}
+          </span>
         </div>
       </footer>
 
@@ -52,7 +58,7 @@ export function Attribution({ className }: AttributionProps) {
             <div className="flex items-center justify-between border-b border-[#1f293d] pb-2">
               <h3 id="safety-notice-title" className="font-semibold text-white flex items-center gap-1.5">
                 <span>⚠️</span>
-                <span>Operational Safety & Scientific Research Notice</span>
+                <span>{t.attribution.safety_title}</span>
               </h3>
               <button
                 type="button"
@@ -65,28 +71,29 @@ export function Attribution({ className }: AttributionProps) {
             </div>
 
             <p className="text-[#cbd5e1] leading-relaxed">
-              <strong className="text-white">NOTICE: </strong>
-              PyroScope is an open scientific research and decision-support platform designed for retrospective analysis, pattern discovery, and early season awareness. It is{" "}
-              <strong className="text-[#ef4444]">NOT</strong> an operational tactical fire dispatch system or emergency evacuation service.
+              <strong className="text-white">
+                {isBangla ? "বিজ্ঞপ্তি: " : "NOTICE: "}
+              </strong>
+              {t.attribution.notice_lead}{" "}
+              {t.attribution.notice_body1}
             </p>
 
-            <p className="text-[#94a3b8] leading-relaxed">
-              Active-fire detections are thermal hot spots; harmonized counts represent{" "}
-              <strong className="text-white">MODIS-equivalent fire events</strong>, not burned area or hectares.
-            </p>
-
-            <p className="text-[#94a3b8] leading-relaxed">
-              In the event of an active wildfire threat, immediately contact the{" "}
-              <strong className="text-white">Bangladesh Fire Service and Civil Defence (emergency: 999 or 102)</strong> and the Ministry of Environment, Forest and Climate Change.
-            </p>
+            <div className="p-3 rounded-lg bg-red-950/30 border border-red-800/40 text-red-200 space-y-1">
+              <p className="font-medium">
+                {t.attribution.notice_body2}
+              </p>
+              <p className="font-bold text-sm text-red-300">
+                🚨 {t.attribution.notice_emergency}
+              </p>
+            </div>
 
             <div className="pt-2 text-right">
               <button
                 type="button"
                 onClick={() => setShowNotice(false)}
-                className="px-4 py-1.5 rounded-lg bg-[#ff6b00] text-white font-medium hover:bg-[#e05e00] transition-colors"
+                className="px-4 py-1.5 rounded-lg bg-[#ff6b00] text-white font-medium hover:bg-[#e05e00] transition-colors cursor-pointer"
               >
-                Acknowledge & Close
+                {t.attribution.close_btn}
               </button>
             </div>
           </div>
