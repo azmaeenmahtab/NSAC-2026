@@ -5,14 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMeta } from "@/features/shell";
 import { DataStatusBadge } from "@/features/shell";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-
-const NAV_ITEMS = [
-  { href: "/", label: "Map & Calendar", tab: "mission-control" },
-  { href: "/hidden-jump", label: "The Hidden Jump", tab: "hidden-jump" },
-  { href: "/ask", label: "Ask Assistant", tab: "ask" },
-  { href: "/methodology", label: "Methodology", tab: "methodology" },
-] as const;
 
 export interface HeaderProps {
   className?: string;
@@ -24,6 +18,14 @@ export function Header({ className, activeTab, onTabChange }: HeaderProps) {
   const pathname = usePathname();
   const { data: metaResponse } = useMeta();
   const meta = metaResponse?.data;
+  const { language, setLanguage, t } = useLanguage();
+
+  const navItems = [
+    { href: "/", label: t.header.nav_map_calendar, tab: "mission-control" },
+    { href: "/hidden-jump", label: t.header.nav_hidden_jump, tab: "hidden-jump" },
+    { href: "/ask", label: t.header.nav_ask, tab: "ask" },
+    { href: "/methodology", label: t.header.nav_methodology, tab: "methodology" },
+  ];
 
   return (
     <header
@@ -41,14 +43,14 @@ export function Header({ className, activeTab, onTabChange }: HeaderProps) {
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5 leading-none">
               <span className="font-bold text-sm tracking-tight text-[#f8fafc]">
-                PyroScope
+                {t.header.brand_title}
               </span>
               <span className="text-[10px] font-mono rounded bg-[#161f30] px-1 py-0.2 text-[#ff6b00] border border-[#2d3b55]">
-                BETA
+                {t.header.brand_badge}
               </span>
             </div>
             <span className="text-[10px] text-[#64748b] leading-tight">
-              NASA Space Apps 2026
+              {t.header.brand_tagline}
             </span>
           </div>
         </Link>
@@ -56,7 +58,7 @@ export function Header({ className, activeTab, onTabChange }: HeaderProps) {
 
       {/* Center Nav tabs */}
       <nav className="hidden md:flex items-center gap-1 rounded-lg bg-[#080b10] p-1 border border-[#1f293d]">
-        {NAV_ITEMS.map((item) => {
+        {navItems.map((item) => {
           const isActive =
             activeTab !== undefined
               ? activeTab === item.tab
@@ -93,8 +95,42 @@ export function Header({ className, activeTab, onTabChange }: HeaderProps) {
         })}
       </nav>
 
-      {/* Right side metadata badge */}
-      <div className="flex items-center gap-2">
+      {/* Right side controls: Language switcher toggle & Metadata badge */}
+      <div className="flex items-center gap-2.5">
+        {/* Language Toggle */}
+        <div
+          role="group"
+          aria-label="Language selector"
+          className="flex items-center rounded-lg bg-[#080b10] p-0.5 border border-[#1f293d]"
+        >
+          <button
+            type="button"
+            onClick={() => setLanguage("en")}
+            className={cn(
+              "px-2 py-0.5 rounded text-xs font-medium transition-all cursor-pointer",
+              language === "en"
+                ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                : "text-[#94a3b8] hover:text-[#f8fafc]"
+            )}
+            title="Switch to English"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            onClick={() => setLanguage("bn")}
+            className={cn(
+              "px-2 py-0.5 rounded text-xs font-medium transition-all cursor-pointer",
+              language === "bn"
+                ? "bg-[#ff6b00] text-white font-semibold shadow-xs"
+                : "text-[#94a3b8] hover:text-[#f8fafc]"
+            )}
+            title="বাংলায় দেখুন"
+          >
+            বাংলা
+          </button>
+        </div>
+
         <DataStatusBadge
           dataVersion={meta?.dataVersion}
           asOf={meta?.asOf}

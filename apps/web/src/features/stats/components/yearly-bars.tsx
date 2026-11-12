@@ -11,6 +11,7 @@ import {
   Cell,
 } from "recharts";
 import { formatNumber } from "@/lib/format";
+import { useLanguage } from "@/lib/i18n";
 import type { YearlyStatRow } from "../types";
 
 interface YearlyBarsProps {
@@ -21,6 +22,7 @@ interface YearlyBarsProps {
 
 export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps) {
   const [showTable, setShowTable] = useState(false);
+  const { isBangla } = useLanguage();
 
   // Sort chronologically for chart display
   const chartData = [...data].sort((a, b) => a.year - b.year);
@@ -57,7 +59,7 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
         <button
           type="button"
           onClick={() => setShowTable(!showTable)}
-          className="self-start sm:self-auto text-xs text-[#94a3b8] hover:text-[#f1f5f9] px-2.5 py-1 rounded bg-[#161f30] border border-[#23324d] transition-colors"
+          className="self-start sm:self-auto text-xs text-[#94a3b8] hover:text-[#f1f5f9] px-2.5 py-1 rounded bg-[#161f30] border border-[#23324d] transition-colors cursor-pointer"
           aria-expanded={showTable}
         >
           {showTable ? "Hide accessible table" : "Show accessible table"}
@@ -68,23 +70,41 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
       {data.length > 0 && (
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
-            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Timeline</span>
-            <span className="text-sm font-bold text-white font-mono">{data.length} Years</span>
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">
+              {isBangla ? "সময়কাল" : "Timeline"}
+            </span>
+            <span className="text-sm font-bold text-white font-mono">
+              {data.length} {isBangla ? "বছর" : "Years"}
+            </span>
           </div>
           <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
-            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Peak Year</span>
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">
+              {isBangla ? "সর্বোচ্চ বছর" : "Peak Year"}
+            </span>
             <span className="text-sm font-bold text-[#ef4444] font-mono">
               {peakYearRow?.year || "—"}
             </span>
           </div>
           <div className="p-2 rounded-lg bg-[#141e30] border border-[#21304b]">
-            <span className="text-[10px] text-[#64748b] uppercase font-mono block">Average / Yr</span>
+            <span className="text-[10px] text-[#64748b] uppercase font-mono block">
+              {isBangla ? "বাৎসরিক গড়" : "Average / Yr"}
+            </span>
             <span className="text-sm font-bold text-[#ff8533] font-mono">
               {formatNumber(avgAnnualEvents)}
             </span>
           </div>
         </div>
       )}
+
+      {/* Plain Language Explainer */}
+      <div className="rounded-lg bg-[#141e30] border border-[#21304b] p-2.5 text-[11px] text-[#94a3b8]">
+        <strong className="text-white">
+          {isBangla ? "💡 কীভাবে পড়বেন: " : "💡 How to Read: "}
+        </strong>
+        {isBangla
+          ? "এই চার্টে প্রতিটি স্তম্ভ নির্দেশ করে ওই বছরে মোট কতগুলো আগুনের ঘটনা ঘটেছে। উঁচু স্তম্ভ মানে সেই বছরে বেশি আগুন লেগেছিল। লাল রঙের চিহ্নিত স্তম্ভটি ছিল সবচেয়ে ভয়াবহ বছর।"
+          : "Each bar shows the total fire events in that year across the selected region. Taller bars indicate unusually dry, high-fire years."}
+      </div>
 
       <div className="h-56 w-full" aria-label="Annual fire activity bar chart">
         <ResponsiveContainer width="100%" height="100%">
@@ -117,36 +137,41 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
                     <p className="text-[#FF6B00]">
                       {formatNumber(val)} MODIS-equivalent fire events
                     </p>
-                    <p className="text-[#94a3b8]">Historical Rank: #{row.rank}</p>
+                    <p className="text-[#94a3b8]">
+                      {isBangla ? `ঐতিহাসিক অবস্থান: #${row.rank}` : `Historical Rank: #${row.rank}`}
+                    </p>
                     <p
                       className={
                         row.vs_mean_pct >= 0 ? "text-[#ef4444]" : "text-[#10b981]"
                       }
                     >
                       {row.vs_mean_pct >= 0 ? "+" : ""}
-                      {row.vs_mean_pct.toFixed(1)}% vs historical mean
+                      {row.vs_mean_pct.toFixed(1)}%{" "}
+                      {isBangla ? "গড়ের চেয়ে" : "vs historical mean"}
                     </p>
                   </div>
                 );
               }}
             />
             <Bar
-              dataKey={(d: YearlyStatRow) => d.harmonized_total ?? d.total_events ?? 0}
+              dataKey="harmonized_total"
               radius={[4, 4, 0, 0]}
-              onClick={(entry) => {
-                const row = entry as unknown as { year?: number; payload?: { year?: number } };
-                const yr = row?.year ?? row?.payload?.year;
-                if (yr && onSelectYear) onSelectYear(yr);
-              }}
-              className="cursor-pointer"
+              onClick={(entry) => onSelectYear && onSelectYear((entry as unknown as YearlyStatRow).year)}
+              cursor="pointer"
             >
               {chartData.map((entry) => {
                 const isSelected = selectedYear === entry.year;
+                const isPeak = peakYearRow?.year === entry.year;
+                const fillColor = isSelected
+                  ? "#ff8533"
+                  : isPeak
+                    ? "#ef4444"
+                    : "#ff6b00";
                 return (
                   <Cell
-                    key={`bar-${entry.year}`}
-                    fill={isSelected ? "#FF6B00" : "#3b82f6"}
-                    fillOpacity={isSelected ? 1.0 : 0.75}
+                    key={entry.year}
+                    fill={fillColor}
+                    fillOpacity={isSelected ? 1 : isPeak ? 0.95 : 0.75}
                   />
                 );
               })}
@@ -155,27 +180,42 @@ export function YearlyBars({ data, selectedYear, onSelectYear }: YearlyBarsProps
         </ResponsiveContainer>
       </div>
 
+      {/* Accessible Table Fallback */}
       {showTable && (
-        <div className="mt-4 border-t border-[#1e293b] pt-3 overflow-x-auto">
-          <table className="w-full text-xs text-left text-[#cbd5e1]">
-            <caption className="sr-only">Annual fire totals by year</caption>
-            <thead className="text-[#64748b] uppercase border-b border-[#1e293b]">
+        <div className="pt-2 overflow-x-auto">
+          <table
+            className="w-full text-left text-xs border border-[#1e293b] rounded-lg"
+            aria-label="Accessible yearly fire activity table"
+          >
+            <thead className="bg-[#141e30] text-[#94a3b8] uppercase font-mono text-[10px]">
               <tr>
-                <th scope="col" className="py-2 px-3">Year</th>
-                <th scope="col" className="py-2 px-3">Harmonized Total</th>
-                <th scope="col" className="py-2 px-3">Rank</th>
-                <th scope="col" className="py-2 px-3">Vs Mean</th>
+                <th className="p-2 border-b border-[#1e293b]">Year</th>
+                <th className="p-2 border-b border-[#1e293b]">Events</th>
+                <th className="p-2 border-b border-[#1e293b]">Peak Month</th>
+                <th className="p-2 border-b border-[#1e293b]">Rank</th>
+                <th className="p-2 border-b border-[#1e293b]">vs Mean</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-[#1e293b]">
               {chartData.map((row) => (
-                <tr key={`acc-bar-${row.year}`} className="border-b border-[#161f30]">
-                  <td className="py-2 px-3 font-medium text-white">{row.year}</td>
-                  <td className="py-2 px-3">
+                <tr
+                  key={row.year}
+                  className={`hover:bg-[#162238] transition-colors cursor-pointer ${
+                    selectedYear === row.year ? "bg-[#1c2942]" : ""
+                  }`}
+                  onClick={() => onSelectYear && onSelectYear(row.year)}
+                >
+                  <td className="p-2 font-mono font-semibold text-white">{row.year}</td>
+                  <td className="p-2 font-mono text-[#ff8533]">
                     {formatNumber(row.harmonized_total ?? row.total_events ?? 0)}
                   </td>
-                  <td className="py-2 px-3">#{row.rank}</td>
-                  <td className="py-2 px-3">
+                  <td className="p-2 text-[#cbd5e1]">{row.peak_month ?? "—"}</td>
+                  <td className="p-2 text-[#94a3b8]">#{row.rank}</td>
+                  <td
+                    className={`p-2 font-mono ${
+                      row.vs_mean_pct >= 0 ? "text-[#ef4444]" : "text-[#10b981]"
+                    }`}
+                  >
                     {row.vs_mean_pct >= 0 ? "+" : ""}
                     {row.vs_mean_pct.toFixed(1)}%
                   </td>
