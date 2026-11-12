@@ -35,6 +35,7 @@ from app.features.heatmap import router as heatmap_router
 from app.features.meta import router as meta_router
 from app.features.methodology import router as methodology_router
 from app.features.series import router as series_router
+from app.features.stations import router as stations_router
 from app.features.stats import router as stats_router
 
 logger = setup_api_logger()
@@ -80,7 +81,7 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
 
     # Middleware: CORS restricted strictly to WEB_ORIGIN, Request-ID, and per-IP Rate Limiting
     app_instance.add_middleware(
-         SlidingWindowRateLimitMiddleware,
+        SlidingWindowRateLimitMiddleware,
         default_limit=cfg.rate_limit_default,
     )
     app_instance.add_middleware(RequestIdMiddleware)
@@ -110,6 +111,7 @@ def create_app(app_settings: Settings | None = None) -> FastAPI:
     app_instance.include_router(ask_router)
     app_instance.include_router(guidance_router)
     app_instance.include_router(alerts_router)
+    app_instance.include_router(stations_router)
 
     return app_instance
 

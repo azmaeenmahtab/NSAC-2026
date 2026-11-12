@@ -243,6 +243,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stations/nearby": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Nearest fire stations with direct dial and plain-English fire report template */
+        get: operations["getNearbyStations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -470,6 +487,42 @@ export interface components {
         };
         ErrorEnvelope: {
             error: components["schemas"]["ErrorDetail"];
+        };
+        ThreatSummary: {
+            /** @enum {string} */
+            level: "LOW" | "MODERATE" | "HIGH" | "CRITICAL";
+            headline: string;
+            explanation: string;
+            nearby_recent_events?: number;
+        };
+        NearbyStationItem: {
+            station_id: string;
+            name: string;
+            district_id: string;
+            district_name: string;
+            lat: number;
+            lon: number;
+            distance_km: number;
+            hotline: string;
+            national_emergency: string;
+            phone?: string | null;
+            email?: string | null;
+            dial_number: string;
+            email_subject: string;
+            email_body: string;
+        };
+        NearbyStationsData: {
+            center_lat: number;
+            center_lon: number;
+            location_source: string;
+            area_id: string;
+            area_name: string;
+            threat: components["schemas"]["ThreatSummary"];
+            stations: components["schemas"]["NearbyStationItem"][];
+        };
+        NearbyStationsEnvelope: {
+            data: components["schemas"]["NearbyStationsData"];
+            meta: components["schemas"]["ResponseMeta"];
         };
     };
     responses: {
@@ -794,6 +847,16 @@ export interface operations {
                     rule: "season_approaching" | "above_normal" | "both";
                     /** @default 14 */
                     lead_days?: number;
+                    /**
+                     * @default public
+                     * @enum {string}
+                     */
+                    subscriber_type?: "public" | "fire_station";
+                    station_id?: string | null;
+                    station_name?: string | null;
+                    phone?: string | null;
+                    /** @default 25 */
+                    radius_km?: number;
                 };
             };
         };
@@ -894,6 +957,33 @@ export interface operations {
                     "application/json": components["schemas"]["ActiveAlertsEnvelope"];
                 };
             };
+        };
+    };
+    getNearbyStations: {
+        parameters: {
+            query?: {
+                lat?: number;
+                lon?: number;
+                area_id?: string;
+                radius_km?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Nearest fire stations and area risk summary */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NearbyStationsEnvelope"];
+                };
+            };
+            400: components["responses"]["ErrorResponse"];
         };
     };
 }

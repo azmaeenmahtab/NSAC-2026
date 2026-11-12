@@ -55,6 +55,11 @@ def subscribe(
         lead_days=req.lead_days,
         unsubscribe_token=token,
         db_path=db_path,
+        subscriber_type=req.subscriber_type,
+        station_id=req.station_id,
+        station_name=req.station_name,
+        phone=req.phone,
+        radius_km=req.radius_km,
     )
 
     get_mailer().send_confirmation(

@@ -11,6 +11,7 @@ from app.core.responses import ResponseMeta
 
 AlertRule = Literal["season_approaching", "above_normal", "both"]
 AnomalyClass = Literal["normal", "elevated", "extreme"]
+SubscriberType = Literal["public", "fire_station"]
 
 _EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
 
@@ -22,6 +23,11 @@ class SubscriptionRequest(BaseModel):
     area_id: str
     rule: AlertRule
     lead_days: int = Field(default=14, ge=1, le=60)
+    subscriber_type: SubscriberType = "public"
+    station_id: str | None = Field(default=None, max_length=120)
+    station_name: str | None = Field(default=None, max_length=200)
+    phone: str | None = Field(default=None, max_length=40)
+    radius_km: float = Field(default=25.0, ge=5.0, le=100.0)
 
     @field_validator("email")
     @classmethod

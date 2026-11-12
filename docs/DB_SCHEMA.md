@@ -37,6 +37,9 @@ Pipeline order: raw CSV -> `detections` -> `events` -> `monthly_cell`, `monthly_
 ### guidance.json (P1)
 List of `{ id, stage (pre_season|in_season|post_season|extreme|off_season), audience, text, source_title, source_url, verified (bool) }`.
 
+### fire_stations.parquet
+`station_id`, `name`, `district_id`, `district_name`, `division_id`, `adm1_name`, `adm3_name`, `lat` (FLOAT64), `lon` (FLOAT64), `hotline` (`102`), `national_emergency` (`999`), `phone` (nullable), `email` (nullable), `source`, `verified` (BOOL). Sourced from HDX HOTOSM Bangladesh POI (`amenity=fire_station`); documented in `data/reference/SOURCES.md`.
+
 ## 3. Pipeline tables (`data/interim/` and `data/processed/<version>/`)
 
 ### detections (normalized pixels)
@@ -93,7 +96,7 @@ Dedup key: `(sensor, lat, lon, acq_ts)`; duplicates dropped.
 ## 4. App state (SQLite `app.db`, P1)
 
 ### alert_subscriptions
-`id` INTEGER PK, `email` TEXT, `area_id` TEXT, `rule` TEXT (`season_approaching`|`above_normal`|`both`), `lead_days` INTEGER default 14, `confirmed` BOOL, `unsubscribe_token` TEXT unique, `created_at`.
+`id` INTEGER PK, `email` TEXT, `area_id` TEXT, `rule` TEXT (`season_approaching`|`above_normal`|`both`), `lead_days` INTEGER default 14, `confirmed` BOOL, `unsubscribe_token` TEXT unique, `subscriber_type` TEXT (`public`|`fire_station`, default `public`), `station_id` TEXT nullable, `station_name` TEXT nullable, `phone` TEXT nullable, `radius_km` REAL default 25.0, `created_at`.
 
 ### notifications_sent
 `id` PK, `subscription_id` FK, `rule`, `period` TEXT (e.g. `2027-03`), `sent_at`, unique `(subscription_id, rule, period)` so a condition notifies once per period.

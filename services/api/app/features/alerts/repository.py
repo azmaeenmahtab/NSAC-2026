@@ -9,9 +9,17 @@ from typing import Any
 
 from app.core.config import settings
 
+_EXTRA_SUBSCRIPTION_COLUMNS: tuple[tuple[str, str], ...] = (
+    ("subscriber_type", "TEXT NOT NULL DEFAULT 'public'"),
+    ("station_id", "TEXT"),
+    ("station_name", "TEXT"),
+    ("phone", "TEXT"),
+    ("radius_km", "REAL NOT NULL DEFAULT 25.0"),
+)
+
 
 def get_sqlite_connection(db_path: str | Path | None = None) -> sqlite3.Connection:
-    """Connect to SQLite and ensure alert tables exist."""
+    """Connect to SQLite and ensure alert tables exist with latest schema."""
     path = Path(db_path or settings.app_db_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(path))
@@ -26,10 +34,22 @@ def get_sqlite_connection(db_path: str | Path | None = None) -> sqlite3.Connecti
             lead_days INTEGER NOT NULL DEFAULT 14,
             confirmed BOOLEAN NOT NULL DEFAULT 0,
             unsubscribe_token TEXT NOT NULL UNIQUE,
+            subscriber_type TEXT NOT NULL DEFAULT 'public',
+            station_id TEXT,
+            station_name TEXT,
+            phone TEXT,
+            radius_km REAL NOT NULL DEFAULT 25.0,
             created_at TEXT NOT NULL
         )
         """
     )
+    existing_cols = {
+        row[1] for row in conn.execute("PRAGMA table_info(alert_subscriptions)").fetchall()
+    }
+    for col_name, col_def in _EXTRA_SUBSCRIPTION_COLUMNS:
+        if col_name not in existing_cols:
+            conn.execute(f"ALTER TABLE alert_subscriptions ADD COLUMN {col_name} {col_def}")
+
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS notifications_sent (
@@ -53,6 +73,11 @@ def create_subscription(
     lead_days: int,
     unsubscribe_token: str,
     db_path: str | Path | None = None,
+    subscriber_type: str = "public",
+    station_id: str | None = None,
+    station_name: str | None = None,
+    phone: str | None = None,
+    radius_km: float = 25.0,
 ) -> int:
     """Insert an unconfirmed alert subscription."""
     conn = get_sqlite_connection(db_path)
@@ -61,10 +86,23 @@ def create_subscription(
         cursor = conn.execute(
             """
             INSERT INTO alert_subscriptions
-            (email, area_id, rule, lead_days, confirmed, unsubscribe_token, created_at)
-            VALUES (?, ?, ?, ?, 0, ?, ?)
+            (email, area_id, rule, lead_days, confirmed, unsubscribe_token,
+             subscriber_type, station_id, station_name, phone, radius_km, created_at)
+            VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?)
             """,
-            [email, area_id, rule, lead_days, unsubscribe_token, now_utc],
+            [
+                email,
+                area_id,
+                rule,
+                lead_days,
+                unsubscribe_token,
+                subscriber_type,
+                station_id,
+                station_name,
+                phone,
+                radius_km,
+                now_utc,
+            ],
         )
         return int(cursor.lastrowid or 0)
 
@@ -77,7 +115,8 @@ def get_subscription_by_token(
     conn = get_sqlite_connection(db_path)
     cursor = conn.execute(
         """
-        SELECT id, email, area_id, rule, lead_days, confirmed, unsubscribe_token, created_at
+        SELECT id, email, area_id, rule, lead_days, confirmed, unsubscribe_token,
+               subscriber_type, station_id, station_name, phone, radius_km, created_at
         FROM alert_subscriptions
         WHERE unsubscribe_token = ?
         LIMIT 1
@@ -95,7 +134,12 @@ def get_subscription_by_token(
         "lead_days": row[4],
         "confirmed": bool(row[5]),
         "unsubscribe_token": row[6],
-        "created_at": row[7],
+        "subscriber_type": row[7],
+        "station_id": row[8],
+        "station_name": row[9],
+        "phone": row[10],
+        "radius_km": float(row[11]),
+        "created_at": row[12],
     }
 
 
@@ -107,11 +151,7 @@ def confirm_subscription(
     conn = get_sqlite_connection(db_path)
     with conn:
         cursor = conn.execute(
-            """
-            UPDATE alert_subscriptions
-            SET confirmed = 1
-            WHERE unsubscribe_token = ?
-            """,
+            "UPDATE alert_subscriptions SET confirmed = 1 WHERE unsubscribe_token = ?",
             [token],
         )
         return cursor.rowcount > 0
@@ -125,10 +165,7 @@ def delete_subscription_by_token(
     conn = get_sqlite_connection(db_path)
     with conn:
         cursor = conn.execute(
-            """
-            DELETE FROM alert_subscriptions
-            WHERE unsubscribe_token = ?
-            """,
+            "DELETE FROM alert_subscriptions WHERE unsubscribe_token = ?",
             [token],
         )
         return cursor.rowcount > 0
@@ -141,7 +178,8 @@ def list_confirmed_subscriptions(
     conn = get_sqlite_connection(db_path)
     cursor = conn.execute(
         """
-        SELECT id, email, area_id, rule, lead_days, unsubscribe_token
+        SELECT id, email, area_id, rule, lead_days, unsubscribe_token,
+               subscriber_type, station_id, station_name, phone, radius_km
         FROM alert_subscriptions
         WHERE confirmed = 1
         ORDER BY id
@@ -155,6 +193,11 @@ def list_confirmed_subscriptions(
             "rule": row[3],
             "lead_days": row[4],
             "unsubscribe_token": row[5],
+            "subscriber_type": row[6],
+            "station_id": row[7],
+            "station_name": row[8],
+            "phone": row[9],
+            "radius_km": float(row[10]),
         }
         for row in cursor.fetchall()
     ]

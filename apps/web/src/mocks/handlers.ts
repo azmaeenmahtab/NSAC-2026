@@ -575,4 +575,60 @@ export const handlers = [
       meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
     });
   }),
+
+  http.get("*/api/stations/nearby", () => {
+    return HttpResponse.json({
+      data: {
+        center_lat: 22.65,
+        center_lon: 92.18,
+        location_source: "selected_area",
+        area_id: "PRESET-CHT",
+        area_name: "Chittagong Hill Tracts",
+        threat: {
+          level: "HIGH",
+          headline: "Elevated Fire Activity",
+          explanation:
+            "Recent fires were spotted near this area, or activity is higher than normal.",
+          nearby_recent_events: 2,
+        },
+        stations: [
+          {
+            station_id: "FSCD-node-5776723114",
+            name: "Rangamati Fire Service & Civil Defence Station",
+            district_id: "BGD-ADM2-rangamati",
+            district_name: "Rangamati",
+            lat: 22.6512,
+            lon: 92.1849,
+            distance_km: 0.5,
+            hotline: "102",
+            national_emergency: "999",
+            phone: null,
+            email: null,
+            dial_number: "102",
+            email_subject: "[HIGH Risk] Fire Alert Report Near Rangamati",
+            email_body:
+              "Hello Rangamati Fire Service & Civil Defence Station,\n\nI am reporting a possible fire near Rangamati.\n\n- Location: 22.6500N, 92.1800E\n- Current Area Risk: HIGH (Elevated Fire Activity)\n\nPlease check this location when possible.\n",
+          },
+          {
+            station_id: "FSCD-way-531425078",
+            name: "Khagrachhari Fire Service Station",
+            district_id: "BGD-ADM2-khagrachari",
+            district_name: "Khagrachari",
+            lat: 23.112,
+            lon: 91.9704,
+            distance_km: 55.6,
+            hotline: "102",
+            national_emergency: "999",
+            phone: null,
+            email: null,
+            dial_number: "102",
+            email_subject: "[HIGH Risk] Fire Alert Report Near Khagrachari",
+            email_body:
+              "Hello Khagrachhari Fire Service Station,\n\nI am reporting a possible fire near Khagrachari.",
+          },
+        ],
+      },
+      meta: { dataVersion: "v0.1.0-fixtures", asOf: "2025-12-31" },
+    });
+  }),
 ];

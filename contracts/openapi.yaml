@@ -321,6 +321,22 @@ paths:
                 lead_days:
                   type: integer
                   default: 14
+                subscriber_type:
+                  type: string
+                  enum: [public, fire_station]
+                  default: public
+                station_id:
+                  type: string
+                  nullable: true
+                station_name:
+                  type: string
+                  nullable: true
+                phone:
+                  type: string
+                  nullable: true
+                radius_km:
+                  type: number
+                  default: 25.0
               required: [email, area_id, rule]
       responses:
         '200':
@@ -406,6 +422,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActiveAlertsEnvelope'
+
+  /stations/nearby:
+    get:
+      summary: Nearest fire stations with direct dial and plain-English fire report template
+      operationId: getNearbyStations
+      parameters:
+        - name: lat
+          in: query
+          required: false
+          schema: { type: number }
+        - name: lon
+          in: query
+          required: false
+          schema: { type: number }
+        - name: area_id
+          in: query
+          required: false
+          schema: { type: string, default: "PRESET-CHT" }
+        - name: radius_km
+          in: query
+          required: false
+          schema: { type: number, default: 50.0 }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, default: 5 }
+      responses:
+        '200':
+          description: Nearest fire stations and area risk summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NearbyStationsEnvelope'
+        '400':
+          $ref: '#/components/responses/ErrorResponse'
 
 components:
   responses:
@@ -715,4 +766,51 @@ components:
       properties:
         error: { $ref: '#/components/schemas/ErrorDetail' }
       required: [error]
+
+    ThreatSummary:
+      type: object
+      properties:
+        level: { type: string, enum: [LOW, MODERATE, HIGH, CRITICAL] }
+        headline: { type: string }
+        explanation: { type: string }
+        nearby_recent_events: { type: integer }
+      required: [level, headline, explanation]
+
+    NearbyStationItem:
+      type: object
+      properties:
+        station_id: { type: string }
+        name: { type: string }
+        district_id: { type: string }
+        district_name: { type: string }
+        lat: { type: number }
+        lon: { type: number }
+        distance_km: { type: number }
+        hotline: { type: string }
+        national_emergency: { type: string }
+        phone: { type: string, nullable: true }
+        email: { type: string, nullable: true }
+        dial_number: { type: string }
+        email_subject: { type: string }
+        email_body: { type: string }
+      required: [station_id, name, district_id, district_name, lat, lon, distance_km, hotline, national_emergency, dial_number, email_subject, email_body]
+
+    NearbyStationsData:
+      type: object
+      properties:
+        center_lat: { type: number }
+        center_lon: { type: number }
+        location_source: { type: string }
+        area_id: { type: string }
+        area_name: { type: string }
+        threat: { $ref: '#/components/schemas/ThreatSummary' }
+        stations: { type: array, items: { $ref: '#/components/schemas/NearbyStationItem' } }
+      required: [center_lat, center_lon, location_source, area_id, area_name, threat, stations]
+
+    NearbyStationsEnvelope:
+      type: object
+      properties:
+        data: { $ref: '#/components/schemas/NearbyStationsData' }
+        meta: { $ref: '#/components/schemas/ResponseMeta' }
+      required: [data, meta]
 

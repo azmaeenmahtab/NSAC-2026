@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { AreaSelector, AreaBreadcrumb, BBoxDraw, useViewState } from "@/features/areas";
 import { AlertStateCard, SubscribeForm, useActiveAlerts } from "@/features/alerts";
+import { NearbyStationsPanel } from "@/features/stations";
 
 export function SidePanelContent() {
   const { area, setArea } = useViewState();
@@ -40,6 +41,8 @@ export function SidePanelContent() {
           />
         </div>
       )}
+
+      <NearbyStationsPanel areaId={area} />
     </div>
   );
 }

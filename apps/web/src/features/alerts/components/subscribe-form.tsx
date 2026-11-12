@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useSubscribe } from "../api/use-subscribe";
-import type { AlertRule } from "../types";
+import type { AlertRule, SubscriberType } from "../types";
 import { ApiError } from "@/lib/api/errors";
 
 interface SubscribeFormProps {
@@ -13,6 +13,9 @@ interface SubscribeFormProps {
 
 export function SubscribeForm({ areaId, areaName, onSuccess }: SubscribeFormProps) {
   const [email, setEmail] = useState("");
+  const [subscriberType, setSubscriberType] = useState<SubscriberType>("public");
+  const [stationName, setStationName] = useState("");
+  const [phone, setPhone] = useState("");
   const [rule, setRule] = useState<AlertRule>("both");
   const [leadDays, setLeadDays] = useState(14);
   const [consent, setConsent] = useState(false);
@@ -48,6 +51,13 @@ export function SubscribeForm({ areaId, areaName, onSuccess }: SubscribeFormProp
         area_id: areaId,
         rule,
         lead_days: leadDays,
+        subscriber_type: subscriberType,
+        station_name:
+          subscriberType === "fire_station" && stationName.trim()
+            ? stationName.trim()
+            : undefined,
+        phone:
+          subscriberType === "fire_station" && phone.trim() ? phone.trim() : undefined,
       });
       setIsSubmitted(true);
       if (onSuccess) onSuccess();
@@ -108,6 +118,54 @@ export function SubscribeForm({ areaId, areaName, onSuccess }: SubscribeFormProp
           {formError}
         </div>
       )}
+
+      <div className="space-y-1.5">
+        <span className="block font-medium text-[#cbd5e1]">I am subscribing as</span>
+        <div className="grid grid-cols-2 gap-1.5">
+          <button
+            type="button"
+            onClick={() => setSubscriberType("public")}
+            className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-medium cursor-pointer ${
+              subscriberType === "public"
+                ? "bg-[#ff6b00]/20 border-[#ff6b00] text-white"
+                : "bg-[#141e30] border-[#233554] text-[#94a3b8]"
+            }`}
+          >
+            Citizen / Researcher
+          </button>
+          <button
+            type="button"
+            onClick={() => setSubscriberType("fire_station")}
+            className={`px-2.5 py-1.5 rounded-lg border text-[11px] font-medium cursor-pointer ${
+              subscriberType === "fire_station"
+                ? "bg-[#ff6b00]/20 border-[#ff6b00] text-white"
+                : "bg-[#141e30] border-[#233554] text-[#94a3b8]"
+            }`}
+          >
+            Fire Station
+          </button>
+        </div>
+        {subscriberType === "fire_station" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1.5">
+            <input
+              type="text"
+              value={stationName}
+              onChange={(e) => setStationName(e.target.value)}
+              placeholder="Station Name (e.g. Rangamati)"
+              aria-label="Fire Station Name"
+              className="w-full px-3 py-1.5 rounded-lg bg-[#141e30] border border-[#233554] text-white placeholder-[#64748b] focus:border-[#FF6B00] focus:outline-none"
+            />
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Station Phone (optional)"
+              aria-label="Fire Station Phone"
+              className="w-full px-3 py-1.5 rounded-lg bg-[#141e30] border border-[#233554] text-white placeholder-[#64748b] focus:border-[#FF6B00] focus:outline-none"
+            />
+          </div>
+        )}
+      </div>
 
       <div className="space-y-1.5">
         <label htmlFor="sub-email" className="block font-medium text-[#cbd5e1]">

@@ -47,3 +47,11 @@ Per the geoBoundaries (`gbOpen`) and UN OCHA / BBS (`CC BY 3.0 IGO`) license ter
   - Every resolution-7 cell in Bangladesh is assigned to **at most one** `adm2` district (`0` duplicate district assignments).
   - Parent division (`adm1`), country (`BGD`), and preset (`PRESET-CHT`) cell sets in `region_cells.parquet` are the exact disjoint unions of their constituent `adm2` districts.
   - Note on cell count: At Bangladesh's latitude (`20.5°N–26.7°N`), the mean H3 resolution-7 cell area on the icosahedral projection is **`5.721 km²`** (compared to the global average `5.161 km²`), and the 64 ADM2 land polygons cover **`140,051.6 km²`** (`EPSG:32646`), yielding **`25,020` strict centroid-in-polygon cells** and **`26,683` total land-covering district cells** (including coastal/border cells so 100% of in-country FIRMS detections map to a district cell).
+
+---
+
+## 4. Fire Service Stations (`data/reference/fire_stations.parquet`)
+
+- **Primary Source:** Humanitarian OpenStreetMap Team (HOTOSM) / OpenStreetMap Points of Interest for Bangladesh (`hotosm_bgd_points_of_interest`), published via Humanitarian Data Exchange (HDX) under **ODbL 1.0** (`https://data.humdata.org/dataset/hotosm_bgd_points_of_interest`).
+- **Filter:** `amenity == "fire_station"`, centroids computed for polygon station footprints, spatially joined to canonical ADM2 `district_id` from `regions.geojson`.
+- **Official Emergency Hotlines:** Verified against Bangladesh Fire Service and Civil Defence (`fireservice.gov.bd`): dedicated Fire Service hotline **`102`** and National Emergency Helpline **`999`**. Individual station phones/emails are left `null` unless verified via station opt-in registration.

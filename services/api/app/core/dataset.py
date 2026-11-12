@@ -28,6 +28,7 @@ OPTIONAL_PARQUET_TABLES: dict[str, str] = {
     "monthly_cell": "monthly_cell.parquet",
     "calibration_report": "calibration_report.parquet",
     "events": "events.parquet",
+    "fire_stations": "fire_stations.parquet",
 }
 
 _VALID_IDENTIFIER_RE = re.compile(r"^[a-z_][a-z0-9_]*$")
