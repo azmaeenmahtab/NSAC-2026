@@ -38,7 +38,7 @@ export function Attribution({ className }: AttributionProps) {
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <span className="font-medium text-[#94a3b8]">
-            {isBangla ? "টিম সিঙ্গুলারিটি" : "Team Singularity"}
+            {t.attribution.team}
           </span>
           <span>•</span>
           <span>
